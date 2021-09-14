@@ -5,6 +5,8 @@ import {saveProfile,requestInit,requestStop,getProfile } from  "../../Profile/re
 
 export const login = (data , router) => (dispatch) =>{
   dispatch(requestInit({message : "Logging in..."}));
+
+  console.log("api url" ,API.login)
   Service.post(API.login ,data).then(({data})=>{
     dispatch(saveProfile({profile  : data?.data}));
     getProfile(data?.data?.id);

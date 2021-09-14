@@ -2,7 +2,10 @@ export const START = 'START_REQUEST';
 export const STOP = 'STOP_REQUEST';
 export const SAVE_PROFILE = 'SAVE_REQUEST';
 //export const API_BASE_URL = 'http://210.242.250.38:8000';
-export const API_BASE_URL = process.env?.NODE_ENV === 'development' ? process.env?.NEXT_PUBLIC_API_BASE_URL :  process.env?.NEXT_PUBLIC_PROD_API_BASE_URL;
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+//export const API_BASE_URL = 'http://210.242.250.38:8000';
+export const API_BASE_URL = publicRuntimeConfig?.API_BASE_URL;
 export const MESSAGE = {
   creatingAccount : 'Creating account...',
   accountSuccess : 'Created success.'

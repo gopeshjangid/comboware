@@ -4,7 +4,10 @@ export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const REQUEST_START = 'REQUEST_START';
 export const REQUEST_FAILED = 'REQUEST_FAILED';
 export const SAVE_REQUEST = 'SAVE_REQUEST';
-export const API_BASE_URL = process.env?.NODE_ENV === 'development' ? process.env?.NEXT_PUBLIC_API_BASE_URL :  process.env?.NEXT_PUBLIC_PROD_API_BASE_URL;
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+//export const API_BASE_URL = 'http://210.242.250.38:8000';
+export const API_BASE_URL = publicRuntimeConfig?.API_BASE_URL;
 export const NETWORK = {
         id : '9f5e5d0a-8918-4321-8fec-eb062a784fd7',
         name : 'Engineero-network',

@@ -14,6 +14,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import {signUp} from  "../Profile/redux/action";
 
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -53,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   const [loading , setLoading] = useState(false);
   const router = useRouter();
   let reduxState = useSelector(state =>state?.user);
-  let clientId = process.env?.NODE_ENV === 'development' ? process.env?.CLIENT_ID_DEV : process.env?.CLIENT_ID_PROD
+  let clientId = publicRuntimeConfig?.clientId;
   useEffect(() => {
     setLoaded(true);
     return () => {
