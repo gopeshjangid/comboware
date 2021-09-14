@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   const [loading , setLoading] = useState(false);
   const router = useRouter();
   let reduxState = useSelector(state =>state?.user);
-
+  let clientId = process.env?.NODE_ENV === 'development' ? process.env?.CLIENT_ID_DEV : process.env?.CLIENT_ID_PROD
   useEffect(() => {
     setLoaded(true);
     return () => {
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }, [reduxState])
 
-  
+  console.log("rebvironment variable--------" ,process.env);
 
   const responseGoogle = async (data) => {
     console.log("success data" ,data)
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme) => ({
 
         <Box mt={5}>
           {loaded && !reduxState?.loading  && <GoogleLogin
-            clientId="1077191744235-vvnii937rft8kf0j69dde29o0ngtm7a3.apps.googleusercontent.com"
+            clientId={clientId}
             buttonText="Login with google"
             onSuccess={responseGoogle}
             onFailure={responseGoogleFailed}

@@ -142,7 +142,7 @@ function Profile({ updateProfile, createDomain, getProfile }) {
   const submitDomainHandler = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    createDomain({ domain, project, userId: reduxState?.user?.profile?.id || 1 });
+    createDomain({ domain, project : {...project ,name : "Service"}, userId: reduxState?.user?.profile?.id || 1 });
   };
 
   const domainChangeHandler = (e) => {

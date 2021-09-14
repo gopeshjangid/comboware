@@ -15,8 +15,11 @@ module.exports = withPlugins([[withSass], [withImages], [withCSS]], {
   },
   publicRuntimeConfig: {
     API_BASE : process.env.REACT_APP_API_BASE_URL,
-    NEXT_PUBLIC_API_BASE_URL : process.env.NEXT_PUBLIC_API_BASE_URL,
-    clientId: "1077191744235-vvnii937rft8kf0j69dde29o0ngtm7a3.apps.googleusercontent.com"
+    NEXT_PUBLIC_API_BASE_URL : process.env.NEXT_PUBLIC_API_BASE_URL
   },
+  env : {
+    clientId: process.env.NODE_ENV === 'production' ? process.env.CLIENT_ID_PROD  : process.env.CLIENT_ID_DEV,
+    API_BASE_URL: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_PROD_API_BASE_URL  : process.env.NEXT_PUBLIC_API_BASE_URL
+  }
   
 });
