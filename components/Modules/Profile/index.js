@@ -135,7 +135,7 @@ function Profile({ updateProfile, createDomain, getProfile }) {
     e.preventDefault();
     if (profileValidation()) {
       setSubmitted(true);
-      updateProfile({ ...profile?.form, domain_id: domain?.id, skills ,project_id : project?.id ,userId: reduxState?.user?.profile?.id || 1 });
+      updateProfile({ ...profile?.form ,password:window?.btoa(profile?.form?.password), domain_id: domain?.id, skills ,project_id : project?.id ,userId: reduxState?.user?.profile?.id || 1 });
     }
   };
 

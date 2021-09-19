@@ -19,7 +19,7 @@ export default function CustomSelect(props) {
   
   return (
     <div>
-      <FormControl className={classes.margin} variant="outlined">
+      <FormControl className={classes.select} variant="outlined">
         {label && <InputLabel htmlFor="demo-customized-select-native">{label}</InputLabel>}
         <Select
           {...props}
