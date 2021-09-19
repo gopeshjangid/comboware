@@ -1,6 +1,6 @@
 import React from "react";
 import Admin from "layouts/Admin.js";
-import TicketsManagement from "components/Modules/TicketsManagement/TicketDetails";
+import TicketsManagement from "components/Modules/TicketsManagement/ticketDetails";
 import Head from "next/head";
 
 function TicketDetails() {

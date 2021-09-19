@@ -17,7 +17,6 @@ import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { serverRequest, getWorkSpaceDetails } from "../Workspace/redux/action";
-import { IMAGE, NETWORK, FLAVOR } from "./redux/constants";
 import { useRouter } from "next/dist/client/router";
 function Server({ serverRequest, getWorkSpaceDetails }) {
   const useStyles = makeStyles(styles);
@@ -28,20 +27,6 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
   const [loader, setLoader] = useState(false);
   const [server, setServer] = useState({
     form: {
-      networks: {
-        name: NETWORK?.name,
-        uuid: NETWORK?.id,
-        fixed_ip: "static",
-      },
-
-      server: {
-        server_name: reduxState?.user?.profile?.first_name + "Cloud",
-        ram: 4,
-        cpu: 2,
-        capacity: 64,
-      },
-      imageRef: IMAGE?.id,
-      flavorRef: FLAVOR?.id,
       userId: reduxState?.user?.profile?.id,
     },
     error: {
