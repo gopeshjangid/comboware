@@ -16,7 +16,8 @@ export default  {
       justifyContent : 'space-between'
   },
   cardBox : {
-      height : '100vh !important'
+      height : 'auto',
+      minHeight : '100vh !important'
     },
   boxModal : {
       padding : 30,
@@ -29,11 +30,15 @@ export default  {
       height : '60px !important'
   },
   drawerBox : {
-      width :  '400px',
+      width :  '365px',
       padding :20
   },
   activityBox : {
       maxHeight : '212px',
       overflowY : 'scroll'
+  },
+  system_image : {
+      height : 200,
+      width : 200
   }  
 };

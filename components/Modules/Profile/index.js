@@ -16,10 +16,11 @@ import Button from "@material-ui/core/Button";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
-import { updateProfile ,getProfile } from "./redux/action";
+import { updateProfile ,getProfile,updateSystemInfo } from "./redux/action";
 import { createDomain } from "../Workspace/redux/action";
+import {SKILLS} from  "./redux/constants";
 
-function Profile({ updateProfile, createDomain, getProfile }) {
+function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
@@ -34,11 +35,18 @@ function Profile({ updateProfile, createDomain, getProfile }) {
       phone: "",
       user_name: "",
       password: "",
+      company_name : '',
+      company_id : '',
+      company_address : '',
+      company_phone : ''
     },
     error: {
       first_name: false,
       user_name: false,
       password: false,
+      company_name : false,
+      company_address : false,
+      company_phone : false
     },
   });
 
@@ -122,10 +130,6 @@ function Profile({ updateProfile, createDomain, getProfile }) {
       ..._profile.error,
       user_name: _profile?.form?.user_name === "",
     };
-    _profile.error = {
-      ..._profile.error,
-      password: _profile?.form?.password === "",
-    };
     setProfile(_profile);
 
     return !Object.values(_profile?.error).some((field) => field);
@@ -179,6 +183,31 @@ function Profile({ updateProfile, createDomain, getProfile }) {
       return skill;
     })
     setSkills(_skills);
+  };
+
+  const hideNotification = () =>{
+    setSubmitted(false);
+    setLoader(false);
+  }
+
+  const onFileUpload = (event) => {
+    // Create an object of formData
+    const formData = new FormData();
+    let file = event.target.files[0];
+
+    console.log("file", file);
+    setSubmitted(true);
+    setLoader(true);
+    // Update the formData object
+    formData.append("server_image", file, file?.name);
+    updateSystemInfo(
+      {
+        query:"?userId=" +
+          Number(localStorage.getItem("userId")),
+        body: formData,
+      },
+      hideNotification
+    );
   };
 
 
@@ -341,7 +370,7 @@ function Profile({ updateProfile, createDomain, getProfile }) {
                     label="Email"
                     isDisabled
                     value={profile?.form?.email }
-                    isDisabled
+                    disabled={true}
                   />
                 </GridItem>
                 <GridItem xs={4}>
@@ -351,6 +380,7 @@ function Profile({ updateProfile, createDomain, getProfile }) {
                     name="phone"
                     type="number"
                     label="Phone"
+                    inputProps={{maxLength :10}}
                     value={profile?.form?.phone }
                   />
                 </GridItem>
@@ -358,7 +388,7 @@ function Profile({ updateProfile, createDomain, getProfile }) {
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
-                    
+                    disabled={true}
                     helperText={
                       profile?.form?.user_name?.error &&
                       "Please enter user name"
@@ -373,21 +403,90 @@ function Profile({ updateProfile, createDomain, getProfile }) {
                   <TextField
                     fullWidth
                     type="password"
-                    autoComplete="off"
+                    autoComplete="new-password"
                     label="Password"
-                    error
                     helperText={
                       profile?.form?.password?.error && "Please enter password"
                     }
                     onChange={profileChangeHandler}
                     name="password"
-                    
+                    id="password"
                   />
                 </GridItem>
               </GridContainer>
             </CardBody>
           </Card>
         </GridItem>
+       
+        <GridItem xs={12}>
+          <Card>
+            <CardHeader>
+              <Typography variant="h5">Company Details</Typography>
+            </CardHeader>
+            <CardBody>
+              <GridContainer spacing={3}>
+                <GridItem xs={4}>
+                  <TextField
+                    onChange={profileChangeHandler}
+                    name="company_name"
+                    fullWidth
+                    label="Company Name"
+                    value={profile?.form?.company_name}
+                    error={profile?.error?.company_name}
+                    helperText={
+                      profile?.error?.company_name && "Please enter name name"
+                    }
+                  />
+                </GridItem>
+                <GridItem xs={4}>
+                  <TextField
+                    fullWidth
+                    onChange={profileChangeHandler}
+                    name="company_id"
+                    label="Company Id"
+                    value={profile?.form?.company_id}
+                  />
+                </GridItem>
+                <GridItem xs={4}>
+                  <TextField
+                    fullWidth
+                    onChange={profileChangeHandler}
+                    name="company_address"
+                    type="text"
+                    label="Company Address"
+                    isDisabled
+                    value={profile?.form?.company_address }
+                    
+                  />
+                </GridItem>
+                <GridItem xs={4}>
+                  <TextField
+                    fullWidth
+                    onChange={profileChangeHandler}
+                    name="company_phone"
+                    type="number"
+                    inputProps={{maxLength : 10}}
+                    label="Company Phone"
+                    value={profile?.form?.company_phone }
+                  />
+                </GridItem>
+                <GridItem container justify='space-between' xs={4}>
+                  <img src={profile?.form?.system_image}  alt='system image' />
+                </GridItem>
+                <GridItem container justify='space-between' xs={4}>
+                  <label>Upload new system image</label>
+                  <TextField
+                    fullWidth
+                    onChange={onFileUpload}
+                    name="system_image"
+                    type="file"
+                  />
+                </GridItem>
+              </GridContainer>
+            </CardBody>
+          </Card>
+        </GridItem>
+      
         {reduxState?.user?.profile?.user_type === "ER" && (
           <GridItem xs={12} >
             <Card>
@@ -421,7 +520,7 @@ function Profile({ updateProfile, createDomain, getProfile }) {
                                 name="skill_level"
                                 value={skill?.skill_level}
                                 onChange={(e) => skillHandler(e ,index)}
-                                options={[{label : "Beginner" , value : "Beginner"}]}
+                                options={SKILLS?.map(skill =>({label : skill ,value : skill}))}
                               />
                             </GridItem>
                           </React.Fragment>
@@ -462,5 +561,5 @@ export default connect(
   (state) => {
     return { ...state };
   },
-  { createDomain, updateProfile , getProfile }
+  { createDomain, updateProfile , getProfile,updateSystemInfo }
 )(Profile);

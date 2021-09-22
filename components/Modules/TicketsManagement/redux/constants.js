@@ -20,17 +20,17 @@ export const COLUMNS = [
     width: 180,
   },
   {
-    field: 'title',
+    field: 'ticket_subject',
     headerName : "Title",
     width: 200
   },
   {
-    field: 'customer_name',
+    field: 'first_name',
     headerName : "Customer Name",
     width: 180
   },
   {
-    field: 'status',
+    field: 'ticket_status',
     headerName : "Status",
     width: 120,
     align : 'center',
@@ -43,7 +43,7 @@ export const COLUMNS = [
     align : 'center'
   },
   {
-    field: 'created_at',
+    field: 'ticket_date',
     headerName : "Created at",
     width: 150,
     align : 'center',
@@ -58,11 +58,14 @@ export const COLUMNS = [
 ]
 
 
+export const TICKET_STATUS_LIST = ['ALL','OPEN', 'PROCESSING', 'CLOSE'];
+export const REPAIR_STATUS_LIST = ['ALL','PENDING', 'REPAIRED', 'PROCESSING', 'FAILED'];
+
 export const API = {
   createTicket : API_BASE_URL+'/v1/ticket/createTicket',
-  getAllTickets : API_BASE_URL+'/v1/ticket/createWorkspace',
+  getAllTickets : API_BASE_URL+'/v1/ticket/getAllTicketRequest',
   getTicketDetails:  API_BASE_URL+"/v1/ticket/getTicketDetails",
-  updateTicket:  API_BASE_URL+"/v1/ticket/getServerDetails",
+  updateTicket:  API_BASE_URL+"/v1/ticket/updateTicketDetails",
   getCategories:  API_BASE_URL+"/v1/ticket/getCategories",
   getSubCategories:  API_BASE_URL+"/v1/ticket/getSubCategories",
   addActivities : API_BASE_URL+"/v1/ticket/addActivities",

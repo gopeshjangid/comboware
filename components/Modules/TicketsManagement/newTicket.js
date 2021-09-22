@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-
 import { makeStyles } from "@material-ui/core/styles";
-import { AddCircleOutline } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box, TextareaAutosize } from "@material-ui/core";
+import { Typography, IconButton, Box, TextareaAutosize , } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -18,16 +16,25 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { serverRequest, getWorkSpaceDetails } from "../Workspace/redux/action";
 import { useRouter } from "next/dist/client/router";
-function Server({ serverRequest, getWorkSpaceDetails }) {
+import {createTicket ,addNewActivity, getCategories , getSubCategories} from "./redux/action";
+
+
+function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
   const [message, setMessage] = useState("");
   const [isSubmitted, setSubmitted] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [server, setServer] = useState({
+  const [categories, setCategories] = useState([]);
+  const [subCategories, setSubCategories] = useState([]);
+  const [image, setImage] = useState(null);
+  const [ticketDetails, setTicketDetails] = useState({
     form: {
       userId: reduxState?.user?.profile?.id,
+      category_id : '',
+      subcategory_id : '',
+      ticket_subject : ''
     },
     error: {
       network_name: false,
@@ -36,6 +43,7 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
     },
   });
   const router = useRouter();
+  const [note, setNote] = useState(null);
 
   const manageMessage = () => {
     setTimeout(() => {
@@ -44,95 +52,158 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
   };
 
   useEffect(() => {
-    if (reduxState?.workspace?.message || reduxState?.workspace?.error) {
+    if (reduxState?.ticket?.message || reduxState?.ticket?.error) {
       setMessage({
-        text: reduxState?.workspace?.message || reduxState?.workspace?.error,
-        type: reduxState?.workspace?.error ? "error" : "success",
+        text: reduxState?.ticket?.message || reduxState?.ticket?.error,
+        type: reduxState?.ticket?.error ? "error" : "success",
       });
       setSubmitted(true);
       manageMessage();
     }
     return () => {};
-  }, [reduxState?.workspace?.message]);
+  }, [reduxState?.ticket?.message]);
 
   useEffect(() => {
-    setLoader(reduxState?.workspace?.loading);
+    setLoader(reduxState?.ticket?.loading);
     return () => {};
-  }, [reduxState?.workspace?.loading]);
+  }, [reduxState?.ticket?.loading]);
 
   useEffect(() => {
-    if (!reduxState?.workspace?.server && isSubmitted) {
+    setCategories(reduxState?.ticket?.categories?.map(cat => {
+      return  {
+        ...cat,
+        label : cat?.category_name,
+        value : cat?.id
+      }
+    }));
+    return () => {};
+  }, [reduxState?.ticket?.categories]);
+
+  useEffect(() => {
+    setSubCategories([...reduxState?.ticket?.subCategories?.map(cat => {
+      return  {
+        ...cat,
+        label : cat?.subcategory_name,
+        value : cat?.id
+      }
+    })]);
+    return () => {};
+  }, [reduxState?.ticket?.subCategories]);
+
+  useEffect(() => {
+    if (!reduxState?.ticket?.server && isSubmitted) {
       getWorkSpaceDetails(Number(localStorage.getItem("userId")));
     } else {
-      setServer({
-        ...server,
-        form: {
-          ...server?.form,
-          server: reduxState?.workspace?.server?.id
-            ? { ...reduxState?.workspace?.server }
-            : {
-                ...server?.form?.server,
-                server_name: reduxState?.user?.profile?.first_name + "Cloud",
-              },
-        },
+      setTicketDetails({
+       
       });
     }
     setSubmitted(false);
     return () => {};
-  }, [reduxState?.workspace?.server]);
+  }, [reduxState?.ticket?.server]);
 
   useEffect(() => {
-    getWorkSpaceDetails(Number(localStorage.getItem("userId")));
+    getCategories();
   }, []);
 
+
   const validateServerDetails = () => {
-    if (!reduxState?.workspace?.domain?.id) {
-      setMessage({ text: "Please create domain first", type: "error" });
+    if (!ticketDetails?.form?.category_id) {
+      setMessage({ text: "Please select a category", type: "error" });
       return false;
-    } else if (!reduxState?.workspace?.project?.id) {
-      setMessage({ text: "Please create project first", type: "error" });
+    } else if (!ticketDetails?.form?.subcategory_id) {
+      setMessage({ text: "Please select sub category", type: "error" });
+      return false;
+    } else if (!ticketDetails?.form?.ticket_subject) {
+      setMessage({ text: "Please fill enter field", type: "error" });
       return false;
     } else {
       setMessage({ text: "", type: "success" });
       return true;
     }
 
-    let _server = { ...server };
-    _server.error = {
-      ..._server.error,
-      first_name: _server?.form?.first_name === "",
-    };
-
-    setServer(_server);
-
-    return !Object.values(_server?.error).some((field) => field);
   };
+
+  const hideNotification  = () =>{
+    setSubmitted(false);
+    setLoader(false);
+  }
+
+  const activitySubmit = (ticketNumber) =>{
+    let userId = Number(localStorage.getItem("userId"));
+    let ticketId = 'CW-'+userId+'-'+ticketNumber
+    if(image){
+      addNewActivity({type : 'image' ,query : '?ticketNumber='+ticketId+"&userId="+userId ,body  : image},hideNotification);
+    }
+
+    if(note){
+      addNewActivity({query : '?ticketNumber='+ticketId+"&userId="+userId ,body  : { activities:  [note] }},hideNotification);
+      setNote(null);
+    }
+
+    router.push("/ticket");
+   
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
     setSubmitted(true);
     if (validateServerDetails()) {
       setLoader(true);
-      serverRequest({
-        ...server?.form,
-        userId: localStorage.getItem("userId"),
-      });
+      createTicket({
+        ...ticketDetails?.form,
+        userId: Number(localStorage.getItem("userId")),
+      },  activitySubmit  );
     }
+  };
+
+  const subCategoriesHandler = (id) => {
+    if(id)
+     getSubCategories(id)
   };
 
   const changeHandler = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-    setServer({
-      ...server,
+console.log("value" ,value);
+    if(name === 'category_id'){
+      subCategoriesHandler(value);
+    }
+    setTicketDetails({
+      ...ticketDetails,
       form: {
-        ...server?.form,
-        server: { ...server?.form?.server, [name]: value },
+        ...ticketDetails?.form,
+        [name]: value 
       },
     });
   };
 
+  const onFileUpload = (event) => {
+    
+    // Create an object of formData
+    const formData = new FormData();
+    let file = event.target.files[0];
+
+    console.log("file" ,file)
+  
+    // Update the formData object
+    formData.append(
+      "image",
+      file,
+      file.name
+    );
+
+    setImage(formData)
+  
+  };
+
+  
+
   console.log("reduxState=====", reduxState);
+
+  console.log("ticketdetails=====", ticketDetails ,image);
+
+  console.log("subcategories=====", subCategories);
 
   return (
     <div>
@@ -163,20 +234,26 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
                           fullWidth
                           label="Title"
                           placeHolder="Enter the title"
+                          onChange={changeHandler}
+                          name="ticket_subject"
                         />
                       </GridItem>
                       <GridItem xs={6}>
                         <Select
-                          name="category"
-                          options={[]}
+                          name="category_id"
+                          options={categories}
                           label="Category"
+                          onChange={changeHandler}
+                          value={ticketDetails?.form?.category_id}
                         />
                       </GridItem>
                       <GridItem xs={6}>
                         <Select
-                          name="sub_category"
-                          options={[]}
+                          name="subcategory_id"
+                          options={subCategories}
                           label="Sub Category"
+                          onChange={changeHandler}
+                          value={ticketDetails?.form?.subcategory_id}
                         />
                       </GridItem>
                     </GridContainer>
@@ -190,7 +267,28 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
                 borderColor="#e7e9f0"
                 border={0.5}
               >
-                <legend>Secondary Information</legend>
+                <legend>File Upload Area</legend>
+                <GridContainer spacing={2}>
+                  <GridItem xs={12}>
+                    <GridContainer spacing={12}>
+                      <GridItem xs={12}>
+                        <label>Attachment</label> &nbsp;&nbsp;
+                        <input onChange={onFileUpload}  type="file" />
+                      </GridItem>
+                    
+                    </GridContainer>
+                  </GridItem>
+                </GridContainer>
+              </fieldset>
+            </GridItem>
+          
+            <GridItem xs={12}>
+              <fieldset
+                className={classes.boxModal}
+                borderColor="#e7e9f0"
+                border={0.5}
+              >
+                <legend>Note (optional)</legend>
                 <GridContainer spacing={2}>
                   <GridItem xs={12}>
                     <GridContainer spacing={3}>
@@ -200,20 +298,17 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
                           className={classes.textArea}
                           label="Note"
                           placeHolder="Enter note..."
+                          onChange={(e) => setNote({...note, type : 'TEXT' ,content : e.target.value})}
+                          name='note'
                         />
                       </GridItem>
-                      <GridItem xs={12}>
-                        <label>Attachment</label>
-                        <input type="file" />
-                      </GridItem>
-                    
                     </GridContainer>
                   </GridItem>
                 </GridContainer>
               </fieldset>
             </GridItem>
           
-           
+          
             <GridItem
                 xs={10}
                 align="right"
@@ -253,5 +348,5 @@ export default connect(
   (state) => {
     return { ...state };
   },
-  { serverRequest, getWorkSpaceDetails }
-)(Server);
+  { getCategories, getSubCategories ,createTicket ,addNewActivity}
+)(newTicket);

@@ -61,7 +61,7 @@ const dashboardRoutes = [
     rtlName: "إخطارات",
     icon: Notifications,
 
-    layout: "/dashboard",
+    layout: "/ticket",
   },
   {
     path: "/#",

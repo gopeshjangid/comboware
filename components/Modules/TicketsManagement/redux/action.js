@@ -15,14 +15,14 @@ export const errorHandler = (code) =>{
 }
 
 export const saveTicket = (data) =>{
-  return {type : SAVE_TICKET , payload : data}
+  return {type : SAVE_ALL_TICKETS , payload : data}
 }
 export const saveCategories = (data) =>{
   return {type : SAVE_CATEGORIES , payload : data}
 }
 
 export const saveSubCategories = (data) =>{
-  return {type : SAVE_SUBCATEGORIES , payload : data}
+  return {type : SAVE_CATEGORIES , payload : data}
 }
 
 export const saveTicketDetails = (data) =>{
@@ -51,10 +51,13 @@ export const updateTicket = (data) =>{
   return {type : UPDATE_TICKET , payload : data}
 }
 
-export const createTicket = (data) => (dispatch) =>{
+export const createTicket = (data ,uploadImage) => (dispatch) =>{
   dispatch(start({message : "Creating ticket..."}));
   Service.post(API.createTicket ,data).then(res=>{
     console.log("create ticket reponse" ,res?.response)
+    if(uploadImage){
+      uploadImage(res?.data?.data?.id);
+    }
     dispatch(saveTicket({data  : res?.data?.data , message : "Ticket has been created successfully."}));
   }).catch(err =>{
     console.log("api  err-- =>>>>>>>" ,err)
@@ -63,12 +66,23 @@ export const createTicket = (data) => (dispatch) =>{
 
 }
 
-export const addNewActivity = (data) => (dispatch ,getState) =>{
+export const addNewActivity = (data ,callBack) => (dispatch ,getState) =>{
   dispatch(start({loading : true}));
-  Service.post(API.addActivities ,data).then(res=>{
+  let headers = {};
+  if(data?.type === 'image'){
+    headers =   {
+      'accept': 'application/json',
+      'Accept-Language': 'en-US,en;q=0.8',
+      'Content-Type': `multipart/form-data;`
+    }
+  }
+
+  let jsonBody = data?.body;
+  Service.post(API.addActivities+data?.query ,jsonBody ,headers).then(res=>{
     let state = getState();
     console.log("add activity reponse" ,res?.response)
-    dispatch(saveTicket({ticket  :{...state?.ticket ,activities : [...state?.ticket?.activities ,res?.data?.data]}, message : "Uploaded the activity successfully."}));
+    callBack();
+    dispatch(saveTicket({ticketDetails  :{...state?.ticket?.ticketDetails ,activities : [...res?.data?.data]}, message : "Uploaded the activity successfully."}));
   }).catch(err =>{
     console.log("api  err-- =>>>>>>>" ,err)
     dispatch(failed({data  : null, error : errorHandler()}));
@@ -76,12 +90,12 @@ export const addNewActivity = (data) => (dispatch ,getState) =>{
 
 }
 
-export const updateTicketDetails = (data) => (dispatch ,getState) =>{
+export const updateTicketDetails = (data,query) => (dispatch ,getState) =>{
   dispatch(start({message : "Saving the ticket..."}));
-  Service.put(API.updateTicket ,data).then(res=>{
+  Service.put(API.updateTicket+query ,data).then(res=>{
     console.log("res" ,res?.response)
     let tickets = getState();
-    dispatch(saveTicket({ data  :  { ticketList : {...res?.data?.data } } , message : "Saved successfully."}));
+    dispatch(saveAllTickets({message: 'Updated Successfully.'}))
   }).catch(err =>{
     console.log("err code--" ,err?.code)
     dispatch(failed({data  : null, error : errorHandler()}));
@@ -89,11 +103,23 @@ export const updateTicketDetails = (data) => (dispatch ,getState) =>{
 
 }
 
-export const getTicketDetails = (qStr) => (dispatch) =>{
+export const getTicketDetails = (ticketId ,userId) => (dispatch) =>{
   dispatch(start({message : "Fetching ticket details..."}));
-  Service.get(API.getTicketDetails+qStr).then(res=>{
+  Service.get(API.getTicketDetails+`?ticketNumber=${ticketId}&userId=${userId}`).then(res=>{
     console.log("res" ,res?.response)
-    dispatch(saveTicketDetails({ ticket : {...res?.data?.data?.ticket }}));
+    dispatch(saveTicketDetails({ ticketDetails : {...res?.data?.data }}));
+  }).catch(err =>{
+    console.log("err--" ,err)
+    dispatch(failed({data  : null, error : errorHandler()}));
+  })
+
+}
+
+export const getAllTickets = (qStr) => (dispatch) =>{
+  dispatch(start({message : "Fetching ticket details..."}));
+  Service.get(API.getAllTickets+qStr).then(res=>{
+    console.log("res" ,res?.response)
+    dispatch(saveTicket({ ticketList : [...res?.data?.data]}));
   }).catch(err =>{
     console.log("err--" ,err)
     dispatch(failed({data  : null, error : errorHandler()}));
@@ -115,7 +141,7 @@ export const getCategories = (qStr) => (dispatch) =>{
 
 export const getSubCategories = (id) => (dispatch) =>{
   dispatch(start({loading : true}));
-  Service.get(API.getSubCategories+"?categoryId"+id).then(res=>{
+  Service.get(API.getSubCategories+"?categoryId="+id).then(res=>{
     console.log("res" ,res?.response)
     dispatch(saveSubCategories({ subCategories : [...res?.data?.data]}));
   }).catch(err =>{

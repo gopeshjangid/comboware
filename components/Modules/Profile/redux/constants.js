@@ -10,10 +10,13 @@ export const MESSAGE = {
   accountSuccess : 'Created success.'
 }
 
+export const SKILLS = ["BEGINNER" ,"INTERMEDIATE" ,"EXPERT"];
+
 
 export const API = {
   updateProfile : API_BASE_URL+'/v1/user/updateProfile',
   createDomain : API_BASE_URL+'/v1/workspace/createDomain',
   signUp : API_BASE_URL+'/v1/user/register',
-  getProfile : API_BASE_URL+'/v1/user/getProfile'
+  getProfile : API_BASE_URL+'/v1/user/getProfile',
+  updateSystemInfo : API_BASE_URL+'/v1/user/updateSystemData',
 }

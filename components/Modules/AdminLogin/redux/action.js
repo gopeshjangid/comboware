@@ -11,6 +11,7 @@ export const login = (data , router) => (dispatch) =>{
     dispatch(saveProfile({profile  : data?.data}));
     getProfile(data?.data?.id);
     localStorage.setItem('userId' ,data?.data?.id);
+    localStorage.setItem('userType' ,data?.data?.user_type);
     router.push("/dashboard")
   }).catch(err =>{
     console.log("err--" ,err)

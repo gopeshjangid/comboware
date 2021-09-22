@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -16,20 +16,23 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomSelect(props) {
   const classes = useStyles();
   const {options , label ,onChange ,value ,hideInnerLabel ,style}  = props;
-  
+  const [optionValue , setOptionValue] = useState('');
+
+  React.useEffect(()=>{
+    setOptionValue(value);
+  },[value])
   return (
     <div>
       <FormControl className={classes.select} variant="outlined">
-        {label && <InputLabel htmlFor="demo-customized-select-native">{label}</InputLabel>}
+        <InputLabel htmlFor="demo-customized-select-native">{label}</InputLabel>
         <Select
           {...props}
-          id="demo-customized-select-native"
-          value={value}
+          value={optionValue}
           onChange={(e) => onChange  ? onChange(e) : ''}
           className={classes.select}
           style={style}
-          label={label}
-        
+          labelId="demo-controlled-open-select-label"
+          id="demo-controlled-open-select"
         >
          
           {

@@ -20,6 +20,7 @@ export const signUp = (data ,router) => (dispatch) =>{
   Service.post(API.signUp ,data).then(res=>{
     console.log("login success" ,res)
     localStorage.setItem("userId" ,res?.data?.data?.id);
+    localStorage.setItem('userType' ,res?.data?.data?.user_type);
     dispatch(saveProfile({user  : res?.data?.data}));
     if(!res?.data?.data?.is_profile_setup){
       router.push("/dashboard/profile");
@@ -44,6 +45,8 @@ export const updateProfile = (data) => (dispatch) =>{
 
 }
 
+
+
 export const getProfile = (id) => (dispatch) =>{
   dispatch(requestInit({message : "Fetching the profile..."}));
   Service.get(API.getProfile+"?userId="+id).then(({data})=>{
@@ -53,6 +56,18 @@ export const getProfile = (id) => (dispatch) =>{
   }).catch(err =>{
     console.log("err--" ,err)
     //dispatch(requestStop({data  : null, message : err?.message}));
+  })
+
+}
+
+export const updateSystemInfo = (data) => (dispatch) =>{
+  dispatch(requestInit({message : "Updating the system info... "}));
+  Service.put(API.updateSystemInfo+data?.query ,data?.body).then(res=>{
+    dispatch(saveProfile({message : "System info updated successfully."}));
+    dispatch(getProfile(Number(localStorage.getItem('userId'))));
+  }).catch(err =>{
+    console.log("err--" ,err)
+    dispatch(requestStop({data  : null, message : err?.message}));
   })
 
 }

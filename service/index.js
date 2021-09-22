@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default{
+export default {
   get,
   put,
   post,
@@ -27,7 +27,7 @@ const getHeader = (header) => {
 
   return {
     "Content-Type": "application/json",
-    "Accept": "application/json"
+    Accept: "application/json",
   };
 };
 
@@ -37,28 +37,24 @@ const getHeader = (header) => {
 function get(url, header, hideHeaders) {
   const headers = getHeader(header);
 
-  return axios
-    .get(url, {
-      headers: headers,
-    });
+  return axios.get(url, {
+    headers: headers,
+  });
 }
 
 //create Call
-function put(url,body, header) {
+function put(url, body, header) {
   const headers = getHeader(header);
 
-  return axios
-    .put(url, body, { headers: headers });
+  return axios.put(url, body, { headers: headers });
 }
 //update Call
-function post(url, body,header) {
+function post(url, body, header) {
   const headers = getHeader(header);
   if (header) {
-    return axios
-      .post(url, body, { headers: headers });
+    return axios.post(url, body, { headers: {...headers ,...header} });
   }
-  return axios
-    .post(url, body, { headers: headers });
+  return axios.post(url, body, { headers: headers });
 }
 
 // Delete Call (prefixed function name with underscore because delete is a reserved word in javascript)
