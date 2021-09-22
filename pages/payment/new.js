@@ -1,7 +1,7 @@
 import React from "react";
 import Admin from "layouts/Admin.js";
 
-import NewPayment from "components/Modules/TicketsManagement/newPayment";
+import NewPayment from "components/Modules/Payment/newPayment";
 import Head from "next/head";
 
 

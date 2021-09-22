@@ -1,6 +1,6 @@
 import React from "react";
 import Admin from "layouts/Admin.js";
-import PaymentManagement from "components/Modules/TicketsManagement/paymentDetails";
+import PaymentManagement from "components/Modules/Payment/paymentDetails";
 import Head from "next/head";
 
 function TicketDetails() {
