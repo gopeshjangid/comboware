@@ -13,7 +13,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import {signUp} from  "../Profile/redux/action";
-
+import Snackbar from "components/Snackbar";
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 
@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   const classes = useStyles();
   const [loaded , setLoaded] = useState(false);
   const [loading , setLoading] = useState(false);
+  const [error , setError] = useState('');
   const router = useRouter();
   let reduxState = useSelector(state =>state?.user);
   let clientId = publicRuntimeConfig?.clientId;
@@ -86,14 +87,21 @@ const useStyles = makeStyles((theme) => ({
   };
 
   const responseGoogleFailed = (data) => {
-    console.log("failed data" ,data)
-
+    console.log("failed data" ,data )
+    if(data?.error === 'popup_closed_by_user'){
+      setError("Pop closed by you by default. please try in new window or clear all caches or allow cookies.");
+    }
   };
 
   console.log("sssssssssreduxState" ,reduxState)
 
   return (
     <Container component="main" maxWidth="xs">
+       <Snackbar
+        open={!!error}
+        type={"error"}
+        message={error}
+      />
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

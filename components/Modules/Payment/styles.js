@@ -1,0 +1,44 @@
+export default  {
+  firstBox: {
+      backgroundColor: '#1853F9',
+  },
+  firstLeftBox: {
+      width: '65%',
+      marginLeft: '20%'
+  },
+  firstLeftBoxHeading: {
+      color: 'white',
+      fontSize: '75px',
+      fontWeight: 'bold'
+  },
+  gridRow : {
+      display : 'flex',
+      justifyContent : 'space-between'
+  },
+  cardBox : {
+      height : 'auto',
+      minHeight : '100vh !important'
+    },
+  boxModal : {
+      padding : 30,
+      borderColor : '#e7e9f0',
+      borderStyle: 'solid',
+      paddingTop : 16,
+  },
+  textArea : {
+      minWidth : '100%',
+      height : '60px !important'
+  },
+  drawerBox : {
+      width :  '365px',
+      padding :20
+  },
+  activityBox : {
+      maxHeight : '212px',
+      overflowY : 'scroll'
+  },
+  system_image : {
+      height : 200,
+      width : 200
+  }  
+};

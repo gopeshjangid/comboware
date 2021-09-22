@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { AddCircleOutline } from "@material-ui/icons";
@@ -27,6 +27,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   const defaultSkill = { skill_name: "", skill_level: "" };
   const [skills, setSkills] = useState([defaultSkill]);
   const [message, setMessage] = useState("");
+  const imageRef =useRef();
   const [profile, setProfile] = useState({
     form: {
       first_name: "",
@@ -210,6 +211,14 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
     );
   };
 
+
+  const imageClick = () =>{
+   console.log("imageRef" ,imageRef)
+   if(imageRef.current){
+    imageRef.current.click();
+   }
+    
+  }
 
   return (
     <div>
@@ -470,18 +479,22 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     value={profile?.form?.company_phone }
                   />
                 </GridItem>
-                <GridItem container justify='space-between' xs={4}>
-                  <img src={profile?.form?.system_image}  alt='system image' />
+                <GridItem container justify='space-around' xs={6}>
+                   <label>System image</label>
+                  <img src={profile?.form?.system_image} width={300} height={250}  alt='system image' />
                 </GridItem>
-                <GridItem container justify='space-between' xs={4}>
-                  <label>Upload new system image</label>
-                  <TextField
-                    fullWidth
+                <GridItem container justify='space-between' xs={2}>
+                  <Button variant="contained" onClick={imageClick}>Upload New</Button>
+                  <input
+                    
                     onChange={onFileUpload}
                     name="system_image"
                     type="file"
+                    ref={imageRef}
+                    style={{display : 'none'}}
                   />
                 </GridItem>
+                
               </GridContainer>
             </CardBody>
           </Card>

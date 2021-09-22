@@ -6,6 +6,7 @@ import Notifications from "@material-ui/icons/ViewStream";
 import Images from "@material-ui/icons/PermMedia";
 import NetworkIcon from "@material-ui/icons/SettingsApplications";
 import ServerIcon from "@material-ui/icons/SettingsSystemDaydream";
+import PaymentOutlined from "@material-ui/icons/PaymentOutlined";
 import Category from "@material-ui/icons/Category";
 const dashboardRoutes = [
   {
@@ -62,6 +63,15 @@ const dashboardRoutes = [
     icon: Notifications,
 
     layout: "/ticket",
+  },
+  {
+    path: "/#",
+    name: "Payments",
+    accessors : ['USER' ,'ER' ,'ADMIN'],
+    rtlName: "إخطارات",
+    icon: PaymentOutlined,
+
+    layout: "/payment",
   },
   {
     path: "/#",

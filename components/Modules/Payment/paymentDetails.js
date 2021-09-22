@@ -589,7 +589,6 @@ function TicketDetails({
                     }))}
                     label="Ticket Status"
                     fullWidth
-                    disabled={true}
                     onChange={changeHandler}
                     value={ticketDetails?.form?.ticket?.ticket_status}
                     style={{width :'200px',marginBottom : '20px',marginTop :'12px'}}
