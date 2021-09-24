@@ -1,4 +1,5 @@
 import axios from "axios";
+const https = require("https");
 
 export default {
   get,
@@ -21,6 +22,11 @@ export const methodType = {
   post: "POST",
   delete: "DELETE",
 };
+
+const httpsAgent = new https.Agent({
+  requestCert: true,
+  rejectUnauthorized: false
+});
 
 const getHeader = (header) => {
   let idToken = localStorage.getItem("idToken");
@@ -54,7 +60,7 @@ function post(url, body, header) {
   if (header) {
     return axios.post(url, body, { headers: {...headers ,...header} });
   }
-  return axios.post(url, body, { headers: headers });
+  return axios.post(url, body, { headers: headers ,httpsAgent });
 }
 
 // Delete Call (prefixed function name with underscore because delete is a reserved word in javascript)
