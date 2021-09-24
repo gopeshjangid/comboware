@@ -12,5 +12,5 @@ export const MESSAGE = {
 
 
 export const API = {
-  signUp : API_BASE_URL+'/comboware-backend/public/api/register'
+  signUp : API_BASE_URL+'/v1/user/register'
 }

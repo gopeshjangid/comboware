@@ -18,7 +18,8 @@ module.exports = withPlugins([[withSass], [withImages], [withCSS]], {
     NEXT_PUBLIC_API_BASE_URL : process.env.NEXT_PUBLIC_API_BASE_URL,
     clientId: process.env.NODE_ENV === 'production' ? process.env.CLIENT_ID_PROD  : process.env.CLIENT_ID_DEV,
     API_BASE_URL: process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_PROD_API_BASE_URL  : process.env.NEXT_PUBLIC_API_BASE_URL,
-    ENV : process.env.NODE_ENV
+    ENV : process.env.NODE_ENV,
+    PAYPAL_CLIENT_ID : process.env.NODE_ENV === 'production' ? 'sb'  : 'sb'
   },
   env : {
     clientId: process.env.NODE_ENV === 'production' ? process.env.CLIENT_ID_PROD  : process.env.CLIENT_ID_DEV,

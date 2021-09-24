@@ -54,6 +54,10 @@ function AdminNavbarLinks({logout}) {
     logout("");
     router.push("/");
   }
+
+  const settingsClick = () =>{
+    router.push("/settings");
+  }
   return (
     <div>
       
@@ -180,8 +184,9 @@ function AdminNavbarLinks({logout}) {
                       Profile
                     </MenuItem>
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={settingsClick}
                       className={classes.dropdownItem}
+                      
                     >
                       Settings
                     </MenuItem>

@@ -3,7 +3,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box, TextareaAutosize , } from "@material-ui/core";
+import {
+  Typography,
+  IconButton,
+  Box,
+  TextareaAutosize,
+} from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -16,25 +21,35 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { serverRequest, getWorkSpaceDetails } from "../Workspace/redux/action";
 import { useRouter } from "next/dist/client/router";
-import {createTicket ,addNewActivity, getCategories , getSubCategories} from "./redux/action";
+import {
+  createTicket,
+  addNewActivity,
+  getCategories,
+  getSubCategories,
+} from "./redux/action";
+import PaypalPayment from  "./Paypal";
 
 
-function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories }) {
+
+function newTicket({
+  createTicket,
+  addNewActivity,
+  getCategories,
+  getSubCategories,
+}) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
   const [message, setMessage] = useState("");
   const [isSubmitted, setSubmitted] = useState(false);
   const [loader, setLoader] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [subCategories, setSubCategories] = useState([]);
-  const [image, setImage] = useState(null);
-  const [ticketDetails, setTicketDetails] = useState({
+  const [isLoaded, setLoaded] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState({
     form: {
       userId: reduxState?.user?.profile?.id,
-      category_id : '',
-      subcategory_id : '',
-      ticket_subject : ''
+      category_id: "",
+      subcategory_id: "",
+      ticket_subject: "",
     },
     error: {
       network_name: false,
@@ -43,7 +58,6 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
     },
   });
   const router = useRouter();
-  const [note, setNote] = useState(null);
 
   const manageMessage = () => {
     setTimeout(() => {
@@ -51,61 +65,39 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
     }, 4000);
   };
 
+  let amount = '10.00';
+
   useEffect(() => {
-    if (reduxState?.ticket?.message || reduxState?.ticket?.error) {
+    if (reduxState?.payment?.message || reduxState?.payment?.error) {
       setMessage({
-        text: reduxState?.ticket?.message || reduxState?.ticket?.error,
-        type: reduxState?.ticket?.error ? "error" : "success",
+        text: reduxState?.payment?.message || reduxState?.payment?.error,
+        type: reduxState?.payment?.error ? "error" : "success",
       });
       setSubmitted(true);
       manageMessage();
     }
     return () => {};
-  }, [reduxState?.ticket?.message]);
+  }, [reduxState?.payment?.message]);
 
   useEffect(() => {
-    setLoader(reduxState?.ticket?.loading);
+    setLoader(reduxState?.payment?.loading);
     return () => {};
-  }, [reduxState?.ticket?.loading]);
+  }, [reduxState?.payment?.loading]);
+
 
   useEffect(() => {
-    setCategories(reduxState?.ticket?.categories?.map(cat => {
-      return  {
-        ...cat,
-        label : cat?.category_name,
-        value : cat?.id
-      }
-    }));
-    return () => {};
-  }, [reduxState?.ticket?.categories]);
-
-  useEffect(() => {
-    setSubCategories([...reduxState?.ticket?.subCategories?.map(cat => {
-      return  {
-        ...cat,
-        label : cat?.subcategory_name,
-        value : cat?.id
-      }
-    })]);
-    return () => {};
-  }, [reduxState?.ticket?.subCategories]);
-
-  useEffect(() => {
-    if (!reduxState?.ticket?.server && isSubmitted) {
+    if (!reduxState?.payment?.server && isSubmitted) {
       getWorkSpaceDetails(Number(localStorage.getItem("userId")));
     } else {
-      setTicketDetails({
-       
-      });
+      setPaymentDetails({});
     }
     setSubmitted(false);
     return () => {};
-  }, [reduxState?.ticket?.server]);
+  }, [reduxState?.payment?.server]);
 
   useEffect(() => {
-    getCategories();
+    setLoaded(true)
   }, []);
-
 
   const validateServerDetails = () => {
     if (!ticketDetails?.form?.category_id) {
@@ -121,93 +113,27 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
       setMessage({ text: "", type: "success" });
       return true;
     }
-
   };
 
-  const hideNotification  = () =>{
+  const hideNotification = () => {
     setSubmitted(false);
     setLoader(false);
-  }
+  };
 
-  const activitySubmit = (ticketNumber) =>{
-    let userId = Number(localStorage.getItem("userId"));
-    let ticketId = 'CW-'+userId+'-'+ticketNumber
-    if(image){
-      addNewActivity({type : 'image' ,query : '?ticketNumber='+ticketId+"&userId="+userId ,body  : image},hideNotification);
-    }
 
-    if(note){
-      addNewActivity({query : '?ticketNumber='+ticketId+"&userId="+userId ,body  : { activities:  [note] }},hideNotification);
-      setNote(null);
-    }
-
-    router.push("/ticket");
+  const onSuccess = (data) => {
    
-  }
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    if (validateServerDetails()) {
-      setLoader(true);
-      createTicket({
-        ...ticketDetails?.form,
-        userId: Number(localStorage.getItem("userId")),
-      },  activitySubmit  );
-    }
   };
 
-  const subCategoriesHandler = (id) => {
-    if(id)
-     getSubCategories(id)
-  };
-
-  const changeHandler = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-console.log("value" ,value);
-    if(name === 'category_id'){
-      subCategoriesHandler(value);
-    }
-    setTicketDetails({
-      ...ticketDetails,
-      form: {
-        ...ticketDetails?.form,
-        [name]: value 
-      },
-    });
-  };
-
-  const onFileUpload = (event) => {
+  const onError = (data) => {
     
-    // Create an object of formData
-    const formData = new FormData();
-    let file = event.target.files[0];
-
-    console.log("file" ,file)
-  
-    // Update the formData object
-    formData.append(
-      "image",
-      file,
-      file.name
-    );
-
-    setImage(formData)
-  
   };
 
-  
-
-  console.log("reduxState=====", reduxState);
-
-  console.log("ticketdetails=====", ticketDetails ,image);
-
-  console.log("subcategories=====", subCategories);
+ 
 
   return (
     <div>
-      <Loader open={loader} />
+      <Loader open={loader } />
       <Snackbar
         open={isSubmitted}
         type={message?.type || "success"}
@@ -215,8 +141,9 @@ console.log("value" ,value);
       />
       <Card className={classes.cardBox}>
         <CardHeader>
-          <Typography variant="h5">Create New Ticket</Typography>
+          <Typography variant="h5">Create New Payment</Typography>
         </CardHeader>
+
         <CardBody>
           <GridContainer spacing={1}>
             <GridItem xs={12}>
@@ -225,118 +152,18 @@ console.log("value" ,value);
                 borderColor="#e7e9f0"
                 border={0.5}
               >
-                <legend>Primary Information</legend>
+                <legend>Payment Information</legend>
                 <GridContainer spacing={2}>
                   <GridItem xs={12}>
                     <GridContainer spacing={3}>
                       <GridItem xs={12}>
-                        <TextField
-                          fullWidth
-                          label="Title"
-                          placeHolder="Enter the title"
-                          onChange={changeHandler}
-                          name="ticket_subject"
-                        />
+                      {isLoaded && <PaypalPayment onError={onError} onSuccess={onSuccess} amount={amount} />}
                       </GridItem>
-                      <GridItem xs={6}>
-                        <Select
-                          name="category_id"
-                          options={categories}
-                          label="Category"
-                          onChange={changeHandler}
-                          value={ticketDetails?.form?.category_id}
-                        />
-                      </GridItem>
-                      <GridItem xs={6}>
-                        <Select
-                          name="subcategory_id"
-                          options={subCategories}
-                          label="Sub Category"
-                          onChange={changeHandler}
-                          value={ticketDetails?.form?.subcategory_id}
-                        />
-                      </GridItem>
-                    </GridContainer>
+                      </GridContainer>
                   </GridItem>
                 </GridContainer>
               </fieldset>
             </GridItem>
-            <GridItem xs={12}>
-              <fieldset
-                className={classes.boxModal}
-                borderColor="#e7e9f0"
-                border={0.5}
-              >
-                <legend>File Upload Area</legend>
-                <GridContainer spacing={2}>
-                  <GridItem xs={12}>
-                    <GridContainer spacing={12}>
-                      <GridItem xs={12}>
-                        <label>Attachment</label> &nbsp;&nbsp;
-                        <input onChange={onFileUpload}  type="file" />
-                      </GridItem>
-                    
-                    </GridContainer>
-                  </GridItem>
-                </GridContainer>
-              </fieldset>
-            </GridItem>
-          
-            <GridItem xs={12}>
-              <fieldset
-                className={classes.boxModal}
-                borderColor="#e7e9f0"
-                border={0.5}
-              >
-                <legend>Note (optional)</legend>
-                <GridContainer spacing={2}>
-                  <GridItem xs={12}>
-                    <GridContainer spacing={3}>
-                      <GridItem xs={12}>
-                        <TextareaAutosize
-                          minRows={5}
-                          className={classes.textArea}
-                          label="Note"
-                          placeHolder="Enter note..."
-                          onChange={(e) => setNote({...note, type : 'TEXT' ,content : e.target.value})}
-                          name='note'
-                        />
-                      </GridItem>
-                    </GridContainer>
-                  </GridItem>
-                </GridContainer>
-              </fieldset>
-            </GridItem>
-          
-          
-            <GridItem
-                xs={10}
-                align="right"
-              >
-                <Button
-                  type="button"
-                  variant="outlined"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={() =>router.push("/ticket")}
-                >
-                  Cancel
-                </Button>
-              </GridItem>
-              <GridItem
-                xs={2}
-                align="center"
-              >
-                <Button
-                  type="button"
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={submitHandler}
-                >
-                  Create
-                </Button>
-              </GridItem>
           </GridContainer>
         </CardBody>
       </Card>
@@ -348,5 +175,5 @@ export default connect(
   (state) => {
     return { ...state };
   },
-  { getCategories, getSubCategories ,createTicket ,addNewActivity}
+  { getCategories, getSubCategories, createTicket, addNewActivity }
 )(newTicket);

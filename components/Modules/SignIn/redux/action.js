@@ -17,12 +17,16 @@ const signUpFailed = (data) =>{
 export const signUp = (data ,router) => (dispatch) =>{
   dispatch(signUpRequest({message : MESSAGE?.creatingAccount}));
   Service.post(API.signUp ,data).then(res=>{
-
-    console.log("success==",res)
-    dispatch(signUpSuccess({data  : res?.data, message : MESSAGE?.accountSuccess}));
+    
+    dispatch(signUpSuccess({data  : res?.data, message : "Logged in successfully."}));
+    if(res?.data?.data?.is_profile_setup){
+      router.push("/dashboard")
+    } else {
+      router.push("/dashboard/profile")
+    }
   }).catch(err =>{
-    console.log("err--" ,err)
-    dispatch(signUpFailed({data  : null, message : err?.message}));
+    console.log("err===9098--" ,err?.response);
+    dispatch(signUpFailed({data  : null, error : err?.response?.data?.message}));
   })
 
 }
