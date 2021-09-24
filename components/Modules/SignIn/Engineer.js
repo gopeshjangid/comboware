@@ -12,10 +12,14 @@ import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {signUp} from  "../Profile/redux/action";
+import {signUp} from  "./redux/action";
 import Snackbar from "components/Snackbar";
 import getConfig from "next/config";
+import { Button } from "@material-ui/core";
 const { publicRuntimeConfig } = getConfig();
+import GridItem from "components/Grid/GridItem.js";
+import GridContainer from "components/Grid/GridContainer.js";
+import TextField from "../../CustomInput/TextField";
 
 function Copyright() {
   return (
@@ -54,10 +58,18 @@ const useStyles = makeStyles((theme) => ({
   const classes = useStyles();
   const [loaded , setLoaded] = useState(false);
   const [loading , setLoading] = useState(false);
-  const router = useRouter();
-  let reduxState = useSelector(state =>state?.user);
-  let clientId = publicRuntimeConfig?.clientId;
   const [error , setError] = useState('');
+  const [message , setMessage] = useState('');
+  const [emailError , setEmailError] = useState(false);
+  const router = useRouter();
+  let reduxState = useSelector(state =>state);
+  let clientId = publicRuntimeConfig?.clientId;
+
+  console.log("reduxState" ,reduxState)
+  const [form , setForm] = useState({
+    email : '',
+    password : ''
+  });
   useEffect(() => {
     setLoaded(true);
     return () => {
@@ -65,42 +77,105 @@ const useStyles = makeStyles((theme) => ({
     }
   }, [])
 
+  const manageMessage = () =>{
+    setTimeout(()=>{
+      setError(false);
+    },4000)
+  }
+
   useEffect(() => {
-    setLoading(reduxState?.loading);
+    setLoading(reduxState?.login?.loading);
     return () => {
       
     }
-  }, [reduxState])
+  }, [reduxState?.login?.loading])
+  useEffect(() => {
+    manageMessage();
+    setMessage(reduxState?.login?.message);
+    return () => {
+      
+    }
+  }, [reduxState?.login?.message])
 
-  console.log("rebvironment variable--------" ,process.env);
+  useEffect(() => {
+    manageMessage();
+    setError(reduxState?.login?.error);
+    return () => {
+      
+    }
+  }, [reduxState?.login?.error])
+
+  function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 
   const responseGoogle = async (data) => {
     console.log("success data" ,data)
     let postData = {
       email : data?.profileObj?.email,
       first_name : data?.profileObj?.name,
+      user_type : 'USER'
+    }
+    props?.signUp(postData ,router);
+
+  };
+
+  const validateForm = () =>{
+
+    if(form?.email === ''){
+      return false;
+    } else if(form?.password === ''){
+      return false;
+    }else if( !validateEmail(form?.email)){
+      setEmailError(true);
+      return false;
+    } else {
+      setEmailError(false);
+      return true;
+    }
+  }
+
+  const loginHandler = async (data) => {
+
+    if(validateForm()){
+      setLoading(true);
+    let postData = {
+      email : form?.email,
+      password : btoa(form?.password),
+      first_name : '',
       user_type : 'ER'
     }
     props?.signUp(postData ,router);
+  } else {
+     setError("Please enter email and password.")
+  }
 
   };
 
   const responseGoogleFailed = (data) => {
     console.log("failed data" ,data )
     if(data?.error === 'popup_closed_by_user'){
-      setError("Popup closed by you. please try in new window or clear all caches and allow cookies.");
+      setError("Pop closed by you by default. please try in new window or clear all caches or allow cookies.");
     }
   };
+
+  const changeHandler = (e) =>{
+   let name = e.target.name;
+   let value = e.target.value;
+
+    setForm({...form ,[name] :value});
+  }
 
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Snackbar
-        open={!!error}
-        type={"error"}
-        message={error}
+       <Snackbar
+        open={error || message}
+        type={message ? "success" : "error"}
+        message={error || message}
       />
+      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -123,13 +198,44 @@ const useStyles = makeStyles((theme) => ({
         </Box>  
       </div>
       <Box mt={5}>
-        <Grid container justify="center">
+        <GridContainer spacing={3} alignContent="space-between" justifyContent="space-between">
+              <GridItem xs={12}>
+                  <TextField
+                    fullWidth
+                    onChange={changeHandler}
+                    name="email"
+                    type="email"
+                    autocomplete="off"
+                    label="Email"
+                    required
+                    error={emailError}
+                    helperText={emailError && "Invalid email."}
+                  />
+                </GridItem>
+                <GridItem xs={12}>
+                  <TextField
+                    fullWidth
+                    onChange={changeHandler}
+                    name="password"
+                    type="password"
+                    inputProps={{maxLength : 10}}
+                    label="Password"
+                    required
+                  />
+                </GridItem>
+
+                <GridItem xs={12}>
+                    <Button onClick={loginHandler} fullWidth color="primary"
+                      variant="contained">
+                        Login
+                    </Button>
+                </GridItem>
             <Grid item>
               <Link href="/" variant="body2">
                 {"Back to home"}
               </Link>
             </Grid>
-          </Grid>
+          </GridContainer>
       </Box>
       <Box mt={8}>
         <Copyright />
