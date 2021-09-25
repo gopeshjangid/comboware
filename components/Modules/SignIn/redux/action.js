@@ -1,7 +1,7 @@
 
 import {SIGNUP_REQUEST ,SIGNUP_FAILED , SIGNUP_SUCCESS,MESSAGE,API} from  "./constants";
 import Service from  "../../../../service/index";
-
+import {saveProfile} from  "../Profile/redux/action";
 
 const signUpRequest = (data) =>{
   return {type : SIGNUP_REQUEST , payload : data}
@@ -17,7 +17,9 @@ const signUpFailed = (data) =>{
 export const signUp = (data ,router) => (dispatch) =>{
   dispatch(signUpRequest({message : MESSAGE?.creatingAccount}));
   Service.post(API.signUp ,data).then(res=>{
-    
+    localStorage.setItem("userId" ,res?.data?.data?.id);
+    localStorage.setItem('userType' ,res?.data?.data?.user_type);
+    dispatch(saveProfile({user  : res?.data?.data}));
     dispatch(signUpSuccess({data  : res?.data, message : "Logged in successfully."}));
     if(res?.data?.data?.is_profile_setup){
       router.push("/dashboard")
