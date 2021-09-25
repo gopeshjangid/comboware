@@ -24,7 +24,7 @@ export const methodType = {
 };
 
 const httpsAgent = new https.Agent({
-  requestCert: true,
+  requestCert: false,
   rejectUnauthorized: false
 });
 
@@ -44,7 +44,7 @@ function get(url, header, hideHeaders) {
   const headers = getHeader(header);
 
   return axios.get(url, {
-    headers: headers,
+    headers: headers,httpsAgent
   });
 }
 
@@ -52,13 +52,13 @@ function get(url, header, hideHeaders) {
 function put(url, body, header) {
   const headers = getHeader(header);
 
-  return axios.put(url, body, { headers: headers });
+  return axios.put(url, body, { headers: headers ,httpsAgent});
 }
 //update Call
 function post(url, body, header) {
   const headers = getHeader(header);
   if (header) {
-    return axios.post(url, body, { headers: {...headers ,...header} });
+    return axios.post(url, body, { headers: {...headers ,...header ,httpsAgent} });
   }
   return axios.post(url, body, { headers: headers ,httpsAgent });
 }
@@ -70,6 +70,7 @@ function _delete(url, header, body) {
   return axios
     .delete(url, {
       headers: headers,
+      httpsAgent,
       data: body,
     })
     .then(handleResponse)

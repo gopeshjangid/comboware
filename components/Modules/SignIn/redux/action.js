@@ -1,7 +1,7 @@
 
 import {SIGNUP_REQUEST ,SIGNUP_FAILED , SIGNUP_SUCCESS,MESSAGE,API} from  "./constants";
 import Service from  "../../../../service/index";
-import {saveProfile} from  "../Profile/redux/action";
+import {saveProfile} from  "../../Profile/redux/action";
 
 const signUpRequest = (data) =>{
   return {type : SIGNUP_REQUEST , payload : data}
