@@ -24,7 +24,6 @@ export const methodType = {
 };
 
 const httpsAgent = new https.Agent({
-  requestCert: false,
   rejectUnauthorized: false
 });
 
