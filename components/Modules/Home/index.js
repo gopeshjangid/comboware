@@ -298,7 +298,7 @@ export default function Homes(props) {
                     </Typography>
                 </Grid>
             </Grid>
-            <ChatSystem />
+            {/* <ChatSystem /> */}
             <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center" >
                 <Grid container direction='column' xs={7} sm={6} >
                     <Box style={{ gridTemplateColumns: 'auto auto', display: 'grid', marginLeft: '100px' }}>
