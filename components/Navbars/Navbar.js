@@ -20,19 +20,27 @@ import styles from "assets/jss/nextjs-material-dashboard/components/headerStyle.
 export default function Header(props) {
   // used for checking current route
   const router = useRouter();
+  const [title , setTitle] = React.useState("");
   // create styles for this component
   const useStyles = makeStyles(styles);
   const classes = useStyles();
-  function makeBrand() {
-    var name = "Comboware Dashboard";
-    props.routes.map((prop) => {
-      if (router.route.indexOf(prop.layout + prop.path) !== -1) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
-      }
-      return null;
-    });
-    return name;
+  const getTitle = () =>{
+
+    if(localStorage.getItem("userType") === 'ADMIN'){
+      return "Admin Dashboard"
+    } else if(localStorage.getItem("userType") === 'ADMIN'){
+      return "Engineer Dashboard"
+    } else if(localStorage.getItem("userType") === 'CR'){
+      return "Customer representative Dashboard"
+    } else {
+      return "Customer Dashboard"
+    }
   }
+
+  React.useEffect(()=>{
+    getTitle();
+  },[])
+  
   const { color } = props;
   const appBarClasses = classNames({
     [" " + classes[color]]: color,
@@ -43,7 +51,7 @@ export default function Header(props) {
         <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button color="transparent" href="#" className={classes.title}>
-            {makeBrand()}
+            {title}
           </Button>
         </div>
         <Hidden smDown implementation="css">

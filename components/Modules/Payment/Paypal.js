@@ -17,12 +17,12 @@ export const PAYPAL_CLIENT_ID = publicRuntimeConfig?.PAYPAL_CLIENT_ID;
 
 
 function Paypal(props) {
-
   const PAYMENT_CURRENCY = "USD";
   const amount = {
     currency_code: PAYMENT_CURRENCY,
-    value: props?.amount || "10",
+    value: props?.amount,
   };
+
 
   function createOrder(data, actions) {
     // throw new Error("force the createOrder callback to fail");
@@ -50,10 +50,29 @@ function Paypal(props) {
   }
  
   function onApprove(data, actions) {
-    console.log("success data", data);
-    if(props?.onSuccess){
-      props.onSuccess(data);
-    }
+   
+    return actions.order.capture().then(res =>{
+      console.log("final success" ,res ,"props" ,props);
+        let payload = {
+          payment_date : res?.create_time,
+          amount : res?.purchase_units[0]?.amount?.value,
+          payment_status : 'COMPLETED',
+          reference_id : res?.id,
+          userId : Number(localStorage.getItem("userId")),
+          payer_id : res?.payer?.payer_id,
+          payment_description : '',
+          payment_code : '',
+          payment_token : ''
+        }
+       if(props?.onSuccess){
+        props?.onSuccess(payload)
+       }
+    }).catch(error =>{
+      if(props?.onError){
+        props.onError(error);
+      }
+    });
+    
     
   }
   function onError(err) {
@@ -69,7 +88,7 @@ function Paypal(props) {
     <div>
       <PayPalScriptProvider
         options={{
-          "client-id": 'AZ9j0TX_IMLD3N55EUbEQWDMKZuheJYl_Cv6-YQdoo6n_A_HpYA1O4MBWvQql5fYu-2F1vSuSMcnekoH',
+          "client-id": PAYPAL_CLIENT_ID,
           components: "buttons",
           intent: "capture",
         }}

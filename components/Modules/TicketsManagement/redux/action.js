@@ -105,7 +105,7 @@ export const updateTicketDetails = (data,query) => (dispatch ,getState) =>{
 
 export const getTicketDetails = (ticketId ,userId) => (dispatch) =>{
   dispatch(start({message : "Fetching ticket details..."}));
-  Service.get(API.getTicketDetails+`?ticketNumber=${ticketId}&userId=${userId}`).then(res=>{
+  Service.get(API.getTicketDetails+`?ticketNumber=${ticketId}&userId=${userId}&userType=${localStorage.getItem("userType")}`).then(res=>{
     console.log("res" ,res?.response)
     dispatch(saveTicketDetails({ ticketDetails : {...res?.data?.data }}));
   }).catch(err =>{
@@ -134,7 +134,7 @@ export const getCategories = (qStr) => (dispatch) =>{
     dispatch(saveCategories({ categories : [...res?.data?.data]}));
   }).catch(err =>{
     console.log("err--" ,err)
-    dispatch(failed({data  : null, error : errorHandler()}));
+    dispatch(failed({ error : errorHandler()}));
   })
 
 }
@@ -146,8 +146,21 @@ export const getSubCategories = (id) => (dispatch) =>{
     dispatch(saveSubCategories({ subCategories : [...res?.data?.data]}));
   }).catch(err =>{
     console.log("err--" ,err)
-    dispatch(failed({data  : null, error : errorHandler()}));
+    dispatch(failed({error : errorHandler()}));
   })
 
 }
+
+export const AssignTicket = (data) => (dispatch) =>{
+  dispatch(start({message : "Assigning ticket..."}));
+  Service.post(API.assignTicket ,data).then(res=>{
+    dispatch(saveTicket({message : "Ticket has been assigned."}));
+  }).catch(err =>{
+    console.log("api  err-- =>>>>>>>" ,err ,err.response)
+    dispatch(failed({error : errorHandler()}));
+  })
+
+}
+
+
 

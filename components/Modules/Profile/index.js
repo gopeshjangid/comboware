@@ -397,7 +397,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
-                    disabled={true}
+                    disabled={profile?.form?.is_profile_setup}
                     helperText={
                       profile?.form?.user_name?.error &&
                       "Please enter user name"

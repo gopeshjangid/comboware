@@ -19,4 +19,5 @@ export const API = {
   signUp : API_BASE_URL+'/v1/user/register',
   getProfile : API_BASE_URL+'/v1/user/getProfile',
   updateSystemInfo : API_BASE_URL+'/v1/user/updateSystemData',
+  getAllUsers : API_BASE_URL+"/v1/user/getAllUsers"
 }

@@ -1,6 +1,7 @@
-import { START, FAILED, SAVE_RESOURCE } from "./constants";
+import { START, STOP, SAVE_SUPPORT } from "./constants";
 const initialState = {
-  resources : [],
+  latestMessage: null,
+  messageList : [],
   loading : false,
   message : '',
   error : ''
@@ -17,17 +18,16 @@ function reducer(state = initialState, action) {
       };
       break;
 
-    case FAILED:
+    case STOP:
       return {
         ...state,
         loading: false,
         message : '',
-        error : action.payload?.error,
-        ...action.payload
+        error : action.payload?.error
       };
       break;
 
-    case SAVE_RESOURCE:
+    case SAVE_SUPPORT:
 
       return {
         ...state,

@@ -9,7 +9,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-
 import routes from "routes.js";
 
 import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
@@ -76,7 +75,12 @@ let ps;
 
 
   React.useEffect(()=>{
-    getProfile(localStorage.getItem("userId"));
+    
+    if(localStorage.getItem("userId") === '' || !localStorage.getItem("userId")){
+       router.push("/");
+    } else {
+      getProfile(localStorage.getItem("userId"));
+    }
   },[])
   return (
     <div className={classes.wrapper}>

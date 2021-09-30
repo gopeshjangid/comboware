@@ -39,6 +39,7 @@ function AdminNavbarLinks({logout}) {
     setOpenNotification(null);
   };
   const handleClickProfile = (event) => {
+    event.preventDefault();
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
     } else {
@@ -47,15 +48,23 @@ function AdminNavbarLinks({logout}) {
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
-    router.push("/dashboard/profile")
   };
+
+  const openProfileDashboard = (e) =>
+  {
+    e.preventDefault();
+    router.push("/dashboard/profile")
+  }
 
   const Logout = () =>{
     logout("");
     router.push("/");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userType");
   }
 
-  const settingsClick = () =>{
+  const settingsClick = (e) =>{
+    e.preventDefault();
     router.push("/settings");
   }
   return (
@@ -178,7 +187,7 @@ function AdminNavbarLinks({logout}) {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={openProfileDashboard}
                       className={classes.dropdownItem}
                     >
                       Profile

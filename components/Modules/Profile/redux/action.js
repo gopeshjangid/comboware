@@ -79,3 +79,17 @@ export const logoutUser = (data) => (dispatch) =>{
 
 }
 
+
+
+
+export const usersList = (qStr) => (dispatch) =>{
+  dispatch(requestInit({loading : true}));
+  Service.get(API.getAllUsers+qStr).then(res=>{
+    dispatch(saveProfile({ usersList : [...res?.data?.data]}));
+  }).catch(err =>{
+    console.log("err--" ,err)
+    dispatch(requestStop({data  : null, error : "Something went wrong. please try again"}));
+  })
+
+}
+

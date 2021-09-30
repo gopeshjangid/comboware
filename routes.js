@@ -7,6 +7,7 @@ import Images from "@material-ui/icons/PermMedia";
 import NetworkIcon from "@material-ui/icons/SettingsApplications";
 import ServerIcon from "@material-ui/icons/SettingsSystemDaydream";
 import PaymentOutlined from "@material-ui/icons/PaymentOutlined";
+import Support from "@material-ui/icons/ContactSupport";
 import Category from "@material-ui/icons/Category";
 const dashboardRoutes = [
   {
@@ -18,34 +19,34 @@ const dashboardRoutes = [
     accessors : ['USER' ,'ER' ,'ADMIN']
   },
   {
-    path: "/workspace",
+    path: "/servers",
     name: "Workspace",
     icon: LocationOn,
-    layout: "/index",
+    layout: "/workspace",
     accessors : ['USER' ,'ER'],
-    subItems : [
+    // subItems : [
       
-      {
-        path : "/workspace/images",
-        icon : Images,
-        name : 'Images'
-      },
-      {
-        path : "/workspace/networks",
-        icon : NetworkIcon,
-        name : 'Networks'
-      },
-      {
-        path : "/dashboard/workspace/sizetypes",
-        icon : Category,
-        name : 'Size Types'
-      },
-      {
-        path : "/workspace/servers",
-        icon : ServerIcon,
-        name : 'Virtual Servers'
-      }
-    ]
+    //   {
+    //     path : "/workspace/images",
+    //     icon : Images,
+    //     name : 'Images'
+    //   },
+    //   {
+    //     path : "/workspace/networks",
+    //     icon : NetworkIcon,
+    //     name : 'Networks'
+    //   },
+    //   {
+    //     path : "/dashboard/workspace/sizetypes",
+    //     icon : Category,
+    //     name : 'Size Types'
+    //   },
+    //   {
+    //     path : "/workspace/servers",
+    //     icon : ServerIcon,
+    //     name : 'Virtual Servers'
+    //   }
+    // ]
   },
   {
     path: "/requests",
@@ -74,10 +75,18 @@ const dashboardRoutes = [
     layout: "/payment",
   },
   {
-    path: "/#",
+    path: "/",
     name: "Settings",
+    accessors : ['ADMIN'],
     icon: Setting,
-    layout: "/dashboard",
+    layout: "/settings",
+  },
+  {
+    path: "/",
+    name: "Support",
+    accessors : ['ADMIN'],
+    icon: Support,
+    layout: "/support",
   },
 ];
 

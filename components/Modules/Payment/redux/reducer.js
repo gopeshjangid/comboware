@@ -1,11 +1,9 @@
-import {SAVE_CATEGORIES, SAVE_SUBCATEGORIES,SAVE_TICKET_DETAILS, SAVE_TICKET,UPDATE_TICKET,ADD_ACTIVITY,SAVE_ALL_TICKETS,TICKET_FAILED,TICKET_START,MESSAGE,API} from  "./constants";
+import {SAVE_PAYMENT,PAYMENT_FAILED,PAYMENT_START,MESSAGE,API} from  "./constants";
 
 const initialState = {
-  ticketDetails:null,
-  ticketList : [],
-  activities : [],
-  categories : [],
-  subCategories: [],
+  paymentDetails:null,
+  paymentList : [],
+  billing : null,
   loading: false,
   message: "",
   error : ''
@@ -13,7 +11,7 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case SAVE_TICKET_DETAILS:
+    case SAVE_PAYMENT:
       return {
         ...state,
         ...action.payload,
@@ -24,17 +22,7 @@ function reducer(state = initialState, action) {
 
       break;
 
-      case SAVE_ALL_TICKETS:
-        return {
-          ...state,
-          loading : false,
-          error: '',
-          ...action?.payload
-        };
-  
-        break;
-
-    case TICKET_START:
+    case PAYMENT_START:
       return {
         ...state,
         ...action.payload,
@@ -44,19 +32,7 @@ function reducer(state = initialState, action) {
 
       break;
 
-      case SAVE_CATEGORIES:
-      return {
-        ...state,
-        ...action.payload,
-        error : '',
-        loading: false,
-      };
-
-      break;
-
-      
-
-    case TICKET_FAILED:
+    case PAYMENT_FAILED:
       return {
         ...state,
         ...action.payload,

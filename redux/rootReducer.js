@@ -4,10 +4,14 @@ import workspace from  "../components/Modules/Workspace/redux/reducer";
 import ticket from  "../components/Modules/TicketsManagement/redux/reducer";
 import payment from  "../components/Modules/Payment/redux/reducer";
 import login from  "../components/Modules/SignIn/redux/reducer";
+import settings from  "../components/Modules/Settings/redux/reducer";
+import support from  "../components/Modules/Support/redux/reducer";
 export default  combineReducers({
   user,
   workspace,
   ticket,
   payment,
-  login
+  login,
+  settings,
+  support
 });

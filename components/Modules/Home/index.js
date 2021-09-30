@@ -1,11 +1,11 @@
 import { Box, Button, Card, CardContent, CardHeader, Link, Grid, Typography, Avatar, TextField } from '@material-ui/core';
-import { ClassRounded, Home } from '@material-ui/icons';
+//import { ClassRounded, Home } from '@material-ui/icons';
 import React from 'react';
 import Layout from '../Layout';
 import useStyle from './style';
 import homeImg from "assets/img/home1.png";
 import { Airplay, Work, Lock, AccountCircle, Contacts, MailOutline, Call } from '@material-ui/icons';
-
+import Dynamic from  "next/dynamic";
 import { PrimaryButton, SecondaryButton, WhiteButton } from '../Common/button';
 import Testimonal from './Testimonal';
 import Banner1 from 'assets/img/6.png';
@@ -18,18 +18,13 @@ import Banner7 from 'assets/img/7.png';
 import Banner8 from 'assets/img/8.png';
 import Banner9 from 'assets/img/9.png';
 import Banner10 from 'assets/img/10.png';
-
-import { useSelector } from "react-redux";
-
+const ChatSystem = Dynamic(() => import("../../Chat"),{ssr : false})
 const bannerImaeges = [
     Banner1, Banner2, Banner3, Banner4, Banner5, Banner6
 ]
 export default function Homes(props) {
     const classes = useStyle();
 
-    const state = useSelector(state => state);
-
-    console.log("redux state", state)
     return (
         <Layout>
             <Grid  container item className={classes.firstBox} justifyContent="center" direction='row' alignItems="center">
@@ -303,6 +298,7 @@ export default function Homes(props) {
                     </Typography>
                 </Grid>
             </Grid>
+            <ChatSystem />
             <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center" >
                 <Grid container direction='column' xs={7} sm={6} >
                     <Box style={{ gridTemplateColumns: 'auto auto', display: 'grid', marginLeft: '100px' }}>

@@ -69,5 +69,5 @@ export const API = {
   getCategories:  API_BASE_URL+"/v1/ticket/getCategories",
   getSubCategories:  API_BASE_URL+"/v1/ticket/getSubCategories",
   addActivities : API_BASE_URL+"/v1/ticket/addActivities",
-  
+  assignTicket : API_BASE_URL+"/v1/ticket/assignTicket",
 }

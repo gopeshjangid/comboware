@@ -36,7 +36,7 @@ export default function CustomSelect(props) {
         >
          
           {
-            options && options.length ? options?.map(option =><MenuItem value={option.value}>{option.label}</MenuItem>) : <MenuItem value="">{"No found !"}</MenuItem>
+            options && options.length ? options?.map(option =><MenuItem value={option.value}>{option.label}</MenuItem>) : <MenuItem value="">{"No record found !"}</MenuItem>
           }
         </Select>
       </FormControl>

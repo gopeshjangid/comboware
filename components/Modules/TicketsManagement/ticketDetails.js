@@ -39,9 +39,11 @@ import {
   updateTicketDetails,
   getCategories,
   getSubCategories,
+  AssignTicket
 } from "./redux/action";
 import {
- updateSystemInfo
+ updateSystemInfo,
+ usersList
 } from "../Profile/redux/action";
 import { useRouter } from "next/dist/client/router";
 import { TICKET_STATUS_LIST, REPAIR_STATUS_LIST } from "./redux/constants";
@@ -52,7 +54,9 @@ function TicketDetails({
   addNewActivity,
   getCategories,
   getSubCategories,
-  updateSystemInfo
+  updateSystemInfo,
+  usersList,
+  AssignTicket
 }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -65,6 +69,7 @@ function TicketDetails({
   const [selectedSubCat, setSelectedSubCat] = useState(null);
   const [selectedCat, setSelectedCat] = useState(null);
   const [openModal, setModal] = useState(false);
+  const [assignee, setAssignee] = useState(null);
   const [note, setNote] = useState(null);
   const [systemImage, setSystemImage] = useState(null);
   const [ticketDetails, setTicketDetails] = useState({
@@ -83,7 +88,7 @@ function TicketDetails({
     },
   });
   const router = useRouter();
-
+  const userType = reduxState?.user?.profile?.user_type;
   const fileRef = useRef();
   console.log("reduxState", reduxState);
   const manageMessage = () => {
@@ -166,6 +171,10 @@ function TicketDetails({
       setSubmitted(true);
       getTicketDetails(ticketId, Number(localStorage.getItem("userId")));
       getCategories();
+    }
+
+    if(userType === 'ADMIN' || localStorage.getItem("userType") === 'ADMIN'){
+      usersList("?userType=ER");
     }
   }, []);
 
@@ -298,6 +307,13 @@ function TicketDetails({
     setSystemImage(formData)
   }
 
+  const assigneeHandler = (e) =>{
+
+    console.log("eee" ,e)
+    setAssignee(e.target.value)
+    AssignTicket({ticket_number : ticketDetails?.form?.ticket?.ticket_number , userId : e.target.value});
+  }
+
   const submitSystemInfo = () => {
     
     setSubmitted(true);
@@ -314,7 +330,7 @@ function TicketDetails({
   };
 
   console.log("ticketDetails=====", ticketDetails);
-  console.log("note=====", note);
+  console.log("userType=====", userType);
   const {
     form: { activities },
   } = ticketDetails;
@@ -509,7 +525,7 @@ function TicketDetails({
                           </Typography>
                         </GridItem>
                         <GridItem xs={5}>
-                          <img src={ticketDetails?.form?.user?.system_image} alt='system image'  />
+                          <img width={200} height={200} src={ticketDetails?.form?.user?.system_image} alt='system image'  />
                         </GridItem>
                         {
                           ticketDetails?.form?.ticket?.can_edit &&  <GridItem xs={2}>
@@ -607,6 +623,21 @@ function TicketDetails({
                     value={ticketDetails?.form?.ticket?.repair_status}
                     style={{width :'200px'}}
                   ></Select>
+                    &nbsp;
+                    {userType === 'ADMIN' && 
+                  <Select
+                    name="assignee"
+                    options={reduxState?.user?.usersList.filter(user=> user?.id !== ticketDetails?.form?.ticket?.user_id).map((user) => ({
+                      label: user?.first_name+" "+(user?.last_name ||''),
+                      value: user?.id,
+                    }))}
+                    label="Assignee Engineer"
+                    fullWidth
+                    onChange={assigneeHandler}
+                    value={assignee || ticketDetails?.form?.ticket?.assignee_id}
+                    style={{width :'200px'}}
+                  />
+                  }
                    &nbsp;
                    <Typography variant="subtitle2" color="textSecondary"></Typography>
                   <Typography variant="subtitle2" color="textSecondary">
@@ -665,6 +696,8 @@ export default connect(
     getSubCategories,
     addNewActivity,
     updateTicketDetails,
-    updateSystemInfo
+    updateSystemInfo,
+    usersList,
+    AssignTicket
   }
 )(TicketDetails);

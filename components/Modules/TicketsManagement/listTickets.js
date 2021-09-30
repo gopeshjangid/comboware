@@ -35,6 +35,7 @@ function TicketsList({ getAllTickets, getProfile }) {
   const [ticketList, setTicketList] = useState([]);
   const [ticketDetails, setTicketDetails] = useState(null);
   const [filters, setFilter] = useState({ticket_status : 'ALL' ,repair_status : 'ALL'});
+  const userType = reduxState?.user?.profile?.user_type;
   const router = useRouter();
   const manageMessage = () => {
     setTimeout(() => {
@@ -53,7 +54,7 @@ function TicketsList({ getAllTickets, getProfile }) {
         delete row["id"];
         row.id = key + 1;
         return row;
-      })
+      }).sort((a,b) => b.id-a.id)
     );
     return () => {};
   }, [reduxState?.ticket?.ticketList]);
@@ -309,16 +310,17 @@ function TicketsList({ getAllTickets, getProfile }) {
             <CardHeader>
               <GridContainer spacing={1} justify="space-between">
                 <GridItem xs={6}>
-                  <Typography variant="h5">Tickets List</Typography>
+                  <Typography variant="h5">{userType === 'ADMIN' ? 'Users '  : '' }Tickets List</Typography>
                 </GridItem>
                 <GridItem xs={6} align="right">
-                  {" "}
+                  {userType !== 'ADMIN' &&
                   <Button
                     onClick={() => router.push("/ticket/new")}
                     variant="outlined"
                   >
                     Create New
                   </Button>
+                 }
                 </GridItem>
                 <GridItem xs={12}>&nbsp;</GridItem>
                 <GridItem xs={6}>

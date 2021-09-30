@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
   const submitHandler = (e) =>{
     e.preventDefault();
-    login({...form , user_type : 'ADMIN'} ,router);
+    login({...form,password: btoa(form?.password) , user_type : 'ADMIN'} ,router);
   }
 console.log("reduxState" ,reduxState)
   return (

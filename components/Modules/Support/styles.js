@@ -15,11 +15,5 @@ export default makeStyles(() => ({
   gridRow : {
       display : 'flex',
       justifyContent : 'space-between'
-  },
-  fieldset : {
-    padding : 30,
-    borderColor : '#e7e9f0 !important',
-    borderStyle: 'solid',
-    paddingTop : 16,
-},
+  }
 }));

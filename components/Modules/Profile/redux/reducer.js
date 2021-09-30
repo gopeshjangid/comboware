@@ -1,6 +1,7 @@
 import { START, FAILED, SAVE_PROFILE } from "./constants";
 const initialState = {
   profile: {},
+  usersList : [],
   skills: [{ skill_name: "", skill_level: "" }],
   loading : false,
   message : '',

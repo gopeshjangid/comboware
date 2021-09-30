@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box } from "@material-ui/core";
+import { Typography, IconButton, Box ,Chip } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -18,14 +18,13 @@ import Table from "../../Table/Table-Grid";
 import Select from "../../Select";
 import {
   COLUMNS,
-  TICKET_STATUS_LIST,
-  REPAIR_STATUS_LIST,
+  PAYMENT_STATUS_LIST
 } from "./redux/constants";
-import { getAllTickets } from "./redux/action";
+import { getAllPayments } from "./redux/action";
 import Drawer from "../../Drawers";
 import { useRouter } from "next/dist/client/router";
 
-function TicketsList({ getAllTickets, getProfile }) {
+function TicketsList({ getAllPayments }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
@@ -34,8 +33,9 @@ function TicketsList({ getAllTickets, getProfile }) {
   const [loader, setLoader] = useState(false);
   const [ticketList, setTicketList] = useState([]);
   const [paymentDetails, setPaymentDetails] = useState(null);
-  const [filters, setFilter] = useState({ticket_status : 'ALL' ,repair_status : 'ALL'});
+  const [filters, setFilter] = useState({payment_id : '' ,payment_status : 'ALL'});
   const router = useRouter();
+  const userType = reduxState?.user?.profile?.user_type;
   const manageMessage = () => {
     setTimeout(() => {
       setSubmitted(false);
@@ -75,9 +75,9 @@ function TicketsList({ getAllTickets, getProfile }) {
     //  getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
     let query =
       localStorage.getItem("userType") !== "ADMIN"
-        ? "?userId=" + Number(localStorage.getItem("userId"))+'&ticket_status=ALL&repair_status=ALL'
-        : "?ticket_status=ALL&repair_status=ALL";
-    getAllTickets(query);
+        ? "?userId=" + Number(localStorage.getItem("userId"))+'&payment_status=COMPLETED&payment_id='
+        : "?payment_id=''&payment_status=COMPLETED";
+        getAllPayments(query);
     return () => {};
   }, []);
 
@@ -124,6 +124,21 @@ function TicketsList({ getAllTickets, getProfile }) {
 
   const getColumns = () => {
     return COLUMNS?.map((col) => {
+      if (col?.field === "payment_id") {
+        col.renderCell = (params) => {
+          return (
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              style={{ marginLeft: 16 }}
+            >
+              {params?.row?.payment_id}
+            </Button>
+          );
+        };
+      }
+
       if (col?.field === "action") {
         col.renderCell = (params) => {
           return (
@@ -139,7 +154,27 @@ function TicketsList({ getAllTickets, getProfile }) {
           );
         };
       }
-      if (col?.field === "ticket_number") {
+      if (col?.field === "payment_status") {
+        col.renderCell = (params) => {
+          return (
+            <Chip
+              label={params?.row?.payment_status}
+              color={params?.row?.payment_status === 'COMPLETED' ? 'success' : "error"}
+            />
+              
+          );
+        };
+      }
+
+      if (col?.field === "amount") {
+        col.renderCell = (params) => {
+          return (
+            <Chip
+              label={"$"+params?.row?.amount}
+            />
+              
+          );
+        };
       }
 
       if (col?.field === "ticket_number") {
@@ -178,7 +213,7 @@ function TicketsList({ getAllTickets, getProfile }) {
       } else {
         query += sign + `${new URLSearchParams(_filters).toString()}`;
       }
-    getAllTickets(query);
+    getAllPayments(query);
     setFilter(_filters);
   };
   return (
@@ -312,37 +347,36 @@ function TicketsList({ getAllTickets, getProfile }) {
                   <Typography variant="h5">Payments</Typography>
                 </GridItem>
                 <GridItem xs={6} align="right">
-                  {" "}
+                  {userType !=='ADMIN' && 
                   <Button
                     onClick={() => router.push("/payment/new")}
                     variant="outlined"
                   >
-                    Create New
+                    Pay Bill
                   </Button>
+                  }
                 </GridItem>
                 <GridItem xs={12}>&nbsp;</GridItem>
                 <GridItem xs={6}>
-                  <Select
-                    name="ticket_status"
-                    options={TICKET_STATUS_LIST.map((status) => ({
-                      label: status,
-                      value: status,
-                    }))}
-                    label="Status"
-                    value={filters?.payment_status}
+                  <TextField
+                    name="payment_id"
+                    label="Search payment Id"
+                    value={filters?.payment_id}
                     onChange={onFilterChange}
+                    fullWidth
+                    type='number'
                   />
                 </GridItem>
 
                 <GridItem xs={6}>
                   <Select
-                    name="repair_status"
-                    options={REPAIR_STATUS_LIST.map((status) => ({
+                    name="payment_status"
+                    options={PAYMENT_STATUS_LIST.map((status) => ({
                       label: status,
                       value: status,
                     }))}
                     label="Payment Status"
-                    value={filters?.repair_status}
+                    value={filters?.payment_status}
                     onChange={onFilterChange}
                   />
                 </GridItem>
@@ -376,5 +410,5 @@ export default connect(
   (state) => {
     return { ...state };
   },
-  { getAllTickets }
+  { getAllPayments }
 )(TicketsList);
