@@ -7,9 +7,6 @@ import "assets/css/nextjs-material-dashboard.css?v=1.1.0";
 class MyApp extends App {
  
   static getInitialProps = wrapper.getInitialAppProps(store => async ({Component, ctx}) => {
-
-    store.dispatch({type: 'TOE', payload: 'was set in _app'});
-
     return {
         pageProps: {
             // Call page-level getInitialProps
