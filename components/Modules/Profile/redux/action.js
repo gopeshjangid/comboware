@@ -1,5 +1,5 @@
 
-import {START ,FAILED,SAVE_PROFILE ,MESSAGE,API} from  "./constants";
+import {START ,FAILED,SAVE_PROFILE ,MESSAGE,API, SAVE_IMAGE} from  "./constants";
 import Service from  "../../../../service/index";
 import {saveRequest} from  "../../Workspace/redux/action";
 
@@ -13,6 +13,10 @@ export const requestStop = (data) =>{
 
 export const saveProfile = (data) =>{
   return {type : SAVE_PROFILE , payload : data}
+}
+
+export const saveImage = (data) =>{
+  return {type : SAVE_IMAGE , payload : data}
 }
 
 export const signUp = (data ,router) => (dispatch) =>{
@@ -37,10 +41,10 @@ export const signUp = (data ,router) => (dispatch) =>{
 export const updateProfile = (data) => (dispatch) =>{
   dispatch(requestInit({message : "Updating the profile... "}));
   Service.put(API.updateProfile ,data).then(res=>{
-    dispatch(saveProfile({message : "Profile updated successfully."}));
+    dispatch(saveProfile({profile :  res?.data?.data?.user, message : "Profile updated successfully."}));
   }).catch(err =>{
     console.log("err--" ,err)
-    dispatch(requestStop({data  : null, message : err?.message}));
+    dispatch(requestStop({data  : null, error : err?.message}));
   })
 
 }
@@ -55,7 +59,7 @@ export const getProfile = (id) => (dispatch) =>{
     dispatch(saveProfile( {profile : data?.data?.user , skills : data?.data?.skills}));
   }).catch(err =>{
     console.log("err--" ,err)
-    //dispatch(requestStop({data  : null, message : err?.message}));
+    dispatch(requestStop({data  : null, error : err?.message}));
   })
 
 }
@@ -63,11 +67,11 @@ export const getProfile = (id) => (dispatch) =>{
 export const updateSystemInfo = (data) => (dispatch) =>{
   dispatch(requestInit({message : "Updating the system info... "}));
   Service.put(API.updateSystemInfo+data?.query ,data?.body).then(res=>{
-    dispatch(saveProfile({message : "System info updated successfully."}));
-    dispatch(getProfile(Number(localStorage.getItem('userId'))));
+    dispatch(saveImage({ system_image :res?.data?.data?.system_image}));
+    //dispatch(getProfile(Number(localStorage.getItem('userId'))));
   }).catch(err =>{
     console.log("err--" ,err)
-    dispatch(requestStop({data  : null, message : err?.message}));
+    dispatch(requestStop({data  : null, error : err?.message}));
   })
 
 }

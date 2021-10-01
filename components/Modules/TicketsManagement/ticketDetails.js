@@ -331,10 +331,11 @@ function TicketDetails({
 
   console.log("ticketDetails=====", ticketDetails);
   console.log("userType=====", userType);
-  const {
+  let {
     form: { activities },
   } = ticketDetails;
-
+  
+  activities = activities?.sort((a,b) =>b.id-a.id);
   return (
     <div>
       <Loader open={loader} />
@@ -381,7 +382,7 @@ function TicketDetails({
                   <legend>Primary Information</legend>
                   <GridContainer spacing={2}>
                     <GridItem xs={12}>
-                      <GridContainer spacing={3}>
+                      <GridContainer spacing={6}>
                         <GridItem xs={12}>
                           <TextField
                             fullWidth
@@ -390,6 +391,7 @@ function TicketDetails({
                             onChange={changeHandler}
                             name="ticket_subject"
                             value={ticketDetails?.form?.ticket?.ticket_subject}
+                            variant="filled"
                           />
                         </GridItem>
                         <GridItem xs={6}>

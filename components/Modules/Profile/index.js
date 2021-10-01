@@ -56,6 +56,8 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   const [isSubmitted, setSubmitted] = useState(false);
   const [project, setProject] = useState({ name: "Service", description: "xx" });
   const [loader, setLoader] = useState(false);
+  const [system_image , setImage] = useState("");
+  const [userType , setUserType] = useState("");
 
   const manageMessage = () =>{
     setTimeout(()=>{
@@ -86,15 +88,22 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   }, [reduxState?.workspace?.message]);
 
   useEffect(() => {
-    getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
+    //getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
     return () => {
     }
   }, [])
 
   useEffect(() => {
     setProfile({...profile, form : {...profile?.form, ...reduxState?.user?.profile}})
+    setImage(reduxState?.user?.profile?.system_image)
+    setUserType(localStorage.getItem("userType"));
     return () => {};
   }, [reduxState?.user?.profile]);
+
+  useEffect(() => {
+    setImage(reduxState?.user?.system_image)
+    return () => {};
+  }, [reduxState?.user?.system_image]);
 
   useEffect(() => {
     manageMessage();
@@ -221,7 +230,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   }
 
   return (
-    <div>
+    <div >
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -271,8 +280,8 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
           </GridItem>
         </GridContainer>
       </Modal>
-      <GridContainer spacing={1}>
-        <GridItem xs={12} sm={12} md={12}>
+      <GridContainer style={{background : 'white', marginTop :20}} spacing={1}>
+        {userType !== 'ADMIN' && <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>
               <Typography variant="h5">Project and domain details</Typography>
@@ -340,7 +349,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
             </CardBody>
           </Card>
         </GridItem>
-
+       }
         <GridItem xs={12}>
           <Card>
             <CardHeader>
@@ -427,7 +436,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
           </Card>
         </GridItem>
        
-        <GridItem xs={12}>
+        {userType !== 'ADMIN' && <GridItem xs={12}>
           <Card>
             <CardHeader>
               <Typography variant="h5">Company Details</Typography>
@@ -481,12 +490,12 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                 </GridItem>
                 <GridItem container justify='space-around' xs={6}>
                    <label>System image</label>
-                  <img src={profile?.form?.system_image} width={300} height={250}  alt='system image' />
+                  <img src={system_image} width={300} height={250}  alt='system image' />
                 </GridItem>
                 <GridItem container justify='space-between' xs={2}>
                   <Button variant="contained" onClick={imageClick}>Upload New</Button>
                   <input
-                    
+                    accept="image/png, image/gif, image/jpeg, image/jpg"
                     onChange={onFileUpload}
                     name="system_image"
                     type="file"
@@ -499,6 +508,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
             </CardBody>
           </Card>
         </GridItem>
+    }
       
         {reduxState?.user?.profile?.user_type === "ER" && (
           <GridItem xs={12} >

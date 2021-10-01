@@ -15,11 +15,10 @@ import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { getProfile } from "../Profile/redux/action";
-import { createDomain } from "../Workspace/redux/action";
 import Table from "../../Table/Table-Grid";
 import { COLUMNS } from "./redux/constants";
-import { getAllWorkspace ,updateRequest } from "./redux/action";
-
+//import { getAllWorkspace ,updateRequest } from "./redux/action";
+import ChatSupport from "./chatSupport";
 function Support({ getAllWorkspace, updateRequest, getProfile }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -56,8 +55,8 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
   }, [reduxState?.workspace?.message]);
 
   useEffect(() => {
-    getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
-    getAllWorkspace();
+   // getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
+   // getAllWorkspace();
     return () => {};
   }, []);
 
@@ -154,11 +153,11 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>
-              <Typography variant="h5">Server Requests List</Typography>
+              <Typography variant="h5">Customer Chat Support</Typography>
             </CardHeader>
             <CardBody>
               <GridContainer spacing={2}>
-                <Table columns={getColumns()} rows={requestList} />
+                <ChatSupport chatData={null} />
               </GridContainer>
             </CardBody>
           </Card>
@@ -172,5 +171,5 @@ export default connect(
   (state) => {
     return { ...state };
   },
-  { updateRequest, getAllWorkspace, getProfile }
+  {  getProfile }
 )(Support);

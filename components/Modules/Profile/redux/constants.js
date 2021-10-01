@@ -1,6 +1,8 @@
 export const START = 'START';
 export const FAILED = 'FAILED';
 export const SAVE_PROFILE = 'SAVE_PROFILE';
+export const SAVE_IMAGE = 'SAVE_IMAGE';
+
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 //export const API_BASE_URL = 'http://210.242.250.38:8000';

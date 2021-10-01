@@ -148,7 +148,7 @@ console.log("billing" ,billing)
                          <Typography>TO</Typography>
                       </GridItem>
                       <GridItem xs={4}>
-                         <Typography>{billing?.current_date}</Typography>
+                         <Typography>{billing?.end_date}</Typography>
                       </GridItem>
                     <GridItem xs={3}>
                         <Typography>Payment Amount</Typography>

@@ -82,7 +82,7 @@ export const addNewActivity = (data ,callBack) => (dispatch ,getState) =>{
     let state = getState();
     console.log("add activity reponse" ,res?.response)
     callBack();
-    dispatch(saveTicket({ticketDetails  :{...state?.ticket?.ticketDetails ,activities : [...res?.data?.data]}, message : "Uploaded the activity successfully."}));
+    dispatch(saveTicket({ticketDetails  :{...state?.ticket?.ticketDetails ,activities : [...state?.ticket?.ticketDetails?.activities,res?.data?.data[0]]}, message : "Uploaded the activity successfully."}));
   }).catch(err =>{
     console.log("api  err-- =>>>>>>>" ,err)
     dispatch(failed({data  : null, error : errorHandler()}));

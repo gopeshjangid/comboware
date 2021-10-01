@@ -1,8 +1,9 @@
-import { START, FAILED, SAVE_PROFILE } from "./constants";
+import { START, FAILED, SAVE_PROFILE,SAVE_IMAGE } from "./constants";
 const initialState = {
   profile: {},
   usersList : [],
   skills: [{ skill_name: "", skill_level: "" }],
+  system_image : '',
   loading : false,
   message : '',
   error : ''
@@ -38,6 +39,15 @@ function reducer(state = initialState, action) {
         ...action.payload
       };
       break;
+    case SAVE_IMAGE:
+console.log("sysmsds" ,action.payload)
+      return {
+        ...state,
+        loading: false,
+        message : '',
+        ...action.payload
+      };
+      break;  
 
     default:
       return state;
