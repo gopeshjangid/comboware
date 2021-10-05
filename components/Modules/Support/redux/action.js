@@ -32,3 +32,13 @@ export const sendMessage = (data) => (dispatch ,getState) =>{
   })
 
 }
+
+export const sendReplyMessage = (data) => (dispatch ,getState) =>{
+  
+  Service.post(API.replyChatByAdmin ,data).then(res=>{
+  }).catch(err =>{
+    console.log("err--" ,err)
+    dispatch({type : STOP , payload : {error : "Something went wrong"}});
+  })
+
+}

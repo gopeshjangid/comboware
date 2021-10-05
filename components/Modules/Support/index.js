@@ -16,7 +16,6 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { getProfile } from "../Profile/redux/action";
 import Table from "../../Table/Table-Grid";
-import { COLUMNS } from "./redux/constants";
 //import { getAllWorkspace ,updateRequest } from "./redux/action";
 import ChatSupport from "./chatSupport";
 function Support({ getAllWorkspace, updateRequest, getProfile }) {
@@ -89,27 +88,6 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
     });
   };
 
-  const getColumns = () => {
-    return COLUMNS?.map((col) => {
-      if (col?.field === "action") {
-        col.renderCell = (params) => {
-          
-          return (
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              style={{ marginLeft: 16 }}
-              onClick={(e) => actionHandler(e,params, "APPROVE")}
-            >
-              APPROVE
-            </Button>
-          );
-        };
-      }
-      return col;
-    });
-  };
 
   return (
     <div>

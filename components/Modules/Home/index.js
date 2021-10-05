@@ -18,7 +18,7 @@ import Banner7 from 'assets/img/7.png';
 import Banner8 from 'assets/img/8.png';
 import Banner9 from 'assets/img/9.png';
 import Banner10 from 'assets/img/10.png';
-const ChatSystem = Dynamic(() => import("../../Chat"),{ssr : false})
+const ChatSystem = Dynamic(() => import("../../Chat"));
 const bannerImaeges = [
     Banner1, Banner2, Banner3, Banner4, Banner5, Banner6
 ]
@@ -298,7 +298,7 @@ export default function Homes(props) {
                     </Typography>
                 </Grid>
             </Grid>
-            {/* <ChatSystem /> */}
+            <ChatSystem />
             <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center" >
                 <Grid container direction='column' xs={7} sm={6} >
                     <Box style={{ gridTemplateColumns: 'auto auto', display: 'grid', marginLeft: '100px' }}>
