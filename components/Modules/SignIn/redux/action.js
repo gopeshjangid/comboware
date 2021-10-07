@@ -19,6 +19,7 @@ export const signUp = (data ,router) => (dispatch) =>{
   Service.post(API.signUp ,data).then(res=>{
     localStorage.setItem("userId" ,res?.data?.data?.id);
     localStorage.setItem('userType' ,res?.data?.data?.user_type);
+    sessionStorage.setItem("token" , res?.data?.data?.token);
     dispatch(saveProfile({user  : res?.data?.data}));
     dispatch(signUpSuccess({data  : res?.data, message : "Logged in successfully."}));
     if(res?.data?.data?.is_profile_setup){

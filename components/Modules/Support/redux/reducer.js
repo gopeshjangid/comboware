@@ -2,7 +2,9 @@ import { START, STOP, SAVE_SUPPORT } from "./constants";
 const initialState = {
   latestMessage: null,
   messageList : [],
+  chatList : [],
   loading : false,
+  chat_id :  0,
   message : '',
   error : ''
 };

@@ -33,6 +33,7 @@ const getHeader = (header) => {
   return {
     "Content-Type": "application/json",
     Accept: "application/json",
+    'x-access-token' : sessionStorage.getItem("token")
   };
 };
 

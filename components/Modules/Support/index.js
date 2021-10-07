@@ -91,12 +91,12 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
 
   return (
     <div>
-      <Loader open={loader} />
+      {/* <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
         type={message?.type ||"success"}
         message={message?.text}
-      />
+      /> */}
       <Modal
         title="Create Domain and Project"
         // isOpen={domainModal}

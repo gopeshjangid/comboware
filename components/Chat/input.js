@@ -10,13 +10,17 @@ const useStyles = makeStyles(() =>
     wrapForm : {
         display: "flex",
         justifyContent: "center",
-        width: "98%",
+        width: "100%",
         margin: `0 auto`
     },
     wrapText  : {
         width: "100%"
     },
     button: {
+    position: 'absolute',
+    right: 2,
+    bottom: 2,
+    height: 50
         //margin: theme.spacing(1),
     },
   })
@@ -56,7 +60,8 @@ export const TextInput = ({sendMessage ,botQuestion}) => {
                 onChange={(e) =>setInput(e.target.value)}
                 value={input}
                 error={!!error}
-                focused={true}
+                variant="outlined"
+               
                 //margin="normal"
             />
             <Button onClick={onSubmit} variant="contained" color="primary" className={classes.button}>

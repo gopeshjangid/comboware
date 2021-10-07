@@ -113,11 +113,12 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+//avatarが左にあるメッセージ（他人）
 export const MessageLeft = (props) => {
   const message = props.message ? props.message : "no message";
   const timestamp = props.timestamp ? props.timestamp : "";
   const photoURL = props.photoURL ? props.photoURL : "dummy.js";
-  const displayName = props.displayName ? props.displayName : "Anonymous";
+  const displayName = props.displayName ? props.displayName : "Comboware";
   const classes = useStyles();
   return (
     <>

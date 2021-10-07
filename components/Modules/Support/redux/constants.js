@@ -14,5 +14,6 @@ export const API = {
   sendMessage : API_BASE_URL+'/v1/chat/sendMessage',
   getLatestMessage :  API_BASE_URL+'/v1/chat/getLatestMessage',
   getAllMessages :  API_BASE_URL+'/v1/chat/getAllMessages',
-  replyChatByAdmin : API_BASE_URL+'/v1/chat/replyChatByAdmin' 
+  replyChatByAdmin : API_BASE_URL+'/v1/chat/replyChatByAdmin',
+  getAllChats : API_BASE_URL+'/v1/chat/getAllChats', 
 }
