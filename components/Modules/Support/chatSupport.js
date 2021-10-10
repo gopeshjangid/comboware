@@ -1,4 +1,4 @@
-import React , {useState ,useEffect} from "react";
+import React , {useState ,useEffect ,useCallback} from "react";
 import Avatar from "@material-ui/core/Avatar";
 import {
   List,
@@ -76,7 +76,7 @@ function ChatSupport({ profile, getAllChats, chatList,getAllMessages, ...props }
     return () => {};
   }, []);
 
-  const openHandler = (value,e , recieverName) =>{
+  const openHandler = useCallback((value,e , recieverName) =>{
     if(e){
       e.preventDefault();
       e.stopPropagation();
@@ -86,7 +86,7 @@ function ChatSupport({ profile, getAllChats, chatList,getAllMessages, ...props }
     sessionStorage.setItem("selectedUser",recieverName);
     setOpen(value);
   
-  }
+  },[]);
   return (
     <div className={classes.chatContainer}>
       <List className={classes.wrapper}>
@@ -106,7 +106,7 @@ function ChatSupport({ profile, getAllChats, chatList,getAllMessages, ...props }
               className={classes.itemText}
             />
             <ChatWIdget
-              chatId={chat?.chat_id}
+              chatId={open}
               customerName={chat?.receiver_name || 'Customer'}
               open={open}
               setOpen={openHandler}

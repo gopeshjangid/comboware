@@ -80,7 +80,7 @@ const questions = [
   { type: "help", text: "How may i help you ?" },
 ];
 
-function App({
+const ChatApp = React.memo(function App({
   sendMessage,
   getAllMessages,
   getLatestMessage,
@@ -178,7 +178,6 @@ function App({
   scrollBox();
   },[messages])
 
- 
 
   useEffect(() => {
     if (chat?.messageList.length) {
@@ -260,11 +259,11 @@ function App({
       )}
     </div>
   );
-}
+})
 
 export default connect(
   (state) => {
     return { chat: state?.support, profile: state?.user?.profile };
   },
   { sendMessage, getAllMessages, getLatestMessage }
-)(React.memo(App));
+)(ChatApp);
