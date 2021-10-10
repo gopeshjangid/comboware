@@ -1,6 +1,27 @@
 import axios from "axios";
 const https = require("https");
 
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  // Do something with response error
+  if(error.response.status === 401) {
+     let loginType = localStorage.getItem("userType");
+     if(loginType === 'ER'){
+      loginType = "engineer";
+     }  else if(loginType === "USER") {
+       loginType = "customer";
+     }
+     localStorage.removeItem("userType");
+     localStorage.removeItem("userId");
+     sessionStorage.removeItem("token");
+     window.location.href = loginType === 'ADMIN' ? "/admin-login" :  "/login/"+loginType
+   }
+
+  // Trow errr again (may be need for some other catch)
+  return Promise.reject(error);
+});
+
 export default {
   get,
   put,
