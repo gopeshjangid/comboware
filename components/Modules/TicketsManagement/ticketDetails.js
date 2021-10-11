@@ -641,6 +641,7 @@ function TicketDetails({
                     onChange={changeHandler}
                     value={ticketDetails?.form?.ticket?.repair_status}
                     style={{width :'200px'}}
+                    disabled={ticketDetails?.form?.ticket?.user_id === reduxState?.user?.profile?.id }
                   ></Select>
                     &nbsp;
                     {userType === 'ADMIN' && 
