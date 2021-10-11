@@ -97,6 +97,22 @@ function TicketDetails({
     }, 4000);
   };
 
+  const callBack = (status , message) => {
+    manageMessage();
+
+    if(status){
+      setMessage({
+        text: message,
+        type: "success",
+      });
+    } else {
+      setMessage({
+        text: message,
+        type: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     setCategories(
       reduxState?.ticket?.categories?.map((cat) => {
@@ -212,7 +228,8 @@ function TicketDetails({
           category_id : ticketDetails?.form?.ticket?.ticket_category,
           subcategory_id : ticketDetails?.form?.ticket?.ticket_subcategory
         },
-        qstr
+        qstr,
+        callBack
       );
     }
   };
@@ -311,7 +328,7 @@ function TicketDetails({
 
     console.log("eee" ,e)
     setAssignee(e.target.value)
-    AssignTicket({ticket_number : ticketDetails?.form?.ticket?.ticket_number , userId : e.target.value});
+    AssignTicket({ticket_number : ticketDetails?.form?.ticket?.ticket_number , userId : e.target.value} ,callBack);
   }
 
   const submitSystemInfo = () => {

@@ -51,6 +51,22 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
     }, 4000);
   };
 
+  const callBack = (status , message) => {
+    manageMessage();
+
+    if(status){
+      setMessage({
+        text: message,
+        type: "success",
+      });
+    } else {
+      setMessage({
+        text: message,
+        type: "error",
+      });
+    }
+  };
+
   useEffect(() => {
     if (reduxState?.ticket?.message || reduxState?.ticket?.error) {
       setMessage({
@@ -127,6 +143,7 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
   const hideNotification  = () =>{
     setSubmitted(false);
     setLoader(false);
+    setMess
   }
 
   const activitySubmit = (ticketNumber) =>{
@@ -153,7 +170,7 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
       createTicket({
         ...ticketDetails?.form,
         userId: Number(localStorage.getItem("userId")),
-      },  activitySubmit  );
+      },  activitySubmit ,callBack );
     }
   };
 
@@ -165,7 +182,7 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
   const changeHandler = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-console.log("value" ,value);
+
     if(name === 'category_id'){
       subCategoriesHandler(value);
     }
@@ -198,12 +215,6 @@ console.log("value" ,value);
   };
 
   
-
-  console.log("reduxState=====", reduxState);
-
-  console.log("ticketdetails=====", ticketDetails ,image);
-
-  console.log("subcategories=====", subCategories);
 
   return (
     <div>

@@ -28,6 +28,9 @@ export default function Textfield(props) {
         label={label}
         variant="outlined"
         defaultValue={""}
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
     </Box>
   );

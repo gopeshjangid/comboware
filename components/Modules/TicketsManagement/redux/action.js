@@ -51,16 +51,23 @@ export const updateTicket = (data) =>{
   return {type : UPDATE_TICKET , payload : data}
 }
 
-export const createTicket = (data ,uploadImage) => (dispatch) =>{
+export const createTicket = (data ,uploadImage ,callBack) => (dispatch) =>{
   dispatch(start({message : "Creating ticket..."}));
   Service.post(API.createTicket ,data).then(res=>{
     console.log("create ticket reponse" ,res?.response)
     if(uploadImage){
       uploadImage(res?.data?.data?.id);
     }
+    if(callBack){
+      callBack(true , "Ticket has been created successfully.");
+    }
     dispatch(saveTicket({data  : res?.data?.data , message : "Ticket has been created successfully."}));
   }).catch(err =>{
     console.log("api  err-- =>>>>>>>" ,err)
+
+    if(callBack){
+      callBack(false ,errorHandler());
+    }
     dispatch(failed({data  : null, error : errorHandler()}));
   })
 
@@ -90,14 +97,21 @@ export const addNewActivity = (data ,callBack) => (dispatch ,getState) =>{
 
 }
 
-export const updateTicketDetails = (data,query) => (dispatch ,getState) =>{
+export const updateTicketDetails = (data,query ,callBack) => (dispatch ,getState) =>{
   dispatch(start({message : "Saving the ticket..."}));
   Service.put(API.updateTicket+query ,data).then(res=>{
     console.log("res" ,res?.response)
     let tickets = getState();
+    if(callBack){
+      callBack(true , "Updated Successfully.");
+    }
     dispatch(saveAllTickets({message: 'Updated Successfully.'}))
   }).catch(err =>{
     console.log("err code--" ,err?.code)
+
+    if(callBack){
+      callBack(false ,errorHandler());
+    }
     dispatch(failed({data  : null, error : errorHandler()}));
   })
 
@@ -145,17 +159,27 @@ export const getSubCategories = (id) => (dispatch) =>{
     console.log("res" ,res?.response)
     dispatch(saveSubCategories({ subCategories : [...res?.data?.data]}));
   }).catch(err =>{
-    console.log("err--" ,err)
+    console.log("err--" ,err);
+    if(callBack){
+      callBack(false ,errorHandler());
+    }
     dispatch(failed({error : errorHandler()}));
   })
 
 }
 
-export const AssignTicket = (data) => (dispatch) =>{
+export const AssignTicket = (data ,callBack) => (dispatch) =>{
   dispatch(start({message : "Assigning ticket..."}));
   Service.post(API.assignTicket ,data).then(res=>{
+    if(callBack){
+      callBack(true , "Ticket has been assigned.");
+    }
     dispatch(saveTicket({message : "Ticket has been assigned."}));
   }).catch(err =>{
+
+    if(callBack){
+      callBack(false ,errorHandler());
+    }
     console.log("api  err-- =>>>>>>>" ,err ,err.response)
     dispatch(failed({error : errorHandler()}));
   })
