@@ -92,7 +92,7 @@ function App({sendMessage , getAllMessages , getLatestMessage ,chat}) {
   const scrollBox = () =>{
     var div = document.getElementById("chatBox");
     if(div){
-    div.scrollTop = div.scrollHeight - div.clientHeight;
+     div.scrollTop = div.scrollHeight - div.clientHeight;
     } 
   }
   const addMessage = (msg,isBot ,interval) =>{
@@ -203,9 +203,10 @@ useEffect(() => {
   // }
 }, [messages])
   const sendNewMessage = (text) =>{
-    
+   
     let _msg = [...messages ,{id : "start" ,text : text ,userType : 'user'}];
     setMessages(_msg);
+    scrollBox();
     setCurrentQuestionUser("user");
     let answer = "";
     if(botQuestion===0){
@@ -216,7 +217,7 @@ useEffect(() => {
      } else {
       answer = {message : text,chat_id : chat?.chat_id, sender_id : localStorage.getItem("customerId"),sender_name : localStorage.getItem("name") }
      }
-
+     scrollBox();
      sendMessage(answer)
   
   }

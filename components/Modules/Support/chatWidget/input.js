@@ -68,7 +68,7 @@ export const TextInput = ({sendMessage ,botQuestion}) => {
     return (
         <>
          {error && <span style={{color :'red', fontSize :9}}>{error}</span>}
-            <div   onClick={onSubmit} className={classes.wrapForm}><TextField
+           <form className={classes.wrapForm} onSubmit={onSubmit} noValidate autoComplete="off"><TextField
                 id="standard-text"
                 label="Write new message"
                 className={classes.wrapText}
@@ -84,7 +84,7 @@ export const TextInput = ({sendMessage ,botQuestion}) => {
             <Button onClick={onSubmit} variant="contained" color="primary" className={classes.button}>
                 <SendIcon />
             </Button>
-            </div>
+            </form>
         </>
     )
 }

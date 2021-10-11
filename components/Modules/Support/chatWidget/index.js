@@ -201,7 +201,7 @@ const ChatApp = React.memo(function App({
   }, [chat?.messageList]);
 
   const sendNewMessage = (text) => {
-    scrollBox();
+   
     let _msg = [...messages, { id: "start", text: text, userType: "user" }];
     setMessages(_msg);
     //setCurrentQuestionUser("user");
@@ -211,7 +211,7 @@ const ChatApp = React.memo(function App({
       sender_id: localStorage.getItem("userId"),
       sender_name: profile?.first_name,
     };
-
+    scrollBox();
     sendMessage(answer);
   };
 

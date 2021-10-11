@@ -1,4 +1,4 @@
-import React ,{useState} from 'react'
+import React ,{useState, useRef,useEffect} from 'react'
 import TextField from '@material-ui/core/TextField';
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import SendIcon from '@material-ui/icons/Send';
@@ -31,6 +31,7 @@ export const TextInput = ({sendMessage ,botQuestion}) => {
     const classes = useStyles();
     const [input , setInput] = useState("");
     const [error , setError] = useState("");
+    let textInput = useRef(null);
     const onSubmit = (e) =>{
         e.preventDefault();
         if(botQuestion ===1 ){
@@ -49,10 +50,22 @@ export const TextInput = ({sendMessage ,botQuestion}) => {
        
     }
 
+    useEffect(() => {
+        textInput.current.focus();
+
+        if (textInput && textInput.current) {
+            textInput.current.addEventListener("click" ,function(e){
+                onSubmit(e);
+            });
+          }
+        setInput("");
+        setError("");
+    }, [])
+
     return (
         <>
          {error && <span style={{color :'red', fontSize :9}}>{error}</span>}
-            <form className={classes.wrapForm}  noValidate autoComplete="off">
+            <form className={classes.wrapForm} onSubmit={onSubmit} noValidate autoComplete="off">
             <TextField
                 id="standard-text"
                 label="Write new message"
@@ -61,10 +74,11 @@ export const TextInput = ({sendMessage ,botQuestion}) => {
                 value={input}
                 error={!!error}
                 variant="outlined"
+                inputRef={textInput}
                
                 //margin="normal"
             />
-            <Button onClick={onSubmit} variant="contained" color="primary" className={classes.button}>
+            <Button variant="contained" color="primary" className={classes.button}>
                 <SendIcon />
             </Button>
             </form>
