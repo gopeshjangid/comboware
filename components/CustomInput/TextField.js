@@ -27,7 +27,7 @@ export default function Textfield(props) {
         { ...rest}
         label={label}
         variant="outlined"
-        defaultValue={"dsad"}
+        defaultValue={""}
       />
     </Box>
   );
