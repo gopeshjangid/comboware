@@ -36,8 +36,8 @@ export const createDomain = (data) => (dispatch) =>{
     console.log("res" ,res?.response)
     dispatch(saveDomain({data  : res?.data?.data , message : "Domain and project has been created successfully."}));
   }).catch(err =>{
-    console.log("err--" ,err)
-    dispatch(requestFailed({data  : null, error : errorHandler()}));
+    console.log("err--" ,err?.response ,err?.data)
+    dispatch(requestFailed({data  : null, error : err?.response?.data?.message || "Something went wrong."}));
   })
 
 }
