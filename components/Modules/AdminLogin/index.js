@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {connect ,useSelector} from "react-redux";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
+import {Button} from '@material-ui/core';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -12,6 +12,8 @@ import Container from "@material-ui/core/Container";
 import {useRouter} from  "next/router";
 import {login} from  "./redux/action";
 import Snackbar from "components/Snackbar";
+
+import Loader from  "components/Loader/linear";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   const classes = useStyles();
   const [form, setForm] = useState({email : '' ,password : ''});
   const [message, setMessage] = useState({text : '' ,type : 'success'});
+  const [loading, setLoading] = useState(false);
    const router = useRouter();
    const reduxState = useSelector((state) =>state?.user)
 
@@ -47,19 +50,32 @@ const useStyles = makeStyles((theme) => ({
     setMessage({text : reduxState?.message || reduxState?.error , type  : reduxState?.error ? "error"  :"success"});
    },[reduxState?.message])
 
+   const callBack = (status, message) =>{
+     if(status){
+      setMessage({type : 'success' ,text :message});
+     } else {
+      setMessage({type : 'error' ,text :message});
+     }
+     setLoading(false);
+   }
+
   const submitHandler = (e) =>{
     e.preventDefault();
-    login({...form,password: btoa(form?.password) , user_type : 'ADMIN'} ,router);
+    setLoading(true)
+    login({...form,password: btoa(form?.password) , user_type : 'ADMIN'} ,router,callBack);
   }
-console.log("reduxState" ,reduxState)
+
+  console.log("form" ,form)
   return (
     <Container component="main" maxWidth="sm">
+      {loading && <Loader />}
         <Snackbar
-        open={message?.text}
-        type={message?.error}
+        open={!!message?.text}
+        type={message?.type}
         message={message?.text}
       />
       <CssBaseline />
+      
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -101,6 +117,7 @@ console.log("reduxState" ,reduxState)
             fullWidth
             variant="contained"
             color="primary"
+            disabled={loading}
             className={classes.submit}
             onClick={submitHandler}
           >

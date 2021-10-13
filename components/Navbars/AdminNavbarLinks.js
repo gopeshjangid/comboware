@@ -57,8 +57,18 @@ function AdminNavbarLinks({logout}) {
   }
 
   const Logout = () =>{
+
+    let userType = localStorage.getItem("userType");
+
     logout("");
-    router.push("/");
+    if(userType === 'ADMIN'){
+      router.push("/admin-login");
+    } else if(userType === 'ER'){
+      router.push("/login/engineer");
+    } else {
+      router.push("/login/customer");
+    }
+    
     localStorage.removeItem("userId");
     localStorage.removeItem("userType");
   }
