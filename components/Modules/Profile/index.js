@@ -5,7 +5,7 @@ import { AddCircleOutline } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box } from "@material-ui/core";
+import { Typography, IconButton, Box  ,Paper} from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -52,6 +52,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   });
 
   const [domainModal, setDomainModal] = useState(false);
+  const [environmentType, setEnvironmentType] = useState('FIXED');
   const [domain, setDomain] = useState({ name: "", description: "" });
   const [isSubmitted, setSubmitted] = useState(false);
   const [project, setProject] = useState({ name: "Service", description: "xx" });
@@ -228,7 +229,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
    }
     
   }
-
+  const {is_profile_setup} = reduxState?.user?.profile;
   return (
     <div >
       <Loader open={loader} />
@@ -245,6 +246,12 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
         submitText="Save Domain and Project"
       >
         <GridContainer spacing={2}>
+           <GridItem container xs={12} spacing={2} alignContent="center" justify="space-around">
+            <Typography variant='subtitle1'>Choose Environment Type</Typography>
+            <Button onClick={() => setEnvironmentType("FIXED")} color='primary' variant={environmentType === 'FIXED' ? "contained" : "outlined"}>Fixed</Button>
+            <Button onClick={() => setEnvironmentType("UNLIMITED")} color='primary' variant={environmentType === 'UNLIMITED' ? "contained" : "outlined"}>Unlimited</Button>
+          </GridItem>
+          <GridItem xs={12}>&nbsp;</GridItem>
           <GridItem xs={6}>
             <TextField
               onChange={domainChangeHandler}
@@ -287,42 +294,40 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
               <Typography variant="h5">Project and domain details</Typography>
             </CardHeader>
             <CardBody>
-              <GridContainer spacing={2}>
+              <GridContainer spacing={3}>
                 {domain?.id && (
                   <>
-                    <GridItem className={classes.gridRow} xs={4}>
-                      <Box display="flex" justifyContent="space-around">
-                        <Typography align="center" variant="subtitle2">Domain Name:</Typography>
-                        <Typography align="left" color="primary" variant="subtitle2" >
+                    <GridItem className={classes.gridRow} xs={4} container  spacing={2} alignContent="center" justify="space-around">
+                     
+                        <Typography align="center" variant="body1">Domain Name:</Typography>
+                        <Typography align="left" color="primary" variant="body1" >
                           {domain?.name}
                         </Typography>
-                      </Box>
+                      
                     </GridItem>
-                    <GridItem className={classes.gridRow} xs={8}>
-                      <Box display="flex" justifyContent="space-around">
-                        <Typography variant="subtitle2">Domain Description:</Typography>
-                        <Typography color="primary" variant="subtitle2" >
+                    <GridItem className={classes.gridRow} xs={8} container  spacing={2} alignContent="center" justify="space-around">
+                     
+                        <Typography variant="body1">Domain Description:</Typography>
+                        <Typography color="primary" variant="body1" >
                           {domain?.description}
                         </Typography>
-                      </Box>
+                    
                     </GridItem>
                   </>
                 )}
                 {project?.id && (
                   <>
-                    <GridItem className={classes.gridRow} xs={4}>
-                      <Box display="flex" justifyContent="space-around">
-                        <Typography align="center" variant="subtitle2">Project Name</Typography>
-                        <Typography align="left" color="primary" variant="subtitle2">{project?.name}</Typography>
-                      </Box>
+                    <GridItem className={classes.gridRow} xs={4} container  spacing={2} alignContent="center" justify="space-around">
+                        <Typography align="center" variant="body1">Project Name</Typography>
+                        <Typography align="left" color="primary" variant="body1">{project?.name}</Typography>
                     </GridItem>
-                    <GridItem className={classes.gridRow} xs={8}>
-                      <Box display="flex" justifyContent="space-around">
-                        <Typography variant="subtitle2">
+                    <GridItem className={classes.gridRow} xs={8} container  spacing={2} alignContent="center" justify="space-around">
+                    
+                        <Typography variant="body1">
                           Project Description:
                         </Typography>
-                        <Typography color="primary" variant="subtitle2">{project?.description}</Typography>
-                      </Box>
+                        <Typography color="primary" variant="body1">{project?.description}</Typography>
+                      
                     </GridItem>
                   </>
                 )}
@@ -350,6 +355,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
           </Card>
         </GridItem>
        }
+       {(is_profile_setup || (is_profile_setup ===0 && domain?.id)) && (<>
         <GridItem xs={12}>
           <Card>
             <CardHeader>
@@ -508,7 +514,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
             </CardBody>
           </Card>
         </GridItem>
-    }
+        }
       
         {reduxState?.user?.profile?.user_type === "ER" && (
           <GridItem xs={12} >
@@ -575,6 +581,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
             Save Changes
           </Button>
         </GridItem>
+       </>)}
       </GridContainer>
     </div>
   );

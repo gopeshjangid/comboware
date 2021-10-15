@@ -8,6 +8,7 @@ import NetworkIcon from "@material-ui/icons/SettingsApplications";
 import ServerIcon from "@material-ui/icons/SettingsSystemDaydream";
 import PaymentOutlined from "@material-ui/icons/PaymentOutlined";
 import Support from "@material-ui/icons/ContactSupport";
+import Monitor from "@material-ui/icons/DesktopMac";
 import Category from "@material-ui/icons/Category";
 const dashboardRoutes = [
   {
@@ -87,6 +88,12 @@ const dashboardRoutes = [
     accessors : ['ADMIN'],
     icon: Support,
     layout: "/support",
+  },{
+    path: "/",
+    name: "System Monitoring",
+    accessors : ['ADMIN'],
+    icon: Monitor,
+    layout: "/monitoring",
   },
 ];
 

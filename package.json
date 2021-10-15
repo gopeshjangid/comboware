@@ -17,6 +17,7 @@
     "@material-ui/data-grid": "^4.0.0-alpha.37",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "^4.0.0-alpha.60",
+    "@mui/icons-material": "^5.0.4",
     "@mui/lab": "^5.0.0-alpha.50",
     "@mui/material": "^5.0.3",
     "@paypal/react-paypal-js": "^7.3.3",

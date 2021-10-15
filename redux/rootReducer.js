@@ -6,6 +6,8 @@ import payment from  "../components/Modules/Payment/redux/reducer";
 import login from  "../components/Modules/SignIn/redux/reducer";
 import settings from  "../components/Modules/Settings/redux/reducer";
 import support from  "../components/Modules/Support/redux/reducer";
+import dashboard from  "../components/Modules/Dashboard/redux/reducer";
+import monitoring from  "../components/Modules/Monitoring/redux/reducer";
 export default  combineReducers({
   user,
   workspace,
@@ -13,5 +15,7 @@ export default  combineReducers({
   payment,
   login,
   settings,
-  support
+  support,
+  dashboard,
+  monitoring
 });
