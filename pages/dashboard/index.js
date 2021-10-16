@@ -30,7 +30,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardIcon from "components/Card/CardIcon.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-import HostsList from "../../components/Modules/Dashboard/HostsList";
+import HostsList from "../../components/Modules/Dashboard/hostsList";
 
 
 // import {
