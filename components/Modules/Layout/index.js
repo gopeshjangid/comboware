@@ -5,7 +5,7 @@ import { Grid } from '@material-ui/core';
 
 export default function Layout(props) {
     return (
-        <Grid container direction="column">
+        <Grid  container direction="column">
             <Header />
             <div>{props.children}</div>
             <Footer />

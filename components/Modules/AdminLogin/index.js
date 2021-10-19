@@ -116,7 +116,7 @@ const useStyles = makeStyles((theme) => ({
             type="button"
             fullWidth
             variant="contained"
-            color="primary"
+            color="secondary"
             disabled={loading}
             className={classes.submit}
             onClick={submitHandler}

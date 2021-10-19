@@ -9,7 +9,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import TextField from "../../CustomInput/TextField";
 import useStyles from "./styles";
-import Button from "@material-ui/core/Button";
+import Button from "components/CustomButtons";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
@@ -111,11 +111,6 @@ function Settings({ saveResource, getResources, settings }) {
     );
   };
 
-  const domainChangeHandler = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-    setDomain({ ...domain, [name]: value });
-  };
 
   const resourceChangeHandler = (e) => {
     let name = e.target.name;
@@ -123,38 +118,6 @@ function Settings({ saveResource, getResources, settings }) {
     setResource({ ...resource, [name]: value });
   };
 
-  const onFileUpload = (event) => {
-    // Create an object of formData
-    const formData = new FormData();
-    let file = event.target.files[0];
-
-    console.log("file", file);
-    setSubmitted(true);
-    setLoader(true);
-    // Update the formData object
-    formData.append("server_image", file, file?.name);
-  };
-
-  const getColumns = () => {
-    return [
-      { field: "select", select: true },
-      { field: "name", header: "Name" },
-      { field: "type", header: "User" },
-      { field: "status", header: "Status" },
-      { field: "date", header: "Date" },
-      {
-        field: "action",
-        header: "Date",
-        renderCell: () => {
-          return <Chip label="Active" type="filled" />;
-        },
-      },
-    ];
-  };
-
-  const handleClick = () =>{
-
-  }
 
   return (
     <div>
@@ -165,32 +128,29 @@ function Settings({ saveResource, getResources, settings }) {
         message={message}
       />
       <Wrapper>
-        <Typography variant="h5">Admin Settings</Typography>
 
-        <GridContainer spacing={1}>
-          {/* <GridItem xs={12} sm={12} md={12}>
-              <fieldset
-                className={classes.fieldset}
-                borderColor="#e7e9f0"
-                border={0.5}
+        <GridContainer spacing={3}>
+          <GridItem xs={12} sm={12} md={12}>
+              <FieldSet
+                padding={30}
               >
                 <legend>Resource Billing Quotes</legend>
                 <GridContainer spacing={2}>
                   <GridItem container className={classes.gridRow} xs={4}>
                     <Typography>RAM</Typography>
                   </GridItem>
-                  <GridItem className={classes.gridRow} xs={6}>
+                  <GridItem className={classes.gridRow} xs={3}>
                     <TextField
                       name="RAM"
                       fullWidth
-                      label="RAM Charge ($/MB)"
+                      label="RAM Charge ($/GBi)"
                       value={resource?.RAM}
                       onChange={resourceChangeHandler}
                       type="number"
                       inputProps={{ min: 0 }}
                     />
                   </GridItem>
-                  <GridItem container justify="flex-end" xs={2}>
+                  <GridItem  justify="flex-end" xs={2}>
                     <Button
                       variant="outlined"
                       color="primary"
@@ -206,7 +166,7 @@ function Settings({ saveResource, getResources, settings }) {
                   <GridItem container className={classes.gridRow} xs={4}>
                     <Typography>CPUs</Typography>
                   </GridItem>
-                  <GridItem className={classes.gridRow} xs={6}>
+                  <GridItem className={classes.gridRow} xs={3}>
                     <TextField
                       name="CPU"
                       fullWidth
@@ -217,10 +177,10 @@ function Settings({ saveResource, getResources, settings }) {
                       inputProps={{ min: 0 }}
                     />
                   </GridItem>
-                  <GridItem container justify="flex-end" xs={2}>
+                  <GridItem  justify="flex-end" xs={2}>
                     <Button
                       variant="outlined"
-                      color="primary"
+                      color="secondary"
                       onClick={(e) => resourceSubmitHandler(e,"CPU")}
                       disabled={
                         !(resource?.CPU)
@@ -233,7 +193,7 @@ function Settings({ saveResource, getResources, settings }) {
                   <GridItem container className={classes.gridRow} xs={4}>
                     <Typography>Volume</Typography>
                   </GridItem>
-                  <GridItem className={classes.gridRow} xs={6}>
+                  <GridItem className={classes.gridRow} xs={3}>
                     <TextField
                       name="VOLUME"
                       fullWidth
@@ -244,7 +204,7 @@ function Settings({ saveResource, getResources, settings }) {
                       inputProps={{ min: 0 }}
                     />
                   </GridItem>
-                  <GridItem container justify="flex-end" xs={2}>
+                  <GridItem  justify="flex-end" xs={2}>
                     <Button
                       variant="outlined"
                       color="primary"
@@ -258,11 +218,11 @@ function Settings({ saveResource, getResources, settings }) {
                   </GridItem>
                   
                 </GridContainer>
-              </fieldset>
+              </FieldSet>
             </GridItem>
           
             <GridItem>
-               <FieldSet title="Hypervisors List">
+               <FieldSet title="Hypervisors">
                   <HostList />
                </FieldSet>
             </GridItem>
@@ -271,38 +231,8 @@ function Settings({ saveResource, getResources, settings }) {
                <FieldSet title="Environment Plan">
                   <Environment />
                </FieldSet>
-            </GridItem> */}
-          <GridItem xs={12}>
-            <CustomTable
-              footer_label={"Active customers"}
-              columns={getColumns()}
-              data={[
-                {
-                  id: 1,
-                  name: "Gopesh",
-                  type: "Admin",
-                  status: "Inprogress",
-                  date: "210-2102",
-                },
-                {
-                  id: 2,
-                  name: "Gopesh",
-                  type: "Admin",
-                  status: "Inprogress",
-                  date: "210-2102",
-                },
-                {
-                  id: 3,
-                  name: "Gopesh",
-                  type: "Admin",
-                  status: "Inprogress",
-                  date: "210-2102",
-                },
-              ]}
-
-              actions={[{label : "Edit" ,handleClick : handleClick},{label : "DELETE" ,handleClick : handleClick}]}
-            />
-          </GridItem>
+            </GridItem>
+        
         </GridContainer>
       </Wrapper>
     </div>

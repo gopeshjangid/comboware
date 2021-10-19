@@ -21,6 +21,7 @@ const appStyle = (theme) => ({
     maxHeight: "100%",
     width: "100%",
     overflowScrolling: "touch",
+    height : '100vh'
   },
   content: {
     marginTop: "20px",
