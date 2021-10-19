@@ -16,6 +16,8 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import Table from "../../Table/Table-Grid";
 import Select from "../../Select";
+import CustomTable from "components/Table/CustomTable";
+import Wrapper from "components/Wrapper";
 import {
   COLUMNS,
   PAYMENT_STATUS_LIST
@@ -121,6 +123,24 @@ function TicketsList({ getAllPayments }) {
       setPaymentDetails(null);
     }
   };
+
+  // const getColumns = () => {
+  //   return [
+  //     { field: "select", select: true },
+  //     { field: "payment_id", header: "Payment ID" },
+  //     { field: "reference_id", header: "Reference ID" },
+  //     { field: "amount", header: "Amount" },
+  //     { field: "payment_status", header: "Status" },
+  //     { field: "date", header: "Payment Date" },
+  //     {
+  //       field: "action",
+  //       header: "Date",
+  //       renderCell: () => {
+  //         return <button >Edit</button>;
+  //       },
+  //     },
+  //   ];
+  // };
 
   const getColumns = () => {
     return COLUMNS?.map((col) => {

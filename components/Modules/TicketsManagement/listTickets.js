@@ -16,6 +16,8 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import Table from "../../Table/Table-Grid";
 import Select from "../../Select";
+import CustomTable from "components/Table/CustomTable";
+import Wrapper from "components/Wrapper";
 import {
   COLUMNS,
   TICKET_STATUS_LIST,
@@ -121,6 +123,61 @@ function TicketsList({ getAllTickets, getProfile }) {
     if (!open) {
       setTicketDetails(null);
     }
+  };
+
+  const getColumnsDetails = () => {
+    return [
+      { field: "select", select: true },
+      { field: "ticket_number", header: "Ticket Number" },
+      { field: "ticket_subject", header: "Title" },
+      { field: "category_name", header: "Category" },
+      { field: "subcategory_name", header: "SubCategory" },
+      { field: "ticket_status", header: "Ticket Status" },
+      { field: "repair_status", header: "Repair Status" },
+      { field: "first_name", header: "Customer Name" },
+      { field: "email", header: "Customer Email" },
+      { field: "company_name", header: "Company Name" },
+      { field: "company_email", header: "Company Email" },
+      { field: "company_phone", header: "Company Phone" },
+      { field: "company_address", header: "Company Address" },
+      { field: "system_image", header: "System Image" },
+      {
+        field: "action",
+        header: "Date",
+        renderCell: () => {
+          return <button >View</button>;
+        },
+      },
+    ];
+  };
+
+  const getColumnsFields = () => {
+    return [
+      { field: "select", select: true },
+      { field: "ticket_number", header: "Ticket Number" },
+      { field: "ticket_subject", header: "Title" },
+      { field: "first_name", header: "Customer Name" },
+      { field: "ticket_status", header: "Ticket Status" },
+      { field: "repair_status", header: "Repair Status" },
+      { field: "ticket_date", header: "Created At" },
+      {
+        field: "action",
+        header: "Date",
+        renderCell: (params) => {
+          return (
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              style={{ marginLeft: 16 }}
+              onClick={() => viewTicket(params?.row)}
+            >
+              View
+            </Button>
+          );
+        },
+      },
+    ];
   };
 
   const getColumns = () => {
@@ -351,9 +408,17 @@ function TicketsList({ getAllTickets, getProfile }) {
               </GridContainer>
             </CardHeader>
             <CardBody>
-              <GridContainer spacing={2}>
+
+            <GridItem xs={12}>
+            <CustomTable
+              columns={getColumnsFields()}
+              data={ticketList}
+            />
+            </GridItem>
+              
+              {/* <GridContainer spacing={2}>
                 <Table pageSize={15} columns={getColumns()} rows={ticketList} />
-              </GridContainer>
+              </GridContainer> */}
             </CardBody>
           </Card>
         </GridItem>
