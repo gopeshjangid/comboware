@@ -124,23 +124,23 @@ function TicketsList({ getAllPayments }) {
     }
   };
 
-  // const getColumns = () => {
-  //   return [
-  //     { field: "select", select: true },
-  //     { field: "payment_id", header: "Payment ID" },
-  //     { field: "reference_id", header: "Reference ID" },
-  //     { field: "amount", header: "Amount" },
-  //     { field: "payment_status", header: "Status" },
-  //     { field: "date", header: "Payment Date" },
-  //     {
-  //       field: "action",
-  //       header: "Date",
-  //       renderCell: () => {
-  //         return <button >Edit</button>;
-  //       },
-  //     },
-  //   ];
-  // };
+  const getColumnsFields = () => {
+    return [
+      { field: "select", select: true },
+      { field: "payment_id", header: "Payment ID" },
+      { field: "reference_id", header: "Reference ID" },
+      { field: "amount", header: "Amount" },
+      { field: "payment_status", header: "Status" },
+      { field: "payment_date", header: "Payment Date" },
+      // {
+      //   field: "action",
+      //   header: "Date",
+      //   renderCell: () => {
+      //     return <button >Edit</button>;
+      //   },
+      // },
+    ];
+  };
 
   const getColumns = () => {
     return COLUMNS?.map((col) => {
@@ -404,7 +404,8 @@ function TicketsList({ getAllPayments }) {
             </CardHeader>
             <CardBody>
               <GridContainer spacing={2}>
-                <Table pageSize={15} columns={getColumns()} rows={ticketList} />
+                <CustomTable columns={getColumnsFields()} data={ticketList} />
+                {/* <Table pageSize={15} columns={getColumns()} rows={ticketList} /> */}
               </GridContainer>
             </CardBody>
           </Card>
