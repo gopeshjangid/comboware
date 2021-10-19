@@ -19,6 +19,8 @@ import HostList from "components/Modules/Dashboard/hostsList";
 import Environment from "components/Modules/Settings/environmentPlan";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
+import {Chip} from  "components/Custom";
+
 function Settings({ saveResource, getResources, settings }) {
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
@@ -144,7 +146,7 @@ function Settings({ saveResource, getResources, settings }) {
         field: "action",
         header: "Date",
         renderCell: () => {
-          return <button >Edit</button>;
+          return <Chip label="Active" type="filled" />;
         },
       },
     ];
