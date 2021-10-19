@@ -12,7 +12,7 @@ import classNames from "classnames";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Button } from "@mui/material";
+import { Button ,Box } from "@mui/material";
 import {TablePagination ,Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -254,15 +254,22 @@ export default function CustomTable(props) {
           })}
         </TableBody>
       </Table>
-      <Typography>{footer_label}</Typography>
+      <Box display='flex' justifyContent="space-between" alignContent="center" alignItems="center" style={{width  :'100%' , paddingLeft :5 ,borderTop : '.5px solid lightblue'}}>
+      <Typography variant='body2'>{footer_label || ''}</Typography>
       <TablePagination component="div"
-        rowsPerPage="3"
+        rowsPerPage="1"
         labelRowsPerPage="Rows per page"
         labelDisplayedRows={({ from, to, count }) =>
-          `${from}-${to} av ${count} søknader`
+          `${from}-${to} of ${count} records`
         }
         count={data?.length}
         page={1}
+        color="primary"
+        showFirstButton
+        showLastButton
+        //onChange={void}
+        
+        //onChangePage = {}
         rowsPerPageOptions={[5, 10, 25]}
         backIconButtonProps={{
           "aria-label": "forrige side"
@@ -270,6 +277,7 @@ export default function CustomTable(props) {
         nextIconButtonProps={{
           "aria-label": "neste side"
         }} />
+        </Box>
     </div>
   );
 }

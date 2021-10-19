@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import {  useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Button,Typography ,Radio ,RadioGroup ,FormControlLabel  } from "@material-ui/core";
+import { Button,Typography ,Checkbox  ,FormControlLabel ,FormGroup   } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles =  makeStyles((theme) => ({
   box : {
@@ -61,10 +61,10 @@ function EnvironmentPlan() {
                     <Typography>Choose environment type</Typography>
                   </GridItem>
                   <GridItem className={classes.gridRow} xs={6}>
-                      <RadioGroup row aria-label="Fixed" name="row-radio-buttons-group">
-                        <FormControlLabel value="fixed" control={<Radio />} label="Fixed" />
-                        <FormControlLabel value="unlimited" control={<Radio />} label="Unlimited" />
-                      </RadioGroup>
+                    <FormGroup>
+                    <FormControlLabel control={<Checkbox color="primary" defaultChecked />} label="Fixed" />
+                    <FormControlLabel  control={<Checkbox color="primary" />} label="Unlimited" />
+                    </FormGroup>
                   </GridItem>
                   <GridItem container justify="flex-end" xs={2}>
                     <Button

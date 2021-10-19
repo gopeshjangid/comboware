@@ -9,26 +9,33 @@ import { Chip } from "components/Custom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Loader from "components/Loader/circular";
-import { getAllHosts } from "./redux/action";
+import { usersList } from "../Profile/redux/action";
 
-function hostsListBox({ getAllHosts, hostsList, profile }) {
+function usersListDataBox({ usersList, profile }) {
   const reduxState = useSelector((state) => state);
   const [error, setError] = useState(false);
+  const usersListData = reduxState?.user?.usersList;
   const [isLoading, setLoading] = useState(false);
+
 
   const hideNotification = (status, message) => {
     setLoading(false);
     if (!status) {
-      setError(message);
+      setError("Something went wrong. please try again");
     } else {
       setError("");
     }
   };
 
   useEffect(() => {
-    if (hostsList?.length === 0) {
+    hideNotification(reduxState?.user?.usersList.length)
+    return () => {};
+  }, [reduxState?.user?.usersList]);
+
+  useEffect(() => {
+    if (usersListData?.length === 0) {
       setLoading(true);
-      getAllHosts(hideNotification);
+      usersList("?userType=ER");
     } else {
       setLoading(false);
     }
@@ -36,87 +43,38 @@ function hostsListBox({ getAllHosts, hostsList, profile }) {
     return () => {};
   }, []);
 
+  console.log("redux" ,reduxState)
+
   if (profile?.user_type !== "ADMIN") {
     return null;
   }
 
   const getColumns = () => {
     return [
-      { field: "select", select: true },
       {
-        field: "host_name",
-        header: "HOST",
+        field: "first_name",
+        header: "Name",
         renderCell: (row) => {
           return (
             <>
               <Typography variant="body1" color="primary">
-                {row?.hypervisor_hostname}
+                {row?.first_name+" "+row?.last_name}
               </Typography>
-              <Typography variant="p" color='secondaryText'>
-                {row?.host_ip}
-              </Typography>{" "}
             </>
           );
         },
       },
 
-      { field: "domain", header: "DOMAIN" },
-      {
-        field: "cpu",
-        header: "CPU",
-        renderCell: (row) => {
-          return (
-            <>
-              <Typography variant="body2" color="primary">
-                {row?.vcpus-row?.vcpus_used}
-              </Typography>
-              <Typography variant="p" color="secondary">
-                {row?.vcpus}
-              </Typography>{" "}
-            </>
-          );
-        },
-      },
-      {
-        field: "ram",
-        header: "RAM",
-        renderCell: (row) => {
-          return (
-            <>
-              <Typography variant="body2" color="secondaryText">
-                {row?.memory_mb-row?.memory_mb_used}
-              </Typography>
-              <Typography variant="p" color="secondary">
-                {row?.memory_mb}
-              </Typography>{" "}
-            </>
-          );
-        },
-      },
-      {
-        field: "disk",
-        header: "HDD",
-        renderCell: (row) => {
-          return (
-            <>
-              <Typography variant="body2" color="secondaryText">
-                {row?.free_disk_gb}
-              </Typography>
-              <Typography variant="p" color="secondary">
-                {row?.free_disk_gb}
-              </Typography>{" "}
-            </>
-          );
-        },
-      },
+      { field: "email", header: "Email" },
+      { field: "company_name", header: "Company Name" },
       {
         field: "status",
         header: "STATUS",
         renderCell: (row) => {
           return (
             <Chip
-              label={row?.status === "enabled" ? "ACTIVE" : "INACTIVE"}
-              type={row?.status === "enabled" ? "filled" : "outlined"}
+              label={row?.status  ? "ACTIVE" : "INACTIVE"}
+              type={row?.status ? "filled" : "outlined"}
             />
           );
         },
@@ -137,6 +95,7 @@ function hostsListBox({ getAllHosts, hostsList, profile }) {
 
   return (
     <div>
+      <Typography>Customers</Typography>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -146,9 +105,9 @@ function hostsListBox({ getAllHosts, hostsList, profile }) {
         </Alert>
       ) : (
         <CustomTable
-          footer_label={"Available hypervisors"}
+          footer_label={"Total customers"}
           columns={getColumns()}
-          data={hostsList}
+          data={usersListData}
           actions={[
             { label: "Edit", handleClick: handleClick },
             { label: "DELETE", handleClick: handleClick },
@@ -163,5 +122,5 @@ export default connect(
   (state) => {
     return { ...state?.dashboard, profile: state?.user?.profile };
   },
-  { getAllHosts }
-)(hostsListBox);
+  { usersList }
+)(usersListDataBox);

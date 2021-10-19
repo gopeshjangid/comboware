@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 const useStyles = makeStyles((theme) => ({
   root: {
-    background: (props) => props?.danger ?  '#F64E60' :   '#3699FF',
+    background: (props) => props?.danger ?  '#F64E60' :   theme?.palette?.primary.bg,
     borderRadius: '6px',
     padding : 10,
     minWidth : 60,
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '18px',
     textTransform : 'none',
     "&:hover": {
-      background: (props) => props?.danger ?  '#e43447' : '#2885e4'
+      background: (props) => props?.danger ?  '#e43447' :  theme?.palette?.primary.main
     }
   },
 }));
@@ -38,7 +38,7 @@ export default function RegularButton(props) {
     ...rest
   } = props;
   return (
-    <Button {...rest} classes={{ root: classes.root}}>
+    <Button {...rest} disabled={disabled} classes={{ root: classes.root}}>
       {children}
     </Button>
   );
