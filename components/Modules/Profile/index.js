@@ -12,7 +12,7 @@ import CardBody from "components/Card/CardBody.js";
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
 import Select from "../../Select";
-import Button from "@material-ui/core/Button";
+import Button from "components/CustomButtons";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
@@ -341,8 +341,6 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     </GridItem>
                     <GridItem xs={4}>
                       <Button
-                        variant="outlined"
-                        color="primary"
                         onClick={() => setDomainModal(true)}
                       >
                         Create

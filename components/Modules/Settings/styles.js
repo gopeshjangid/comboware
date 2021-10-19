@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
   firstBox: {
       backgroundColor: '#1853F9',
   },
@@ -18,8 +18,9 @@ export default makeStyles(() => ({
   },
   fieldset : {
     padding : 30,
-    borderColor : '#e7e9f0 !important',
+    borderColor : theme?.palette?.borderColor,
     borderStyle: 'solid',
     paddingTop : 16,
+    borderWidth : 1
 },
 }));

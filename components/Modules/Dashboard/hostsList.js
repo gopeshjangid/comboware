@@ -50,6 +50,7 @@ function hostsListBox({ getAllHosts   ,hostsList ,profile}) {
 
   useEffect(() => {
     if(hostsList?.length === 0){
+      setLoading(true);
       getAllHosts(hideNotification);
     } else {
       setLoading(false);

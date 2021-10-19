@@ -13,15 +13,17 @@ import Button from "@material-ui/core/Button";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
-import { saveResource ,getResources } from "./redux/action";
-
-function Settings({ saveResource ,getResources  ,settings}) {
+import { saveResource, getResources } from "./redux/action";
+import FieldSet from "components/Form/fieldset";
+import HostList from "components/Modules/Dashboard/hostsList";
+import Environment from "components/Modules/Settings/environmentPlan";
+import CustomTable from "components/Table/CustomTable";
+import Wrapper from "components/Wrapper";
+function Settings({ saveResource, getResources, settings }) {
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
-  const defaultSkill = { skill_name: "", skill_level: "" };
-  const [skills, setSkills] = useState([defaultSkill]);
   const [message, setMessage] = useState("");
-  const imageRef = useRef();
+  const [checked, setChecked] = useState(false);
   const [resource, setResource] = useState({
     RAM: 0,
     CPU: 0,
@@ -40,18 +42,21 @@ function Settings({ saveResource ,getResources  ,settings}) {
     }, 4000);
   };
 
-  const getValue = (str) =>{
-    let filtered = settings?.resources?.filter(setting => setting?.resource_type === str) || [];
-    console.log("filtered" ,filtered ,"ress" ,settings?.resources)
-     return filtered?.length ? filtered[0]?.price : 0;
-  }
+  const getValue = (str) => {
+    let filtered =
+      settings?.resources?.filter(
+        (setting) => setting?.resource_type === str
+      ) || [];
+    console.log("filtered", filtered, "ress", settings?.resources);
+    return filtered?.length ? filtered[0]?.price : 0;
+  };
 
-  useEffect(()=>{
-     let RAM = getValue("RAM");
-     let CPU = getValue("CPU");
-     let VOLUME = getValue("VOLUME");
-     setResource({...resource,RAM,CPU,VOLUME })
-  },[settings?.resources])
+  useEffect(() => {
+    let RAM = getValue("RAM");
+    let CPU = getValue("CPU");
+    let VOLUME = getValue("VOLUME");
+    setResource({ ...resource, RAM, CPU, VOLUME });
+  }, [settings?.resources]);
 
   const hideNotification = () => {
     setSubmitted(false);
@@ -64,10 +69,12 @@ function Settings({ saveResource ,getResources  ,settings}) {
   }, [reduxState?.workspace?.message]);
 
   useEffect(() => {
-    getResources(reduxState?.user?.profile?.id || localStorage.getItem("userId"),hideNotification);
-    return () => {
-    }
-  }, [])
+    getResources(
+      reduxState?.user?.profile?.id || localStorage.getItem("userId"),
+      hideNotification
+    );
+    return () => {};
+  }, []);
 
   // useEffect(() => {
   //   setProfile({...profile, form : {...profile?.form, ...reduxState?.user?.profile}})
@@ -85,16 +92,21 @@ function Settings({ saveResource ,getResources  ,settings}) {
     return () => {};
   }, [reduxState?.user?.loading]);
 
- 
   console.log("reduxState=====", reduxState);
 
-
-
-  const resourceSubmitHandler = (e ,type) => {
+  const resourceSubmitHandler = (e, type) => {
     e.preventDefault();
     setSubmitted(true);
     setLoading(true);
-    saveResource({resource_type : type, size : 1 ,price:resource[type] ,userId : Number(localStorage.getItem("userId"))},hideNotification);
+    saveResource(
+      {
+        resource_type: type,
+        size: 1,
+        price: resource[type],
+        userId: Number(localStorage.getItem("userId")),
+      },
+      hideNotification
+    );
   };
 
   const domainChangeHandler = (e) => {
@@ -109,8 +121,6 @@ function Settings({ saveResource ,getResources  ,settings}) {
     setResource({ ...resource, [name]: value });
   };
 
- 
-
   const onFileUpload = (event) => {
     // Create an object of formData
     const formData = new FormData();
@@ -123,6 +133,27 @@ function Settings({ saveResource ,getResources  ,settings}) {
     formData.append("server_image", file, file?.name);
   };
 
+  const getColumns = () => {
+    return [
+      { field: "select", select: true },
+      { field: "name", header: "Name" },
+      { field: "type", header: "User" },
+      { field: "status", header: "Status" },
+      { field: "date", header: "Date" },
+      {
+        field: "action",
+        header: "Date",
+        renderCell: () => {
+          return <button >Edit</button>;
+        },
+      },
+    ];
+  };
+
+  const handleClick = () =>{
+
+  }
+
   return (
     <div>
       <Loader open={loader} />
@@ -131,47 +162,11 @@ function Settings({ saveResource ,getResources  ,settings}) {
         type={reduxState?.workspace?.error ? "error" : "success"}
         message={message}
       />
-      <Modal
-        title="Create Domain and Project"
-        isOpen={domainModal}
-        submitText="Save Domain and Project"
-      >
-        <GridContainer spacing={2}>
-          <GridItem xs={6}>
-            <TextField name="name" fullWidth label="Domain Name" />
-          </GridItem>
-          <GridItem xs={6}>
-            <TextField
-              name="description"
-              fullWidth
-              label="Domain Description"
-            />
-          </GridItem>
-          <GridItem xs={6}>
-            <TextField
-              name="name"
-              fullWidth
-              label="Project Name"
-              value="Service"
-              isDisabled
-            />
-          </GridItem>
-          <GridItem xs={6}>
-            <TextField
-              name="description"
-              fullWidth
-              label="Project Description"
-            />
-          </GridItem>
-        </GridContainer>
-      </Modal>
-      <Card>
-        <CardHeader>
-          <Typography variant="h5">Admin Settings</Typography>
-        </CardHeader>
-        <CardBody>
-          <GridContainer spacing={1}>
-            <GridItem xs={12} sm={12} md={12}>
+      <Wrapper>
+        <Typography variant="h5">Admin Settings</Typography>
+
+        <GridContainer spacing={1}>
+          {/* <GridItem xs={12} sm={12} md={12}>
               <fieldset
                 className={classes.fieldset}
                 borderColor="#e7e9f0"
@@ -264,10 +259,50 @@ function Settings({ saveResource ,getResources  ,settings}) {
               </fieldset>
             </GridItem>
           
-          
-          </GridContainer>
-        </CardBody>
-      </Card>
+            <GridItem>
+               <FieldSet title="Hypervisors List">
+                  <HostList />
+               </FieldSet>
+            </GridItem>
+
+            <GridItem>
+               <FieldSet title="Environment Plan">
+                  <Environment />
+               </FieldSet>
+            </GridItem> */}
+          <GridItem xs={12}>
+            <CustomTable
+              footer_label={"Active customers"}
+              columns={getColumns()}
+              data={[
+                {
+                  id: 1,
+                  name: "Gopesh",
+                  type: "Admin",
+                  status: "Inprogress",
+                  date: "210-2102",
+                },
+                {
+                  id: 2,
+                  name: "Gopesh",
+                  type: "Admin",
+                  status: "Inprogress",
+                  date: "210-2102",
+                },
+                {
+                  id: 3,
+                  name: "Gopesh",
+                  type: "Admin",
+                  status: "Inprogress",
+                  date: "210-2102",
+                },
+              ]}
+
+              actions={[{label : "Edit" ,handleClick : handleClick},{label : "DELETE" ,handleClick : handleClick}]}
+            />
+          </GridItem>
+        </GridContainer>
+      </Wrapper>
     </div>
   );
 }
