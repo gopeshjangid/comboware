@@ -570,7 +570,6 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
         )}
         <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
           <Button
-            type="button"
             variant="contained"
             color="primary"
             className={classes.submit}

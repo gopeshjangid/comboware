@@ -14,32 +14,32 @@ export const MESSAGE = {
 export const COLUMNS = [
   {
     field: 'server_name',
-    headerName : "Server Name",
+    header : "Server Name",
     width: 250,
   },
   {
     field: 'ram',
-    headerName : "RAM",
+    header : "RAM",
     width: 130
   },
   {
     field: 'cpu',
-    headerName : "CPUs",
+    header : "CPUs",
     width: 120
   },
   {
     field: 'request_status',
-    headerName : "Status",
+    header : "Status",
     width: 200
   },
   {
     field: 'created_date',
-    headerName : "Created Date",
+    header : "Created Date",
     width: 200
   },
   {
     field: 'action',
-    headerName : "Approve/Reject",
+    header : "Action",
     width: 200
   }
   

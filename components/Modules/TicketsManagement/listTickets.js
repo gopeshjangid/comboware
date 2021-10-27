@@ -15,7 +15,7 @@ import Snackbar from "components/Snackbar";
 import Select from "../../Select";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
-
+import FieldSet from "components/Form/fieldset";
 import {
   COLUMNS,
   TICKET_STATUS_LIST,
@@ -198,7 +198,7 @@ function TicketsList({ getAllTickets, getProfile }) {
     setFilter(_filters);
   };
   return (
-    <Box bgcolor="primary.light" mt="20px">
+    <Wrapper  mt="20px">
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -319,14 +319,12 @@ function TicketsList({ getAllTickets, getProfile }) {
           </GridContainer>
         </Box>
       </Drawer>
+    <FieldSet title="Tickets" >
       <GridContainer spacing={1}>
         <GridItem xs={12} sm={12} md={12}>
         
               <GridContainer spacing={1} justify="space-between">
-                <GridItem xs={6}>
-                  <Typography variant="h5">{userType !== 'ADMIN' ? 'Users '  : '' }Tickets List</Typography>
-                </GridItem>
-                <GridItem xs={6} align="right">
+                <GridItem xs={12} align="right">
                   {userType === 'ADMIN' &&
                   <Button
                     onClick={() => router.push("/ticket/new")}
@@ -389,7 +387,8 @@ function TicketsList({ getAllTickets, getProfile }) {
           </Button>
         </GridItem> */}
       </GridContainer>
-    </Box>
+      </FieldSet>
+    </Wrapper>
   );
 }
 

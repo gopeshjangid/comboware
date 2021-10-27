@@ -18,6 +18,7 @@ import Table from "../../Table/Table-Grid";
 import Select from "../../Select";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
+import FieldSet from "components/Form/fieldset";
 import {
   COLUMNS,
   PAYMENT_STATUS_LIST
@@ -237,128 +238,15 @@ function TicketsList({ getAllPayments }) {
     setFilter(_filters);
   };
   return (
-    <div>
+    <Wrapper>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
         type={message?.type || "success"}
         message={message?.text}
       />
-
-      <Drawer open={!!paymentDetails} onClose={closeTicketDrawer}>
-        <Box className={classes.drawerBox}>
-          <GridContainer spacing={3}>
-            <GridItem xs={6}>
-              <Typography color="primaryText">Title:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.payment_subject}
-              </Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="primaryText">Category:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.category_name}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">SubCategory:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.subcategory_name}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">Payment Status:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.payment_status}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">
-                Repair Processing Date:
-              </Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.repair_status}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">Customer Name:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.first_name}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">Customer Email:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">{paymentDetails?.email}</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="primaryText">Company Name:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.company_name}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">Company Email:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.company_email}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">Company Phone:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.company_phone}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">Company Address:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <Typography color="secondary">
-                {paymentDetails?.company_address}
-              </Typography>
-            </GridItem>
-
-            <GridItem xs={6}>
-              <Typography color="primaryText">System Image:</Typography>
-            </GridItem>
-            <GridItem xs={6}>
-              <img
-                className={classes.system_image}
-                src={paymentDetails?.system_image}
-                alt="system image"
-              />
-            </GridItem>
-          </GridContainer>
-        </Box>
-      </Drawer>
-      <GridContainer spacing={1}>
+       <FieldSet title="Payment list">
+       <GridContainer spacing={1}>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader>
@@ -422,7 +310,8 @@ function TicketsList({ getAllPayments }) {
           </Button>
         </GridItem> */}
       </GridContainer>
-    </div>
+      </FieldSet>
+    </Wrapper>
   );
 }
 

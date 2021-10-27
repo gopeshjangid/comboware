@@ -33,6 +33,9 @@ import Button from "components/CustomButtons";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
+import Wrapper from "components/Wrapper";
+import FieldSet from "components/Form/fieldset";
+
 import {
   getTicketDetails,
   addNewActivity,
@@ -90,7 +93,6 @@ function TicketDetails({
   const router = useRouter();
   const userType = reduxState?.user?.profile?.user_type;
   const fileRef = useRef();
-  console.log("reduxState", reduxState);
   const manageMessage = () => {
     setTimeout(() => {
       setSubmitted(false);
@@ -194,7 +196,6 @@ function TicketDetails({
     }
   }, []);
 
-  console.log("router", router);
 
   const validateServerDetails = () => {
     if (!ticketDetails?.form?.ticket?.ticket_subject) {
@@ -262,7 +263,6 @@ function TicketDetails({
     const formData = new FormData();
     let file = event.target.files[0];
 
-    console.log("file", file);
     setSubmitted(true);
     setLoader(true);
     // Update the formData object
@@ -326,7 +326,6 @@ function TicketDetails({
 
   const assigneeHandler = (e) =>{
 
-    console.log("eee" ,e)
     setAssignee(e.target.value)
     AssignTicket({ticket_number : ticketDetails?.form?.ticket?.ticket_number , userId : e.target.value} ,callBack);
   }
@@ -346,15 +345,14 @@ function TicketDetails({
     });
   };
 
-  console.log("ticketDetails=====", ticketDetails);
-  console.log("userType=====", userType);
+ 
   let {
     form: { activities },
   } = ticketDetails;
   
   activities = activities?.sort((a,b) =>b.id-a.id);
   return (
-    <div>
+    <Wrapper>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -378,11 +376,7 @@ function TicketDetails({
         </GridContainer>
       </Modal>
 
-      <Card className={classes.cardBox}>
-        <CardHeader>
-          <Typography variant="h5">Edit Ticket</Typography>
-        </CardHeader>
-        <CardBody>
+     <FieldSet title="Edit Ticket">
           <GridContainer spacing={3}>
             <GridContainer item xs={9}>
               <GridItem container xs={12}>
@@ -697,10 +691,8 @@ function TicketDetails({
                 </Button>
               </GridItem>
           </GridContainer>
-          
-        </CardBody>
-      </Card>
-    </div>
+       </FieldSet>
+     </Wrapper>  
   );
 }
 

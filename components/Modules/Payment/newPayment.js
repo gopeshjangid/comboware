@@ -21,6 +21,8 @@ import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { useRouter } from "next/dist/client/router";
+import Wrapper from "components/Wrapper";
+import FieldSet from "components/Form/fieldset";
 import {
   createPayment,
   getBillingAmount
@@ -105,19 +107,16 @@ console.log("billing" ,billing)
 
 
   return (
-    <div>
+    <Wrapper>
       <Loader open={loader } />
       <Snackbar
         open={isSubmitted}
         type={message?.type || "success"}
         message={message?.text}
       />
-      <Card className={classes.cardBox}>
+      <FieldSet title="New Payment">
       <GridContainer justify='space-around' align='center' spacing={1}>
         <GridItem   xs={6}>
-        <CardHeader>
-          <Typography align='left' variant="h5">New Payment</Typography>
-        </CardHeader>
          </GridItem>
             <GridItem xs={6} style={{textAlign : 'right' ,paddingTop :10 , paddingRight : 33}}>
               &nbsp;
@@ -215,8 +214,8 @@ console.log("billing" ,billing)
             </GridItem>
           </GridContainer>
         </CardBody>
-      </Card>
-    </div>
+      </FieldSet>
+    </Wrapper>
   );
 }
 

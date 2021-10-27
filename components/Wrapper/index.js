@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '6px',
     padding : 10,
     width  : '100%',
-    height : '100vh'
+    height : 'auto'
   },
 }));
 

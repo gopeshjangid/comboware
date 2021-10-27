@@ -3,10 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box, TextareaAutosize , } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import {  TextareaAutosize , } from "@material-ui/core";
+
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
 import Select from "../../Select";
@@ -17,8 +15,8 @@ import Snackbar from "components/Snackbar";
 import { serverRequest, getWorkSpaceDetails } from "../Workspace/redux/action";
 import { useRouter } from "next/dist/client/router";
 import {createTicket ,addNewActivity, getCategories , getSubCategories} from "./redux/action";
-
-
+import Wrapper from "components/Wrapper";
+import FieldSet from "components/Form/fieldset";
 function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -217,18 +215,14 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
   
 
   return (
-    <div>
+    <Wrapper>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
         type={message?.type || "success"}
         message={message?.text}
       />
-      <Card className={classes.cardBox}>
-        <CardHeader>
-          <Typography variant="h5">Create New Ticket</Typography>
-        </CardHeader>
-        <CardBody>
+     <FieldSet title="New Ticket" >
           <GridContainer spacing={1}>
             <GridItem xs={12}>
               <fieldset
@@ -344,9 +338,8 @@ function newTicket({ createTicket,addNewActivity, getCategories,getSubCategories
                 </Button>
               </GridItem>
           </GridContainer>
-        </CardBody>
-      </Card>
-    </div>
+        </FieldSet>
+    </Wrapper>
   );
 }
 

@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { AddCircleOutline } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import { Typography, Box } from "@material-ui/core";
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
 import Select from "../../Select";
@@ -18,6 +14,9 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { serverRequest ,getWorkSpaceDetails } from "../Workspace/redux/action";
 import {IMAGE , NETWORK , FLAVOR} from  "./redux/constants";
+import Wrapper from "components/Wrapper";
+import FieldSet from "components/Form/fieldset";
+
 function Server({ serverRequest ,getWorkSpaceDetails }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -129,18 +128,14 @@ function Server({ serverRequest ,getWorkSpaceDetails }) {
   console.log("reduxState=====", reduxState);
 
   return (
-    <div>
+    <Wrapper>
        <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
         type={message?.type || "success"}
         message={message?.text}
       /> 
-       <Card className={classes.cardBox}>
-            <CardHeader>
-               <Typography variant="h5">Virtual Server Quotation</Typography>
-            </CardHeader>
-            <CardBody>
+       <FieldSet title="Virtual Server Quotation">
      
       <GridContainer spacing={1}>
         <GridItem xs={12} sm={6} md={6}>
@@ -386,9 +381,8 @@ function Server({ serverRequest ,getWorkSpaceDetails }) {
       
         }
       </GridContainer>
-      </CardBody>
-          </Card>
-    </div>
+      </FieldSet>
+    </Wrapper>
   );
 }
 

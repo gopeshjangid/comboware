@@ -16,15 +16,16 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { getProfile } from "../Profile/redux/action";
 import { createDomain } from "../Workspace/redux/action";
-import Table from "../../Table/Table-Grid";
+import Table from "../../Table/CustomTable";
 import { COLUMNS } from "./redux/constants";
-import { getAllWorkspace ,updateRequest } from "./redux/action";
-
+import { getAllWorkspace, updateRequest } from "./redux/action";
+import Wrapper from "components/Wrapper";
+import FieldSet from "components/Form/fieldset";
 function Admin({ getAllWorkspace, updateRequest, getProfile }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
-  const [message, setMessage] = useState({text : "" ,type : "success"});
+  const [message, setMessage] = useState({ text: "", type: "success" });
   const [isSubmitted, setSubmitted] = useState(false);
   const [loader, setLoader] = useState(false);
   const [requestList, setRequestList] = useState([]);
@@ -47,11 +48,14 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
 
   console.log("reduxState", reduxState);
   useEffect(() => {
-    setMessage({text : reduxState?.workspace?.message || reduxState?.workspace?.error , type : reduxState?.workspace?.error ? "error" : "success" });
-   
+    setMessage({
+      text: reduxState?.workspace?.message || reduxState?.workspace?.error,
+      type: reduxState?.workspace?.error ? "error" : "success",
+    });
+
     setLoader(false);
     manageMessage();
-   // getAllWorkspace();
+    // getAllWorkspace();
     return () => {};
   }, [reduxState?.workspace?.message]);
 
@@ -63,7 +67,10 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
 
   useEffect(() => {
     manageMessage();
-    setMessage({text : reduxState?.user?.message || reduxState?.user?.error , type : reduxState?.user?.error ? "error" : "success" });
+    setMessage({
+      text: reduxState?.user?.message || reduxState?.user?.error,
+      type: reduxState?.user?.error ? "error" : "success",
+    });
     return () => {};
   }, [reduxState?.user?.message]);
 
@@ -77,15 +84,14 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
     return () => {};
   }, []);
 
-
-  const actionHandler = (e,data,status) => {
+  const actionHandler = (e, data, status) => {
     e.preventDefault();
     setSubmitted(true);
     setLoader(true);
-    console.log("data" ,data)
+    console.log("data", data);
     updateRequest({
-      workspaceId : data?.row?.id,
-      requestStatus : 'APPROVED',
+      workspaceId: data?.row?.id,
+      requestStatus: "APPROVED",
       userId: data?.row?.user_id,
     });
   };
@@ -94,14 +100,13 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
     return COLUMNS?.map((col) => {
       if (col?.field === "action") {
         col.renderCell = (params) => {
-          
           return (
             <Button
               variant="contained"
               color="primary"
               size="small"
               style={{ marginLeft: 16 }}
-              onClick={(e) => actionHandler(e,params, "APPROVE")}
+              onClick={(e) => actionHandler(e, params, "APPROVE")}
             >
               APPROVE
             </Button>
@@ -113,70 +118,21 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
   };
 
   return (
-    <div>
+    <Wrapper>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
-        type={message?.type ||"success"}
+        type={message?.type || "success"}
         message={message?.text}
       />
-      <Modal
-        title="Create Domain and Project"
-        // isOpen={domainModal}
-        // onSubmit={submitDomainHandler}
-        // onChange={(flag) => setDomainModal(flag)}
-        submitText="Save Domain and Project"
-      >
-        <GridContainer spacing={2}>
-          <GridItem xs={6}>
-            <TextField name="name" fullWidth label="Domain Name" />
-          </GridItem>
-          <GridItem xs={6}>
-            <TextField
-              name="description"
-              fullWidth
-              label="Domain Description"
-            />
-          </GridItem>
-          <GridItem xs={6}>
-            <TextField name="name" fullWidth label="Project Name" />
-          </GridItem>
-          <GridItem xs={6}>
-            <TextField
-              name="description"
-              fullWidth
-              label="Project Description"
-            />
+      <FieldSet title="Server Requests List">
+        <GridContainer spacing={1}>
+          <GridItem xs={12} sm={12} md={12}>
+            <Table columns={getColumns()} data={requestList} />
           </GridItem>
         </GridContainer>
-      </Modal>
-      <GridContainer spacing={1}>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader>
-              <Typography variant="h5">Server Requests List</Typography>
-            </CardHeader>
-            <CardBody>
-              <GridContainer spacing={2}>
-                <Table columns={getColumns()} rows={requestList} />
-              </GridContainer>
-            </CardBody>
-          </Card>
-        </GridItem>
-
-        {/* <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={submitHandler}
-          >
-            Save Changes
-          </Button>
-        </GridItem> */}
-      </GridContainer>
-    </div>
+      </FieldSet>
+    </Wrapper>
   );
 }
 
