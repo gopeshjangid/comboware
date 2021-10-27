@@ -6,21 +6,44 @@ const theme = createMuiTheme({
      main : '#0A65FF',
      contrastText : '#fff',
      bg : '#0A65FF',
-     light : '#ffffff'
+     light : '#ffffff',
+     backgroundColor : '#F3F6F9',
+     buttonBgColor : '#F3F6F9'
+    },
+    button : {
+      main : '#F5F6F9',
+      error : {
+       default :  '#F64E60',
+       hover : ''
+      }  
+
     },
     secondary : {
      main : '#464E5F',
      contrastText : '#fff',
     },
     danger : {
-     main : '#F64E60'
+     main : '#F64E60',
+     light : '#ef5350'
+    },
+    success : {
+      main : '#2e7d32',
+      light : '#4caf50',
+      contrastText : '#fff'
+    },
+    warning : {
+     main  :'#ED6C02',
+    },
+    info : {
+     main : '#03a9f4',
+     contrastText : '#fff'
     },
     text: {
       primary: '#464E5F',
     },
     typography : {
      
-      fontFamily: 'Poppins',
+      fontFamily: 'sans-serif',
       fontStyle: 'normal',
       fontWeight: 600,
       label : {

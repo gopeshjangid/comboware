@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles ,useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
@@ -28,42 +28,31 @@ const useStyles = makeStyles((theme) => ({
   tableHeadRow: {
     background: "#F3F6F9",
     borderRadius: 6,
+    overflow : 'auto'
+  },
+  tableBodyRow: {
+    overflow : 'auto'
   },
   tableHeadCell: {
     color: "#464E5F !important",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: 600,
-    fontSize: "12px !important",
-    lineHeight: "18px",
+    padding:1,
+    border : 0,
+    paddingLeft:0
   },
   tableCell: {
     color: "#464E5F !important",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: 600,
-    fontSize: "12px !important",
-    lineHeight: "18px",
     border: "none",
+    paddingLeft:1
   },
   root: {
     background: (props) => (props?.danger ? "#F64E60" : "#3699FF"),
     borderRadius: "6px",
     minWidth: 60,
-    color: "#FFFFFF",
-    fontFamily: "Poppins",
-    fontStyle: "normal",
-    fontWeight: 600,
-    fontSize: "12px",
-    lineHeight: "18px",
-    textTransform: "none",
     "&:hover": {
       background: (props) => (props?.danger ? "#e43447" : "#2885e4"),
     },
-  },
-  hightLightrow: {
-    backgroundColor: "#F4F7FC",
-  },
+  }
+  
 }));
 
 export default function CustomTable(props) {
@@ -71,7 +60,7 @@ export default function CustomTable(props) {
   const { columns, data, footer_label, selectedRows, actions } = props;
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedRows] = useState([]);
-
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -180,7 +169,8 @@ export default function CustomTable(props) {
                 if (prop?.field === "action") {
                   return (
                     <TableCell
-                      width="10"
+                      style={{width : prop?.width || 150}}
+                      align={prop?.align || 'center'}
                       className={classes.tableHeadCell}
                       key={key}
                     >
@@ -195,15 +185,18 @@ export default function CustomTable(props) {
                   return (
                     <TableCell
                       width="10"
+                      style={{width : prop?.width || 50}}
                       className={classes.tableHeadCell}
                       key={key}
+                      
                     >
                       {getSelectAllCheckBox()}
                     </TableCell>
                   );
                 }
                 return (
-                  <TableCell className={classes.tableHeadCell} key={key}>
+                  <TableCell  align={prop?.align || 'center'}  style={{width : prop?.width ||  150}}
+                   className={classes.tableHeadCell} key={key}>
                     {(prop?.renderHeader && prop?.renderHeader()) ||
                       prop?.header ||
                       ""}
@@ -220,8 +213,7 @@ export default function CustomTable(props) {
                 hover
                 key={"table-row" + key}
                 className={classNames({
-                  [classes.tableBodyRow]: true,
-                  [classes?.hightLightrow]: key % 2 !== 0,
+                  [classes.tableBodyRow]: true
                 })}
               >
                 {columns.map((col, key) => {
@@ -231,6 +223,7 @@ export default function CustomTable(props) {
                         width="10"
                         key={"table-col-" + key}
                         variant="body"
+                        style={{width : col?.width || 50}}
                         className={classNames({ [classes.tableCell]: true })}
                       >
                         {getCheckBox(row)}
@@ -241,6 +234,8 @@ export default function CustomTable(props) {
                     <TableCell
                       key={"table-col-" + key}
                       variant="body"
+                      style={{width : col?.width || 150}}
+                      align={col?.align || 'center'}
                       className={classNames({ [classes.tableCell]: true })}
                     >
                       {(col?.renderCell &&
@@ -264,7 +259,7 @@ export default function CustomTable(props) {
         }
         count={data?.length}
         page={1}
-        color="primary"
+        color={theme?.palette?.primary?.main}
         showFirstButton
         showLastButton
         //onChange={void}

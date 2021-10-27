@@ -3,7 +3,7 @@ import Admin from "layouts/Admin.js";
 
 import TicketsManagement from "components/Modules/TicketsManagement/listTickets";
 import Head from "next/head";
-
+import Layout from  "components/Layout";
 function TicketList() {
 
   console.log("list ticket")
@@ -12,7 +12,10 @@ function TicketList() {
       <Head>
         <title>Comboware- Tickets</title>
       </Head>
-      <TicketsManagement />
+      <Layout>
+         <TicketsManagement />
+      </Layout>
+     
    </div>
   );
 }

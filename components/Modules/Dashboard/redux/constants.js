@@ -19,5 +19,6 @@ export const API = {
   signUp : API_BASE_URL+'/v1/user/register',
   getProfile : API_BASE_URL+'/v1/user/getProfile',
   getResources : API_BASE_URL+'/v1/workspace/getAllResourceQuotations',
-  addResource : API_BASE_URL+'/v1/workspace/addResourceQuotation'
+  addResource : API_BASE_URL+'/v1/workspace/addResourceQuotation',
+  getAllDomains : API_BASE_URL+'/v1/workspace/getAllDomains'
 }

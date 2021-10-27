@@ -10,7 +10,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
-import Button from "@material-ui/core/Button";
+import Button from "components/CustomButtons";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
@@ -370,7 +370,6 @@ function TicketsList({ getAllPayments }) {
                   {userType !=='ADMIN' && 
                   <Button
                     onClick={() => router.push("/payment/new")}
-                    variant="outlined"
                   >
                     Pay Bill
                   </Button>

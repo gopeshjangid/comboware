@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-
+import React, { useState, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import DeleteIcon from '@mui/icons-material/DeleteTwoTone';
 import {  IconButton, Box } from "@material-ui/core";
-import EditIcon from '@mui/icons-material/ModeEditOutlineTwoTone';
 import CustomTable from "components/Table/CustomTable";
 import { Chip ,Typography } from "components/Custom";
 import Alert from "@mui/material/Alert";
@@ -13,7 +10,7 @@ import { getAllHosts } from "./redux/action";
 import Button from  "components/CustomButtons";
 import Modal from "components/Modal";
 import Domains from  "./domainsList";
-function hostsListBox({ getAllHosts,domainsList, hostsList, profile }) {
+function HostDetails({ getAllHosts,domainsList, hostsList, profile }) {
   const reduxState = useSelector((state) => state);
   const [error, setError] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -190,4 +187,4 @@ export default connect(
     return { ...state?.dashboard, profile: state?.user?.profile };
   },
   { getAllHosts }
-)(hostsListBox);
+)(HostDetails);

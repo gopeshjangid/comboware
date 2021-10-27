@@ -13,7 +13,7 @@ export default function Footer(props) {
   const classes = useStyles();
   return (
     <footer className={classes.footer}>
-      <div className={classes.container}>
+      {/* <div className={classes.container}>
         <div className={classes.left}>
           <List className={classes.list}>
             <ListItem className={classes.inlineBlock}>
@@ -51,7 +51,7 @@ export default function Footer(props) {
             ,Inc
           </span>
         </p>
-      </div>
+      </div> */}
     </footer>
   );
 }

@@ -26,6 +26,18 @@ export const getAllHosts = (hideNotification) => (dispatch) =>{
 
 }
 
+export const getAllDomains = (hideNotification) => (dispatch) =>{
+  
+  Service.get(API.getAllDomains).then(res=>{
+    hideNotification(true ,"Fetched.");
+    dispatch(saveResourceData({domainsList : res?.data?.data}));
+  }).catch(err =>{
+    hideNotification(false , "Something went wrong. Please try again");
+    dispatch(requestStop({error : err?.message}));
+  })
+
+}
+
 export const getResources = (query ,callback) => (dispatch) =>{
   dispatch(requestInit({message : "Please wait... "}));
   Service.get(API.getResources).then(res=>{

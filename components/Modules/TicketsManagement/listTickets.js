@@ -5,19 +5,17 @@ import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import { Typography, IconButton, Box } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
-import Button from "@material-ui/core/Button";
+import Button from "components/CustomButtons";
+import {Chip} from "components/Custom";
 import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
-import Table from "../../Table/Table-Grid";
 import Select from "../../Select";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
+
 import {
   COLUMNS,
   TICKET_STATUS_LIST,
@@ -46,7 +44,7 @@ function TicketsList({ getAllTickets, getProfile }) {
   };
 
   useEffect(() => {
-    // setLoader(reduxState?.ticket?.loading);
+     setLoader(reduxState?.ticket?.loading);
     return () => {};
   }, [reduxState?.ticket?.loading]);
 
@@ -103,20 +101,10 @@ function TicketsList({ getAllTickets, getProfile }) {
     return () => {};
   }, []);
 
-  const actionHandler = (e, data, status) => {
-    e.preventDefault();
-    setSubmitted(true);
-    setLoader(true);
-    console.log("data", data);
-    updateRequest({
-      workspaceId: data?.row?.id,
-      requestStatus: "APPROVED",
-      userId: data?.row?.user_id,
-    });
-  };
 
   const viewTicket = (details) => {
-    setTicketDetails(details);
+    console.log("details" ,details)
+    router.push("/ticket/"+details?.ticket_number);
   };
 
   const closeTicketDrawer = (open) => {
@@ -127,7 +115,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 
   const getColumnsDetails = () => {
     return [
-      { field: "select", select: true },
+      // { field: "select", select: true },
       { field: "ticket_number", header: "Ticket Number" },
       { field: "ticket_subject", header: "Title" },
       { field: "category_name", header: "Category" },
@@ -153,26 +141,37 @@ function TicketsList({ getAllTickets, getProfile }) {
 
   const getColumnsFields = () => {
     return [
-      { field: "select", select: true },
-      { field: "ticket_number", header: "Ticket Number" },
-      { field: "ticket_subject", header: "Title" },
+      // { field: "select", select: true },
+      { field: "ticket_number", header: "Ticket Number", renderCell : (row)=>{
+         return <Chip type="filled" label={row?.ticket_number} />
+      } },
+      { field: "ticket_subject", header: "Title" ,renderCell : () =>{
+
+      } },
       { field: "first_name", header: "Customer Name" },
-      { field: "ticket_status", header: "Ticket Status" },
-      { field: "repair_status", header: "Repair Status" },
+      { field: "ticket_status", header: "Ticket Status" ,renderCell : (row) =>{
+         let color = row?.ticket_status === 'OPEN' ? 'info' : row?.ticket_status === 'CLOSED' ? 'success' : 'warning'
+         return <Chip type="filled" label={row?.ticket_status} style={color} />
+      } },
+      { field: "repair_status", header: "Repair Status" ,renderCell : (row) =>{
+        let color = row?.repair_status === 'OPEN' ? 'info' : row?.repair_status === 'CLOSED' ? 'success' : 'warning'
+        return <Chip type="filled" label={row?.repair_status} style={color} />
+     }  },
       { field: "ticket_date", header: "Created At" },
       {
-        field: "action",
-        header: "Date",
+        field: "name",
+        header: "Action",
         renderCell: (params) => {
           return (
             <Button
-              variant="outlined"
+              
               color="primary"
               size="small"
+              type="action"
               style={{ marginLeft: 16 }}
-              onClick={() => viewTicket(params?.row)}
+              onClick={() => viewTicket(params)}
             >
-              View
+              View Detail
             </Button>
           );
         },
@@ -180,47 +179,6 @@ function TicketsList({ getAllTickets, getProfile }) {
     ];
   };
 
-  const getColumns = () => {
-    return COLUMNS?.map((col) => {
-      if (col?.field === "action") {
-        col.renderCell = (params) => {
-          return (
-            <Button
-              variant="outlined"
-              color="primary"
-              size="small"
-              style={{ marginLeft: 16 }}
-              onClick={() => viewTicket(params?.row)}
-            >
-              View
-            </Button>
-          );
-        };
-      }
-      if (col?.field === "ticket_number") {
-      }
-
-      if (col?.field === "ticket_number") {
-        col.renderCell = (params) => {
-          return (
-            <Button
-              variant="outlined"
-              color="primary"
-              size="small"
-              style={{ marginLeft: 16 }}
-              onClick={() =>
-                router.push("/ticket/" + params?.row?.ticket_number)
-              }
-            >
-              {params?.row?.ticket_number}
-            </Button>
-          );
-        };
-      }
-      return col;
-    });
-  };
-  console.log("filter", filters);
 
   const onFilterChange = (e) => {
     let name = e.target.name;
@@ -240,7 +198,7 @@ function TicketsList({ getAllTickets, getProfile }) {
     setFilter(_filters);
   };
   return (
-    <div>
+    <Box bgcolor="primary.light" mt="20px">
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -363,24 +321,23 @@ function TicketsList({ getAllTickets, getProfile }) {
       </Drawer>
       <GridContainer spacing={1}>
         <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader>
+        
               <GridContainer spacing={1} justify="space-between">
                 <GridItem xs={6}>
-                  <Typography variant="h5">{userType === 'ADMIN' ? 'Users '  : '' }Tickets List</Typography>
+                  <Typography variant="h5">{userType !== 'ADMIN' ? 'Users '  : '' }Tickets List</Typography>
                 </GridItem>
                 <GridItem xs={6} align="right">
-                  {userType !== 'ADMIN' &&
+                  {userType === 'ADMIN' &&
                   <Button
                     onClick={() => router.push("/ticket/new")}
-                    variant="outlined"
+                    variant="contained"
                   >
                     Create New
                   </Button>
                  }
                 </GridItem>
                 <GridItem xs={12}>&nbsp;</GridItem>
-                <GridItem xs={6}>
+                {/* <GridItem xs={6}>
                   <Select
                     name="ticket_status"
                     options={TICKET_STATUS_LIST.map((status) => ({
@@ -404,11 +361,9 @@ function TicketsList({ getAllTickets, getProfile }) {
                     value={filters?.repair_status}
                     onChange={onFilterChange}
                   />
-                </GridItem>
+                </GridItem> */}
               </GridContainer>
-            </CardHeader>
-            <CardBody>
-
+         
             <GridItem xs={12}>
             <CustomTable
               columns={getColumnsFields()}
@@ -419,8 +374,7 @@ function TicketsList({ getAllTickets, getProfile }) {
               {/* <GridContainer spacing={2}>
                 <Table pageSize={15} columns={getColumns()} rows={ticketList} />
               </GridContainer> */}
-            </CardBody>
-          </Card>
+           
         </GridItem>
 
         {/* <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
@@ -435,7 +389,7 @@ function TicketsList({ getAllTickets, getProfile }) {
           </Button>
         </GridItem> */}
       </GridContainer>
-    </div>
+    </Box>
   );
 }
 

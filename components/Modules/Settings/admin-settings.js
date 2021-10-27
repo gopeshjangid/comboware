@@ -4,9 +4,6 @@ import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import { Typography, IconButton, Box } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
 import TextField from "../../CustomInput/TextField";
 import useStyles from "./styles";
 import Button from "components/CustomButtons";
@@ -15,12 +12,13 @@ import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { saveResource, getResources } from "./redux/action";
 import FieldSet from "components/Form/fieldset";
-import HostList from "components/Modules/Dashboard/hostsList";
+
 import Environment from "components/Modules/Settings/environmentPlan";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
 import {Chip} from  "components/Custom";
-
+import UsersList from "components/Modules/Dashboard/usersList";
+import HostManageMent from  "./hostsManagement";
 function Settings({ saveResource, getResources, settings }) {
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
@@ -133,8 +131,8 @@ function Settings({ saveResource, getResources, settings }) {
           <GridItem xs={12} sm={12} md={12}>
               <FieldSet
                 padding={30}
+                title="Resource quotation"
               >
-                <legend>Resource Billing Quotes</legend>
                 <GridContainer spacing={2}>
                   <GridItem container className={classes.gridRow} xs={4}>
                     <Typography>RAM</Typography>
@@ -221,13 +219,17 @@ function Settings({ saveResource, getResources, settings }) {
               </FieldSet>
             </GridItem>
           
-            <GridItem>
-               <FieldSet title="Hypervisors">
-                  <HostList />
-               </FieldSet>
+            <GridItem xs={12}>
+               <HostManageMent />
             </GridItem>
 
-            <GridItem>
+            <GridItem xs={12}>
+               <FieldSet title="Customers">
+                  <UsersList />
+               </FieldSet>
+            </GridItem>
+            
+            <GridItem xs={12}>
                <FieldSet title="Environment Plan">
                   <Environment />
                </FieldSet>

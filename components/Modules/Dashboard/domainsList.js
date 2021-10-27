@@ -2,48 +2,39 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { connect, useSelector } from "react-redux";
 import DeleteIcon from '@mui/icons-material/DeleteTwoTone';
-import { Typography, IconButton, Box } from "@material-ui/core";
+import {  IconButton, Box } from "@material-ui/core";
 import EditIcon from '@mui/icons-material/ModeEditOutlineTwoTone';
 import CustomTable from "components/Table/CustomTable";
-import { Chip } from "components/Custom";
+import { Chip ,Typography } from "components/Custom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import Loader from "components/Loader/circular";
-import { usersList } from "../Profile/redux/action";
+import { getAllDomains } from "./redux/action";
 import Button from  "components/CustomButtons";
-function usersListDataBox({ usersList, profile }) {
+function hostsListBox({ getAllDomains, domainsList, profile }) {
   const reduxState = useSelector((state) => state);
   const [error, setError] = useState(false);
-  const usersListData = reduxState?.user?.usersList;
   const [isLoading, setLoading] = useState(false);
-
 
   const hideNotification = (status, message) => {
     setLoading(false);
     if (!status) {
-      setError("Something went wrong. please try again");
+      setError(message);
     } else {
       setError("");
     }
   };
 
   useEffect(() => {
-    hideNotification(reduxState?.user?.usersList.length)
-    return () => {};
-  }, [reduxState?.user?.usersList]);
-
-  useEffect(() => {
-    if (usersListData?.length === 0) {
+    if (domainsList?.length === 0) {
       setLoading(true);
-      usersList("?userType=ER");
+      getAllDomains(hideNotification);
     } else {
       setLoading(false);
     }
 
     return () => {};
   }, []);
-
-  console.log("redux" ,reduxState)
 
   if (profile?.user_type !== "ADMIN") {
     return null;
@@ -52,63 +43,34 @@ function usersListDataBox({ usersList, profile }) {
   const getColumns = () => {
     return [
       {
-        field: "first_name",
-        header: "Name",
+        field: "name",
+        header: "Domain Name",
+        width : 200,
         renderCell: (row) => {
           return (
             <>
               <Typography variant="body1" color="primary">
-                {row?.first_name+" "+row?.last_name}
+                {row?.name}
               </Typography>
             </>
           );
         },
       },
-
-      { field: "email", header: "Email" },
-      { field: "trial_expire_date", header: "Trial Expiration Date" ,renderCell: (row) => {
-        if(!row?.trial_expire_date){
-          return '';
-        }
-        return (
-          <>
-            <Chip style="info" label={row?.trial_expire_date} color="primary" />
-          </>
-        );
-      }, },
-      { field: "trial_extend_date", header: "Trial Extend Date",renderCell: (row) => {
-        if(!row?.trial_extend_date){
-          return '';
-        }
-        return (
-          <>
-            <Chip style="info" label={row?.trial_extend_date} color="primary" />
-          </>
-        ); 
-       }
+      { 
+        field: "description",header : "Description"
       },
       {
-        field: "status",
+        field: "enabled",
         header: "STATUS",
         renderCell: (row) => {
           return (
             <Chip
-              label={row?.status  ? "ACTIVE" : "INACTIVE"}
-              type={row?.status ? "filled" : "outlined"}
+              label={row?.enabled  ? "ACTIVE" : "INACTIVE"}
+              type={row?.enabled  ? "filled" : "outlined"}
             />
           );
         },
-      },
-      {
-        field: "action",
-        header: "STATUS",
-        width : 100,
-        renderCell: (row) => {
-          return (
-            <Box display='flex' justifyContent='space-between'><Button type="action"  >View detail</Button></Box>
-          );
-        },
-      },
+      }
     ];
   };
 
@@ -125,9 +87,9 @@ function usersListDataBox({ usersList, profile }) {
         </Alert>
       ) : (
         <CustomTable
-          footer_label={"Total customers"}
+          footer_label={"Available Domains"}
           columns={getColumns()}
-          data={usersListData}
+          data={domainsList}
           actions={[
             { label: "Edit", handleClick: handleClick },
             { label: "DELETE", handleClick: handleClick },
@@ -142,5 +104,5 @@ export default connect(
   (state) => {
     return { ...state?.dashboard, profile: state?.user?.profile };
   },
-  { usersList }
-)(usersListDataBox);
+  { getAllDomains }
+)(hostsListBox);

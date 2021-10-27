@@ -1,6 +1,9 @@
 import { START, FAILED, SAVE_RESOURCE } from "./constants";
 const initialState = {
   hostsList : [],
+  domainsList : [],
+  selectedHost : null,
+  selectedUser : null,
   loading : false,
   message : '',
   error : ''
