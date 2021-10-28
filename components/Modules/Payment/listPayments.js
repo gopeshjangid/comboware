@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box ,Chip } from "@material-ui/core";
+import { Typography, IconButton, Box, Chip } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
@@ -19,14 +19,11 @@ import Select from "../../Select";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
 import FieldSet from "components/Form/fieldset";
-import {
-  COLUMNS,
-  PAYMENT_STATUS_LIST
-} from "./redux/constants";
+import { COLUMNS, PAYMENT_STATUS_LIST } from "./redux/constants";
 import { getAllPayments } from "./redux/action";
 import Drawer from "../../Drawers";
 import { useRouter } from "next/dist/client/router";
-
+import Search from "components/Search";
 function TicketsList({ getAllPayments }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
@@ -36,7 +33,10 @@ function TicketsList({ getAllPayments }) {
   const [loader, setLoader] = useState(false);
   const [ticketList, setTicketList] = useState([]);
   const [paymentDetails, setPaymentDetails] = useState(null);
-  const [filters, setFilter] = useState({payment_id : '' ,payment_status : 'ALL'});
+  const [filters, setFilter] = useState({
+    payment_id: "",
+    payment_status: "ALL",
+  });
   const router = useRouter();
   const userType = reduxState?.user?.profile?.user_type;
   const manageMessage = () => {
@@ -78,9 +78,11 @@ function TicketsList({ getAllPayments }) {
     //  getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
     let query =
       localStorage.getItem("userType") !== "ADMIN"
-        ? "?userId=" + Number(localStorage.getItem("userId"))+'&payment_status=COMPLETED&payment_id='
+        ? "?userId=" +
+          Number(localStorage.getItem("userId")) +
+          "&payment_status=COMPLETED&payment_id="
         : "?payment_id=''&payment_status=COMPLETED";
-        getAllPayments(query);
+    getAllPayments(query);
     return () => {};
   }, []);
 
@@ -180,21 +182,19 @@ function TicketsList({ getAllPayments }) {
           return (
             <Chip
               label={params?.row?.payment_status}
-              color={params?.row?.payment_status === 'COMPLETED' ? 'success' : "error"}
+              color={
+                params?.row?.payment_status === "COMPLETED"
+                  ? "success"
+                  : "error"
+              }
             />
-              
           );
         };
       }
 
       if (col?.field === "amount") {
         col.renderCell = (params) => {
-          return (
-            <Chip
-              label={"$"+params?.row?.amount}
-            />
-              
-          );
+          return <Chip label={"$" + params?.row?.amount} />;
         };
       }
 
@@ -229,14 +229,19 @@ function TicketsList({ getAllPayments }) {
         : "";
     let sign = query === "" ? "?" : "&";
     let _filters = { ...filters, [name]: value };
-      if (!filters) {
-        query += sign + `${name}=${value}`;
-      } else {
-        query += sign + `${new URLSearchParams(_filters).toString()}`;
-      }
+    if (!filters) {
+      query += sign + `${name}=${value}`;
+    } else {
+      query += sign + `${new URLSearchParams(_filters).toString()}`;
+    }
     getAllPayments(query);
     setFilter(_filters);
   };
+
+  const onSearch = (input) => {
+    console.log("search", input);
+  };
+
   return (
     <Wrapper>
       <Loader open={loader} />
@@ -245,71 +250,23 @@ function TicketsList({ getAllPayments }) {
         type={message?.type || "success"}
         message={message?.text}
       />
-       <FieldSet title="Payment list">
-       <GridContainer spacing={1}>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader>
-              <GridContainer spacing={1} justify="space-between">
-                <GridItem xs={6}>
-                  <Typography variant="h5">Payments</Typography>
-                </GridItem>
-                <GridItem xs={6} align="right">
-                  {userType !=='ADMIN' && 
-                  <Button
-                    onClick={() => router.push("/payment/new")}
-                  >
-                    Pay Bill
-                  </Button>
-                  }
-                </GridItem>
-                <GridItem xs={12}>&nbsp;</GridItem>
-                <GridItem xs={6}>
-                  <TextField
-                    name="payment_id"
-                    label="Search payment Id"
-                    value={filters?.payment_id}
-                    onChange={onFilterChange}
-                    fullWidth
-                    type='number'
-                  />
-                </GridItem>
+      <FieldSet title="Payment list">
+        <GridContainer spacing={2}>
+          <GridItem xs={6}>
+            <Search onSubmit={onSearch} placeHolder="Search payments" />
+          </GridItem>
+          <GridItem xs={6} align="right">
+            {userType !== "ADMIN" && (
+              <Button onClick={() => router.push("/payment/new")}>
+                Pay Bill
+              </Button>
+            )}
+          </GridItem>
 
-                <GridItem xs={6}>
-                  <Select
-                    name="payment_status"
-                    options={PAYMENT_STATUS_LIST.map((status) => ({
-                      label: status,
-                      value: status,
-                    }))}
-                    label="Payment Status"
-                    value={filters?.payment_status}
-                    onChange={onFilterChange}
-                  />
-                </GridItem>
-              </GridContainer>
-            </CardHeader>
-            <CardBody>
-              <GridContainer spacing={2}>
-                <CustomTable columns={getColumnsFields()} data={ticketList} />
-                {/* <Table pageSize={15} columns={getColumns()} rows={ticketList} /> */}
-              </GridContainer>
-            </CardBody>
-          </Card>
-        </GridItem>
-
-        {/* <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={submitHandler}
-          >
-            Save Changes
-          </Button>
-        </GridItem> */}
-      </GridContainer>
+          <GridItem xs={12}>
+            <CustomTable columns={getColumnsFields()} data={ticketList} />
+          </GridItem>
+        </GridContainer>
       </FieldSet>
     </Wrapper>
   );

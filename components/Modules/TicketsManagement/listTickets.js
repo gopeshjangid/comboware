@@ -16,11 +16,7 @@ import Select from "../../Select";
 import CustomTable from "components/Table/CustomTable";
 import Wrapper from "components/Wrapper";
 import FieldSet from "components/Form/fieldset";
-import {
-  COLUMNS,
-  TICKET_STATUS_LIST,
-  REPAIR_STATUS_LIST,
-} from "./redux/constants";
+import Search from  "components/Search";
 import { getAllTickets } from "./redux/action";
 import Drawer from "../../Drawers";
 import { useRouter } from "next/dist/client/router";
@@ -197,6 +193,10 @@ function TicketsList({ getAllTickets, getProfile }) {
     getAllTickets(query);
     setFilter(_filters);
   };
+
+ const onSearch = (input) =>{
+    console.log("search" ,input);
+  }
   return (
     <Wrapper  mt="20px">
       <Loader open={loader}  />
@@ -324,7 +324,8 @@ function TicketsList({ getAllTickets, getProfile }) {
         <GridItem xs={12} sm={12} md={12}>
         
               <GridContainer spacing={1} justify="space-between">
-                <GridItem xs={12} align="right">
+              <GridItem xs={6} align="left"><Search onSubmit={onSearch} /></GridItem>
+                <GridItem xs={6} align="right">
                   {userType !== 'ADMIN' &&
                   <Button
                     onClick={() => router.push("/ticket/new")}
