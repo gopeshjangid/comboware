@@ -7,6 +7,7 @@ import {
   FolderOpenOutlined,
   CameraAltOutlined,
   MessageOutlined,
+  AttachFileOutlined
 } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
@@ -23,9 +24,7 @@ import {
   Divider,
   Link,
 } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
 import Select from "../../Select";
@@ -282,6 +281,11 @@ function TicketDetails({
     fileRef?.current?.value === "";
   };
 
+  const onUploadBtn = () =>{
+    if(fileRef.current)
+      fileRef.current.click();
+  }
+
   const addActivityHandler = () => {
     if (note) {
       addNewActivity(
@@ -383,12 +387,11 @@ function TicketDetails({
                 <Divider dark />
               </GridItem>
 
-              <GridItem xs={6}>
+              <GridItem xs={12}>
                 <fieldset
                   className={classes.boxModal}
                   borderColor="#e7e9f0"
                   border={0.5}
-                  style={{height : '218px'}}
                 >
                   <legend>Primary Information</legend>
                   <GridContainer spacing={2}>
@@ -430,57 +433,7 @@ function TicketDetails({
                   </GridContainer>
                 </fieldset>
               </GridItem>
-              <GridItem xs={6}>
-                <fieldset
-                  className={classes.boxModal}
-                  borderColor="#e7e9f0"
-                  border={0.5}
-                >
-                  <legend>Add New Activity</legend>
-                  <GridContainer spacing={2}>
-                    <GridItem xs={12}>
-                      <GridContainer spacing={3}>
-                        <GridItem xs={8}>
-                          <TextareaAutosize
-                            minRows={5}
-                            className={classes.textArea}
-                            label="Note"
-                            placeHolder="Enter note..."
-                            value={note?.content}
-                            onChange={(e) =>
-                              setNote({
-                                ...note,
-                                type: "TEXT",
-                                content: e.target.value,
-                              })
-                            }
-                          />
-                        </GridItem>
-                        <GridItem xs={4}>
-                          <Button
-                            onClick={addActivityHandler}
-                            color="primary"
-                            variant="outlined"
-                          >
-                            Add
-                          </Button>
-                        </GridItem>
-                        <GridItem xs={12}>
-                          <label>Attachment</label>&nbsp;&nbsp;
-                          <TextField
-                            ref={fileRef}
-                            inputProps={{ accept: "image/*" }}
-                            type="file"
-                            onChange={onFileUpload}
-                            type="file"
-                          />
-                        </GridItem>
-                      </GridContainer>
-                    </GridItem>
-                  </GridContainer>
-                </fieldset>
-              </GridItem>
-
+            
               <GridItem xs={12}>
                 <fieldset
                   className={classes.boxModal}
@@ -556,6 +509,58 @@ function TicketDetails({
                   </GridContainer>
                 </fieldset>
               </GridItem>
+              <GridItem xs={12}>
+                <fieldset
+                  className={classes.boxModal}
+                  borderColor="#e7e9f0"
+                  border={0.5}
+                >
+                  <legend>Add New Activity</legend>
+                  <GridContainer spacing={2}>
+                    <GridItem xs={12}>
+                      <GridContainer spacing={3}>
+                        <GridItem xs={8}>
+                          <TextareaAutosize
+                            minRows={5}
+                            className={classes.textArea}
+                            label="Note"
+                            placeHolder="Enter note..."
+                            value={note?.content}
+                            onChange={(e) =>
+                              setNote({
+                                ...note,
+                                type: "TEXT",
+                                content: e.target.value,
+                              })
+                            }
+                          />
+                        </GridItem>
+                        <GridItem xs={4}>
+                          <Button
+                            onClick={addActivityHandler}
+                            color="primary"
+                            variant="outlined"
+                          >
+                            Add
+                          </Button>
+                        </GridItem>
+                        <GridItem xs={12}>
+                          <label>Attachment</label>&nbsp;&nbsp;
+                          <IconButton onClick={onUploadBtn}><AttachFileOutlined/></IconButton>
+                          <input
+                            ref={fileRef}
+                            inputProps={{ accept: "image/*" }}
+                            type="file"
+                            onChange={onFileUpload}
+                            style={{visibility : 'hidden'}}
+                          />
+                        </GridItem>
+                      </GridContainer>
+                    </GridItem>
+                  </GridContainer>
+                </fieldset>
+              </GridItem>
+
               <GridItem xs={12}>
                 <fieldset
                   className={classes.boxModal}

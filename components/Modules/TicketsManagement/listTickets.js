@@ -199,7 +199,7 @@ function TicketsList({ getAllTickets, getProfile }) {
   };
   return (
     <Wrapper  mt="20px">
-      <Loader open={loader} />
+      <Loader open={loader}  />
       <Snackbar
         open={isSubmitted}
         type={message?.type || "success"}
@@ -325,7 +325,7 @@ function TicketsList({ getAllTickets, getProfile }) {
         
               <GridContainer spacing={1} justify="space-between">
                 <GridItem xs={12} align="right">
-                  {userType === 'ADMIN' &&
+                  {userType !== 'ADMIN' &&
                   <Button
                     onClick={() => router.push("/ticket/new")}
                     variant="contained"

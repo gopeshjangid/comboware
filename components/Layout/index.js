@@ -11,7 +11,7 @@ export default function FixedContainer(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Container className={classes.root} fixed>
+      <Container className={classes.root} maxWidth="xl" fixed>
         {props?.children}
       </Container>
     </React.Fragment>

@@ -92,7 +92,7 @@ export const addNewActivity = (data ,callBack) => (dispatch ,getState) =>{
     dispatch(saveTicket({ticketDetails  :{...state?.ticket?.ticketDetails ,activities : [...state?.ticket?.ticketDetails?.activities,res?.data?.data[0]]}, message : "Uploaded the activity successfully."}));
   }).catch(err =>{
     console.log("api  err-- =>>>>>>>" ,err)
-    dispatch(failed({data  : null, error : errorHandler()}));
+    dispatch(failed({data  : null, error : data?.type === 'image' ? "Error in image uploading...":  errorHandler()}));
   })
 
 }
