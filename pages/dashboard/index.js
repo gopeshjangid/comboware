@@ -18,7 +18,6 @@ import Admin from "layouts/Admin.js";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Tasks from "components/Tasks/Tasks.js";
-import CustomTabs from "components/CustomTabs/CustomTabs.js";
 import Danger from "components/Typography/Danger.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";

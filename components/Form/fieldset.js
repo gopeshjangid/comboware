@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     background: "white",
     padding: (props) => props?.padding || 20,
     [theme.breakpoints.down('sm')] : {
-      padding : "0px !important",
       margin : "0px !important",
       paddingTop : '16px !important',
     }
@@ -36,7 +35,7 @@ export default function FieldSet(props) {
 
   return (
       <Box className={classes.fieldset}  border={0.5}>
-         <Typography variant="h6" color='#3aadb9' fontSize={25}>{props?.title}</Typography>
+         <Typography variant="h6" color='#ec0c73' fontSize={25}>{props?.title}</Typography>
         <div className={classes.childBox}>{props?.children}</div>
       </Box>
   );

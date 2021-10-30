@@ -5,12 +5,15 @@ const useStyles = makeStyles((theme) => ({
     background: (props) => props?.light ?  'white' :   '#F4F7FC',
     borderRadius: '6px',
     padding : 10,
+    paddingTop : '20px',
+    marginTop : '30px',
     width  : '100%',
     height : 'auto',
     [theme.breakpoints.down('sm')] : {
-      padding : 0,
+      padding : 10,
       margin : 0,
       paddingTop : '20px',
+      marginTop : '60px',
     }
   },
 }));
