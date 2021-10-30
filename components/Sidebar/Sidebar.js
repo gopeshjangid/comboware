@@ -58,12 +58,12 @@ export default function Sidebar(props) {
             activeRoute(prop.layout + prop.path) ||
             prop.path === "/upgrade-to-pro",
         });
-
         let subItems = prop?.subItems;
+
         return (
           <Link href={!subItems ?  prop.layout + prop.path : "#"} key={key}>
             <a className={activePro + classes.item}>
-              <ListItem button className={classes.itemLink } onClick={(e)=> subItems  ? handleClick(e) : ''}>
+              <ListItem button style={{background : activeRoute(prop.layout) &&'#caf9f1'}}  className={classes.itemLink } onClick={(e)=> subItems  ? handleClick(e) : ''}>
                 {typeof prop.icon === "string" ? (
                   <Icon
                     className={classNames(classes.itemIcon, whiteFontClasses, {
@@ -80,7 +80,7 @@ export default function Sidebar(props) {
                   />
                 )}
                 <ListItemText
-                 
+                  style={{background : activeRoute(prop.layout ) &&'#caf9f1' || ''}}
                   className={classNames(classes.itemText, whiteFontClasses, {
                     [classes.itemTextRTL]: props.rtlActive,
                   })}
@@ -157,7 +157,7 @@ export default function Sidebar(props) {
           }}
         >
          <div className={classes.sidebarWrapper}>{links}</div>
-         dasdasd
+        
         </Drawer>
       </Hidden>
       <Hidden smDown implementation="css">
