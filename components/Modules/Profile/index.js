@@ -419,18 +419,18 @@ function Profile({
               icon: <NetworkCell />,
               label: "Domain and Project",
               panel: (
-                <GridContainer spacing={1}>
+                <GridContainer spacing={2}>
                   <GridItem xs={12}>
                     <FieldSet title="Project and domain details">
-                      <GridContainer spacing={1}>
+                      <GridContainer spacing={3} justify="space-between">
                         {domain?.id && (
                           <>
                             <GridItem
                               className={classes.gridRow}
-                              xs={12}
+                              xs={4}
                               sm={4}
                             >
-                              <Typography align="center" variant="body1">
+                              <Typography align="left" variant="body1">
                                 Domain Name:
                               </Typography>
                             </GridItem>
@@ -444,12 +444,12 @@ function Profile({
                               </Typography>
                             </GridItem>
                             <GridItem className={classes.gridRow} sm={4} xs={4}>
-                              <Typography variant="body1">
+                              <Typography align="left" variant="body1">
                                 Domain Description:
                               </Typography>
                             </GridItem>
                             <GridItem className={classes.gridRow} xs={8} sm={8}>
-                              <Typography color="primary" variant="body1">
+                              <Typography align="left" color="primary" variant="body1">
                                 {domain?.description}
                               </Typography>
                             </GridItem>
@@ -458,7 +458,7 @@ function Profile({
                         {project?.id && (
                           <>
                             <GridItem className={classes.gridRow} xs={4} sm={4}>
-                              <Typography align="center" variant="body1">
+                              <Typography align="left" variant="body1">
                                 Project Name
                               </Typography>
                             </GridItem>
@@ -472,12 +472,12 @@ function Profile({
                               </Typography>
                             </GridItem>
                             <GridItem className={classes.gridRow} xs={4} sm={4}>
-                              <Typography variant="body1">
+                              <Typography align="left" variant="body1">
                                 Project Description:
                               </Typography>
                             </GridItem>
                             <GridItem className={classes.gridRow} sm={8} xs={8}>
-                              <Typography color="primary" variant="body1">
+                              <Typography  align="left" color="primary" variant="body1">
                                 {project?.description}
                               </Typography>
                             </GridItem>
