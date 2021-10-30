@@ -12,7 +12,6 @@ function Settings({getLogs}) {
     setData(reduxState?.monitoring?.logs);
     return () => {};
   }, [reduxState?.monitoring?.logs]);
-console.log("reduxState" ,reduxState)
  const callBack = () =>{
 
  }

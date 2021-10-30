@@ -6,7 +6,6 @@ import Head from "next/head";
 
 function Support() {
 
-  console.log("Support")
   return (
     <div>
       <Head>

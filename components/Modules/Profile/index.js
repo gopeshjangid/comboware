@@ -1,14 +1,11 @@
 import React, { useState, useEffect ,useRef } from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { AddCircleOutline } from "@material-ui/icons";
+import { AddCircleOutline ,AttachFileOutlined } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box  ,Paper} from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
+import { Typography, IconButton} from "@material-ui/core";
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
 import Select from "../../Select";
@@ -19,6 +16,8 @@ import Snackbar from "components/Snackbar";
 import { updateProfile ,getProfile,updateSystemInfo } from "./redux/action";
 import { createDomain } from "../Workspace/redux/action";
 import {SKILLS} from  "./redux/constants";
+import FieldSet from "components/Form/fieldset";
+import Wrapper from "components/Wrapper";
 
 function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   const useStyles = makeStyles(styles);
@@ -123,7 +122,6 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
     return () => {};
   }, [reduxState?.user?.skills]);
 
-  console.log("reduxState=====", reduxState);
   
   const addSkill = () => {
     let _skills = [...skills];
@@ -184,8 +182,6 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
     let name = e.target.name;
     let value = e.target.value;
 
-    console.log("name----",name ,value);
-    console.log("eeeee" ,e)
     let _skills = [...skills];
     _skills = _skills?.map ((skill , index) => {
       if(itemIndex === index){
@@ -223,7 +219,6 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
 
 
   const imageClick = () =>{
-   console.log("imageRef" ,imageRef)
    if(imageRef.current){
     imageRef.current.click();
    }
@@ -231,7 +226,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
   }
   const {is_profile_setup} = reduxState?.user?.profile;
   return (
-    <div >
+    <Wrapper>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -287,17 +282,14 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
           </GridItem>
         </GridContainer>
       </Modal>
-      <GridContainer style={{background : 'white', marginTop :20}} spacing={1}>
+      <GridContainer  spacing={1}>
         {userType !== 'ADMIN' && <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader>
-              <Typography variant="h5">Project and domain details</Typography>
-            </CardHeader>
-            <CardBody>
+         
+            <FieldSet title="Project and domain details">
               <GridContainer spacing={3}>
                 {domain?.id && (
                   <>
-                    <GridItem className={classes.gridRow} xs={4} container  spacing={2} alignContent="center" justify="space-around">
+                    <GridItem className={classes.gridRow} xs={12} sm={4}  container  spacing={2} alignContent="center" justify="space-around">
                      
                         <Typography align="center" variant="body1">Domain Name:</Typography>
                         <Typography align="left" color="primary" variant="body1" >
@@ -305,7 +297,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                         </Typography>
                       
                     </GridItem>
-                    <GridItem className={classes.gridRow} xs={8} container  spacing={2} alignContent="center" justify="space-around">
+                    <GridItem className={classes.gridRow} sm={8} xs={12} container  spacing={2} alignContent="center" justify="space-around">
                      
                         <Typography variant="body1">Domain Description:</Typography>
                         <Typography color="primary" variant="body1" >
@@ -317,11 +309,11 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                 )}
                 {project?.id && (
                   <>
-                    <GridItem className={classes.gridRow} xs={4} container  spacing={2} alignContent="center" justify="space-around">
+                    <GridItem className={classes.gridRow} xs={12} sm={4} container  spacing={2} alignContent="center" justify="space-around">
                         <Typography align="center" variant="body1">Project Name</Typography>
                         <Typography align="left" color="primary" variant="body1">{project?.name}</Typography>
                     </GridItem>
-                    <GridItem className={classes.gridRow} xs={8} container  spacing={2} alignContent="center" justify="space-around">
+                    <GridItem className={classes.gridRow} xs={12} sm={8} container  spacing={2} alignContent="center" justify="space-around">
                     
                         <Typography variant="body1">
                           Project Description:
@@ -334,12 +326,12 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                 {!domain?.id && (
                   <>
                     {" "}
-                    <GridItem xs={8}>
+                    <GridItem xs={12} sm={8}>
                       <Typography variant="h6" component="h5">
                         First create a new domain and project.
                       </Typography>
                     </GridItem>
-                    <GridItem xs={4}>
+                    <GridItem xs={12} sm={4}>
                       <Button
                         onClick={() => setDomainModal(true)}
                       >
@@ -349,19 +341,16 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                   </>
                 )}
               </GridContainer>
-            </CardBody>
-          </Card>
+            </FieldSet>
+         
         </GridItem>
        }
        {(is_profile_setup || (is_profile_setup ===0 && domain?.id)) && (<>
         <GridItem xs={12}>
-          <Card>
-            <CardHeader>
-              <Typography variant="h5">Personal Details</Typography>
-            </CardHeader>
-            <CardBody>
+          
+            <FieldSet title="Personal Details">
               <GridContainer spacing={3}>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     onChange={profileChangeHandler}
                     name="first_name"
@@ -374,7 +363,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     }
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -383,7 +372,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     value={profile?.form?.last_name}
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -395,7 +384,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     disabled={true}
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -406,7 +395,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     value={profile?.form?.phone }
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem sm={4} xs={12}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -421,7 +410,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     value={profile?.form?.user_name }
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     type="password"
@@ -436,18 +425,13 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                   />
                 </GridItem>
               </GridContainer>
-            </CardBody>
-          </Card>
+            </FieldSet>
         </GridItem>
        
         {userType !== 'ADMIN' && <GridItem xs={12}>
-          <Card>
-            <CardHeader>
-              <Typography variant="h5">Company Details</Typography>
-            </CardHeader>
-            <CardBody>
+          <FieldSet title="Company Details">
               <GridContainer spacing={3}>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     onChange={profileChangeHandler}
                     name="company_name"
@@ -460,7 +444,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     }
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -469,7 +453,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     value={profile?.form?.company_id}
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -481,7 +465,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     
                   />
                 </GridItem>
-                <GridItem xs={4}>
+                <GridItem xs={12} sm={4}>
                   <TextField
                     fullWidth
                     onChange={profileChangeHandler}
@@ -492,12 +476,12 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     value={profile?.form?.company_phone }
                   />
                 </GridItem>
-                <GridItem container justify='space-around' xs={6}>
+                <GridItem container justify='space-around' sm={6} xs={12}>
                    <label>System image</label>
                   <img src={system_image} width={300} height={250}  alt='system image' />
                 </GridItem>
-                <GridItem container justify='space-between' xs={2}>
-                  <Button variant="contained" onClick={imageClick}>Upload New</Button>
+                <GridItem container justify='space-between' sm={2} xs={12}>
+                  <IconButton onClick={imageClick}><AttachFileOutlined/></IconButton>
                   <input
                     accept="image/png, image/gif, image/jpeg, image/jpg"
                     onChange={onFileUpload}
@@ -509,20 +493,15 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                 </GridItem>
                 
               </GridContainer>
-            </CardBody>
-          </Card>
+          </FieldSet>
         </GridItem>
         }
       
         {reduxState?.user?.profile?.user_type === "ER" && (
           <GridItem xs={12} >
-            <Card>
-              <CardHeader>
-                <Typography variant="h5">Work Details</Typography>
-              </CardHeader>
-              <CardBody>
+            <FieldSet title="Work Details">
                 <GridContainer spacing={3}>
-                  <GridItem xs={10} sm={10} md={10}>
+                  <GridItem xs={12} sm={10} md={10}>
                     <GridContainer spacing={2} style={{ marginRight: 10 }}>
                       {skills?.map((skill, index) => {
                         return (
@@ -564,8 +543,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
                     <TextField fullWidth label="Work Experience" />
                   </GridItem> */}
                 </GridContainer>
-              </CardBody>
-            </Card>
+            </FieldSet>
           </GridItem>
         )}
         <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
@@ -580,7 +558,7 @@ function Profile({ updateProfile, createDomain,updateSystemInfo, getProfile }) {
         </GridItem>
        </>)}
       </GridContainer>
-    </div>
+    </Wrapper>
   );
 }
 

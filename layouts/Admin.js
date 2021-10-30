@@ -10,16 +10,16 @@ import Navbar from "components/Navbars/Navbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import routes from "routes.js";
-
+import Appbar from "./AppBar";
 import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
 
 import bgImage from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
-import {connect} from  "react-redux";
-import {getProfile} from "components/Modules/Profile/redux/action";
+import logo from "assets/img/logo.svg";
+import { connect } from "react-redux";
+import { getProfile } from "components/Modules/Profile/redux/action";
 let ps;
 
- function Admin({ children,getProfile, ...rest }) {
+function Admin({ children, getProfile, ...rest }) {
   // used for checking current route
   const router = useRouter();
   // styles
@@ -35,7 +35,7 @@ let ps;
   const handleImageClick = (image) => {
     setImage(image);
   };
-  
+
   const handleFixedClick = () => {
     if (fixedClasses === "dropdown") {
       setFixedClasses("dropdown show");
@@ -73,15 +73,28 @@ let ps;
     };
   }, [mainPanel]);
 
-
-  React.useEffect(()=>{
-    
-    if(localStorage.getItem("userId") === '' || !localStorage.getItem("userId")){
-       router.push("/");
+  React.useEffect(() => {
+    if (
+      localStorage.getItem("userId") === "" ||
+      !localStorage.getItem("userId")
+    ) {
+      if (localStorage.getItem("userType")) {
+        let type =
+          localStorage.getItem("userType") === "ER"
+            ? "/login/engineer"
+            : localStorage.getItem("userType") === "USER"
+            ? "/login/customer"
+            : "/admin-login";
+        // router.push(type);
+      } else {
+        router.push("/");
+      }
     } else {
       getProfile(localStorage.getItem("userId"));
     }
-  },[])
+  }, []);
+
+  console.log("mobileOpen", mobileOpen);
   return (
     <div className={classes.wrapper}>
       <Sidebar
@@ -94,12 +107,13 @@ let ps;
         color={color}
         {...rest}
       />
+      <Appbar handleDrawerToggle={handleDrawerToggle} />
       <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
+        {/* <Navbar
           routes={routes}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
-        />
+        /> */}
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>
@@ -109,11 +123,9 @@ let ps;
           <div className={classes.map}>{children}</div>
         )}
         {getRoute() ? <Footer /> : null}
-        
       </div>
     </div>
   );
 }
 
-
-export default connect(null ,{getProfile})(Admin);
+export default connect(null, { getProfile })(Admin);

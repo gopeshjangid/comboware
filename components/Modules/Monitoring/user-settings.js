@@ -99,7 +99,6 @@ function Settings({  }) {
 
 
   const imageClick = () =>{
-   console.log("imageRef" ,imageRef)
    if(imageRef.current){
     imageRef.current.click();
    }

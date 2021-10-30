@@ -11,9 +11,7 @@ const appStyle = (theme) => ({
     height: "100vh",
   },
   mainPanel: {
-    [theme.breakpoints.up("md")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-    },
+   
     overflow: "auto",
     position: "relative",
     float: "right",
@@ -21,12 +19,26 @@ const appStyle = (theme) => ({
     maxHeight: "100%",
     width: "100%",
     overflowScrolling: "touch",
-    height : '100vh'
+    overflow : 'auto',
+    height : '100vh',
+    [theme.breakpoints.up("md")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: `100%`,
+      margin : '0px !important',
+      padding : '0px !important'
+    },
   },
   content: {
     marginTop: "20px",
     padding: "20px 15px",
     minHeight: "calc(100vh - 123px)",
+    [theme.breakpoints.down("sm")]: {
+      width: `100%`,
+      margin : '0px !important',
+      padding : '0px !important'
+    },
   },
   container,
   map: {

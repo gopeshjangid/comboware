@@ -189,9 +189,6 @@ function App({sendMessage , getAllMessages , getLatestMessage ,chat}) {
     }
   },[chat?.messageList]);
 
-console.log(
-  "bot que",botQuestion
-)
 
 useEffect(() => {
   // if(messages.length){
@@ -222,7 +219,6 @@ useEffect(() => {
   
   }
 
-  console.log("chat" ,chat)
   return (
     <div className={classes.container}>
       {open ? <Paper className={classes.paper} zDepth={2}>

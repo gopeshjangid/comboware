@@ -6,7 +6,6 @@ import Head from "next/head";
 
 function TicketList() {
 
-  console.log("list ticket")
   return (
     <div>
       <Head>

@@ -42,7 +42,6 @@ function Settings({ saveResource ,getResources  ,settings}) {
 
   const getValue = (str) =>{
     let filtered = settings?.resources?.filter(setting => setting?.resource_type === str) || [];
-    console.log("filtered" ,filtered ,"ress" ,settings?.resources)
      return filtered?.length ? filtered[0]?.price : 0;
   }
 
@@ -86,8 +85,6 @@ function Settings({ saveResource ,getResources  ,settings}) {
   }, [reduxState?.user?.loading]);
 
  
-  console.log("reduxState=====", reduxState);
-
 
 
   const resourceSubmitHandler = (e ,type) => {
@@ -116,7 +113,6 @@ function Settings({ saveResource ,getResources  ,settings}) {
     const formData = new FormData();
     let file = event.target.files[0];
 
-    console.log("file", file);
     setSubmitted(true);
     setLoader(true);
     // Update the formData object

@@ -30,8 +30,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2,12),
     maxWidth: "358px",
+    [theme.breakpoints.down("sm")] : {
+      maxWidth : '228px'
+    }
   },
   title : {
     maxWidth  :500
@@ -111,18 +113,23 @@ const useStyles = makeStyles((theme) => ({
                 onChange={(e) => setForm({...form , password : e.target.value})}
               />
             </Grid>
+
+            <Grid item xs={12}>
+                  <Button
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  disabled={loading}
+                  className={classes.submit}
+                  onClick={submitHandler}
+                >
+                  Login
+                </Button>
+            </Grid>
+
           </Grid>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            disabled={loading}
-            className={classes.submit}
-            onClick={submitHandler}
-          >
-            Login
-          </Button>
+          
         </form>
       </div>
       

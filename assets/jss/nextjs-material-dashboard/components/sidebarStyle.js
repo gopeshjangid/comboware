@@ -19,12 +19,13 @@ const sidebarStyle = (theme) => ({
   drawerPaper: {
     border: "none",
     position: "fixed",
-    top: "0",
+    top: "70px",
     bottom: "0",
     left: "0",
     zIndex: "1",
-    ...boxShadow,
+    boxShadow : 'inset 7px 5px 15px -12px rgb(0 0 0 / 42%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%)',
     width: drawerWidth,
+    background : '#fbfdfd',
     [theme.breakpoints.up("md")]: {
       width: drawerWidth,
       position: "fixed",
@@ -35,10 +36,9 @@ const sidebarStyle = (theme) => ({
       ...boxShadow,
       position: "fixed",
       display: "block",
-      top: "0",
+      top: "70px",
       height: "100vh",
-      right: "0",
-      left: "auto",
+      left: "0",
       zIndex: "1032",
       visibility: "visible",
       overflowY: "visible",
@@ -115,8 +115,6 @@ const sidebarStyle = (theme) => ({
     display: "block",
     top: "0",
     left: "0",
-    backgroundSize: "cover",
-    backgroundPosition: "center center",
     "&:after": {
       position: "absolute",
       zIndex: "3",
@@ -124,8 +122,7 @@ const sidebarStyle = (theme) => ({
       height: "100%",
       content: '""',
       display: "block",
-      background: blackColor,
-      opacity: ".8",
+      opacity: "1",
     },
   },
   list: {
@@ -140,10 +137,7 @@ const sidebarStyle = (theme) => ({
   item: {
     position: "relative",
     display: "block",
-    textDecoration: "none",
-    "&:hover,&:focus,&:visited,&": {
-      color: whiteColor,
-    },
+    textDecoration: "none"
   },
   itemLink: {
     width: "auto",
@@ -154,7 +148,7 @@ const sidebarStyle = (theme) => ({
     display: "block",
     padding: "10px 15px",
     backgroundColor: "transparent",
-    ...defaultFont,
+    ...defaultFont
   },
   itemIcon: {
     width: "24px",
@@ -163,9 +157,10 @@ const sidebarStyle = (theme) => ({
     lineHeight: "30px",
     float: "left",
     marginRight: "15px",
+    fontWeight :500,
     textAlign: "center",
     verticalAlign: "middle",
-    color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)",
+    color:  theme?.palette?.text?.primary,
   },
   itemIconRTL: {
     marginRight: "3px",
@@ -175,9 +170,10 @@ const sidebarStyle = (theme) => ({
   itemText: {
     ...defaultFont,
     margin: "0",
+    fontWeight :500,
     lineHeight: "30px",
     fontSize: "14px",
-    color: whiteColor,
+    color: theme?.palette?.text?.primary,
   },
   itemTextRTL: {
     textAlign: "right",

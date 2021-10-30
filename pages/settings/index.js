@@ -6,7 +6,6 @@ import Head from "next/head";
 
 function Settings() {
 
-  console.log("settings")
   return (
     <div>
       <Head>

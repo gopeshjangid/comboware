@@ -22,7 +22,6 @@ export const saveImage = (data) =>{
 export const signUp = (data ,router) => (dispatch) =>{
   dispatch(requestInit({message : 'Logging in...'}));
   Service.post(API.signUp ,data).then(res=>{
-    console.log("login success" ,res)
     localStorage.setItem("userId" ,res?.data?.data?.id);
     localStorage.setItem('userType' ,res?.data?.data?.user_type);
     dispatch(saveProfile({user  : res?.data?.data}));

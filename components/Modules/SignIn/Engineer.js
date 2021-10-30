@@ -20,6 +20,7 @@ const { publicRuntimeConfig } = getConfig();
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import TextField from "../../CustomInput/TextField";
+import logo from "assets/img/logo.svg";
 
 function Copyright() {
   return (
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  logo : {
+    textAlign : 'center',
+    paddingBottom : 12
+  }
 }));
 
 function CustomerLogin(props) {
@@ -196,6 +201,9 @@ function CustomerLogin(props) {
           {reduxState?.loading && <CircularProgress color="primary" />}
         </Box>
       </div>
+      <div className={classes.logo}>
+          <img src={logo} />
+        </div>
       <Box mt={5}>
         <GridContainer
           spacing={3}

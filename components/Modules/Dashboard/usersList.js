@@ -43,7 +43,6 @@ function usersListDataBox({ usersList, profile }) {
     return () => {};
   }, []);
 
-  console.log("redux" ,reduxState)
 
   if (profile?.user_type !== "ADMIN") {
     return null;

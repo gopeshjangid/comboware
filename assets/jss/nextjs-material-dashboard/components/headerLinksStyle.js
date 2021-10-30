@@ -7,7 +7,11 @@ import {
 import dropdownStyle from "assets/jss/nextjs-material-dashboard/dropdownStyle.js";
 
 const headerLinksStyle = (theme) => ({
-  ...dropdownStyle(theme),
+  LinksList : {
+   display : 'flex',
+   justifyContent : 'space-between',
+   width  : '100%'
+  },
   search: {
     "& > div": {
       marginTop: "0",
@@ -80,7 +84,6 @@ const headerLinksStyle = (theme) => ({
       right: "4px",
       fontSize: "9px",
       background: dangerColor[0],
-      color: whiteColor,
       minWidth: "16px",
       height: "16px",
       borderRadius: "10px",

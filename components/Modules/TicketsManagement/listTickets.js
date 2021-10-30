@@ -324,8 +324,8 @@ function TicketsList({ getAllTickets, getProfile }) {
         <GridItem xs={12} sm={12} md={12}>
         
               <GridContainer spacing={1} justify="space-between">
-              <GridItem xs={6} align="left"><Search onSubmit={onSearch} /></GridItem>
-                <GridItem xs={6} align="right">
+              <GridItem xs={12} sm={6} align="left"><Search onSubmit={onSearch} /></GridItem>
+                <GridItem xs={12} sm={6} align="right">
                   {userType !== 'ADMIN' &&
                   <Button
                     onClick={() => router.push("/ticket/new")}
@@ -363,30 +363,16 @@ function TicketsList({ getAllTickets, getProfile }) {
                 </GridItem> */}
               </GridContainer>
          
-            <GridItem xs={12}>
+            <GridItem xs={12} sm={12}>
             <CustomTable
               columns={getColumnsFields()}
               data={ticketList}
             />
             </GridItem>
               
-              {/* <GridContainer spacing={2}>
-                <Table pageSize={15} columns={getColumns()} rows={ticketList} />
-              </GridContainer> */}
+           
            
         </GridItem>
-
-        {/* <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={submitHandler}
-          >
-            Save Changes
-          </Button>
-        </GridItem> */}
       </GridContainer>
       </FieldSet>
     </Wrapper>

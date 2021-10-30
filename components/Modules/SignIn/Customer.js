@@ -20,7 +20,7 @@ const { publicRuntimeConfig } = getConfig();
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import TextField from "../../CustomInput/TextField";
-
+import logo from "assets/img/logo.svg";
 function Copyright({className}) {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     color: '#7373c5',
     fontSize: 11,
     fontWeight: 400
+  },
+  logo : {
+    textAlign : 'center',
+    paddingBottom : 12
   }
 }));
 
@@ -209,6 +213,10 @@ function CustomerLogin(props) {
         </Box>
       </div>
       <Box mt={5}>
+        <div className={classes.logo}>
+          <img src={logo} />
+        </div>
+        
         <GridContainer
           spacing={3}
           alignContent="space-between"

@@ -6,7 +6,6 @@ import Head from "next/head";
 import Layout from  "components/Layout";
 function TicketList() {
 
-  console.log("list ticket")
   return (
     <div>
       <Head>

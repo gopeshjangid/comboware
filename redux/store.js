@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import {createWrapper, HYDRATE} from 'next-redux-wrapper';
+import {createWrapper} from 'next-redux-wrapper';
 import middleWare from 'redux-thunk';
 import rootReducer from './rootReducer';
 

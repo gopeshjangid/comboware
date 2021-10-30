@@ -1,119 +1,142 @@
-import React from "react";
-import { useRouter } from "next/router";
-// creates a beautiful scrollbar
-import PerfectScrollbar from "perfect-scrollbar";
-import "perfect-scrollbar/css/perfect-scrollbar.css";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-// core components
-import Navbar from "components/Navbars/Navbar.js";
-import Footer from "components/Footer/Footer.js";
-import Sidebar from "components/Sidebar/Sidebar.js";
-import routes from "routes.js";
+import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import logo from "assets/img/logo.svg";
+import Hidden from "@material-ui/core/Hidden";
+import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks";
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
 
-import styles from "assets/jss/nextjs-material-dashboard/layouts/adminStyle.js";
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
 
-import bgImage from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
-import {connect} from  "react-redux";
-import {getProfile} from "components/Modules/Profile/redux/action";
-let ps;
-
- function Admin({ children,getProfile, ...rest }) {
-  // used for checking current route
-  const router = useRouter();
-  // styles
-  const useStyles = makeStyles(styles);
-  const classes = useStyles();
-  // ref to help us initialize PerfectScrollbar on windows devices
-  const mainPanel = React.createRef();
-  // states and functions
-  const [image, setImage] = React.useState(bgImage);
-  const [color, setColor] = React.useState("white");
-  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleImageClick = (image) => {
-    setImage(image);
-  };
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+    zIndex : 999,
+    backgroundColor : '#fff',
+    // [theme.breakpoints.up('md')]: {
+    //   //width: '20ch',
+    // }
   
-  const handleFixedClick = () => {
-    if (fixedClasses === "dropdown") {
-      setFixedClasses("dropdown show");
-    } else {
-      setFixedClasses("dropdown");
-    }
-  };
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-  const getRoute = () => {
-    return router.pathname !== "/admin/maps";
-  };
-  const resizeFunction = () => {
-    if (window.innerWidth >= 960) {
-      setMobileOpen(false);
-    }
-  };
-  // initialize and destroy the PerfectScrollbar plugin
-  React.useEffect(() => {
-    if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(mainPanel.current, {
-        suppressScrollX: true,
-        suppressScrollY: false,
-      });
-      document.body.style.overflow = "hidden";
-    }
-    window.addEventListener("resize", resizeFunction);
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      if (navigator.platform.indexOf("Win") > -1) {
-        ps.destroy();
-      }
-      window.removeEventListener("resize", resizeFunction);
-    };
-  }, [mainPanel]);
+}));
 
+export default function PrimarySearchAppBar({handleDrawerToggle}) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  React.useEffect(()=>{
-    
-    if(localStorage.getItem("userId") === '' || !localStorage.getItem("userId")){
-       router.push("/");
-    } else {
-      getProfile(localStorage.getItem("userId"));
-    }
-  },[])
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const menuId = 'primary-search-account-menu';
+  
+
   return (
-    <div className={classes.wrapper}>
-      <Sidebar
-        routes={routes}
-        logoText={"Comboware"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={color}
-        {...rest}
-      />
-      <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
-          routes={routes}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
-        />
-        {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-        {getRoute() ? (
-          <div className={classes.content}>
-            <div className={classes.container}>{children}</div>
-          </div>
-        ) : (
-          <div className={classes.map}>{children}</div>
-        )}
-        {getRoute() ? <Footer /> : null}
-        
-      </div>
-    </div>
+    <Box sx={{ flexGrow: 1 }}>
+      <StyledAppBar position="fixed">
+        <Toolbar>
+          <Hidden mdUp implementation="css">
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+              onClick={handleDrawerToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+          <div >
+          <img src={logo} />
+        </div>
+          </IconButton>
+
+          
+          {/* <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            /> *
+          </Search> */ }
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } ,width: '10%'}}>
+            <AdminNavbarLinks />
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </StyledAppBar>
+        <AdminNavbarLinks isMobile isMobileMenuOpen={isMobileMenuOpen}  mobileMoreAnchorEl={mobileMoreAnchorEl} handleMobileMenuClose={handleMobileMenuClose}   />
+    </Box>
   );
 }
-
-
-export default connect(null ,{getProfile})(Admin);

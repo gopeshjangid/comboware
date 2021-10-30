@@ -12,7 +12,6 @@ axios.interceptors.response.use(function (response) {
      }  else if(loginType === "USER") {
        loginType = "customer";
      }
-     localStorage.removeItem("userType");
      localStorage.removeItem("userId");
      sessionStorage.removeItem("token");
      window.location.href = loginType === 'ADMIN' ? "/admin-login" :  "/login/"+loginType

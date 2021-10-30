@@ -63,7 +63,7 @@ export default function Sidebar(props) {
         return (
           <Link href={!subItems ?  prop.layout + prop.path : "#"} key={key}>
             <a className={activePro + classes.item}>
-              <ListItem button className={classes.itemLink + listItemClasses} onClick={(e)=> subItems  ? handleClick(e) : ''}>
+              <ListItem button className={classes.itemLink } onClick={(e)=> subItems  ? handleClick(e) : ''}>
                 {typeof prop.icon === "string" ? (
                   <Icon
                     className={classNames(classes.itemIcon, whiteFontClasses, {
@@ -141,11 +141,11 @@ export default function Sidebar(props) {
   );
   return (
     <div>
-      <Hidden mdUp implementation="css">
+       <Hidden smUp implementation="css">
         <Drawer
           variant="temporary"
-          anchor={props.rtlActive ? "left" : "right"}
-          open={props.open}
+          anchor={"left"}
+          open={props?.open}
           classes={{
             paper: classNames(classes.drawerPaper, {
               [classes.drawerPaperRTL]: props.rtlActive,
@@ -156,22 +156,13 @@ export default function Sidebar(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
         >
-          {brand}
-          <div className={classes.sidebarWrapper}>
-            {props.rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
-            {links}
-          </div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
+         <div className={classes.sidebarWrapper}>{links}</div>
+         dasdasd
         </Drawer>
       </Hidden>
       <Hidden smDown implementation="css">
         <Drawer
-          anchor={props.rtlActive ? "right" : "left"}
+          anchor={"left"}
           variant="permanent"
           open
           classes={{
@@ -180,12 +171,10 @@ export default function Sidebar(props) {
             }),
           }}
         >
-          {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
             <div
               className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
             />
           ) : null}
         </Drawer>

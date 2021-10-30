@@ -10,11 +10,13 @@ const useStyles = makeStyles((theme) => ({
   },
   form : {
     border : '1px solid #c6e9ec',
-    background : '#eff2f2'
+    background : '#eff2f2',
+    width : 'auto'
   },
   hoverForm : {
     border : '1px solid #c6e9ec',
-    background : '#fff'
+    background : '#fff',
+    width : 'auto'
   },
   input : {
    '&:hover' : {

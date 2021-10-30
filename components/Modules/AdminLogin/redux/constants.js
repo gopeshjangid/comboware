@@ -5,7 +5,6 @@ import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 //export const API_BASE_URL = 'http://210.242.250.38:8000';
 export const API_BASE_URL = publicRuntimeConfig?.API_BASE_URL;
-console.log("publicRuntimeConfig" ,publicRuntimeConfig)
 export const MESSAGE = {
   creatingAccount : 'Creating account...',
   accountSuccess : 'Created success.'

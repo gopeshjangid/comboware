@@ -6,7 +6,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '6px',
     padding : 10,
     width  : '100%',
-    height : 'auto'
+    height : 'auto',
+    [theme.breakpoints.down('sm')] : {
+      padding : 0,
+      margin : 0,
+      paddingTop : '20px',
+    }
   },
 }));
 

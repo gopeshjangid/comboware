@@ -112,7 +112,6 @@ class SimpleForm extends Component {
   }
 
   fetchMessage = (e) =>{
-    console.log("called" ,e)
     this.setState({...this.state , steps : [...this.state.steps ,{id : "finish1", message : "hi new fetched" ,trigger : "finish"}]})
   }
 

@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
   tableContainer: {
     width: "100%",
     background: "white",
+    overflow : 'auto'
   },
   headerContainer: {
     background: "#F3F6F9",
@@ -28,10 +29,12 @@ const useStyles = makeStyles((theme) => ({
   tableHeadRow: {
     background: "#F3F6F9",
     borderRadius: 6,
-    overflow : 'auto'
+    overflow : 'auto',
+    overflowX : 'auto'
   },
   tableBodyRow: {
-    overflow : 'auto'
+    overflow : 'auto',
+    overflowX : 'auto'
   },
   tableHeadCell: {
     color: "#464E5F !important",

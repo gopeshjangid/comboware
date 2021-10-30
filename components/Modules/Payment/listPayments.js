@@ -61,7 +61,6 @@ function TicketsList({ getAllPayments }) {
     return () => {};
   }, [reduxState?.payment?.paymentList]);
 
-  console.log("reduxState", reduxState);
   useEffect(() => {
     setMessage({
       text: reduxState?.payment?.message || reduxState?.payment?.error,
@@ -109,7 +108,6 @@ function TicketsList({ getAllPayments }) {
     e.preventDefault();
     setSubmitted(true);
     setLoader(true);
-    console.log("data", data);
     updateRequest({
       workspaceId: data?.row?.id,
       requestStatus: "APPROVED",
@@ -218,7 +216,6 @@ function TicketsList({ getAllPayments }) {
       return col;
     });
   };
-  console.log("filter", filters);
 
   const onFilterChange = (e) => {
     let name = e.target.name;

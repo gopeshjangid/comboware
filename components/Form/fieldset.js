@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
     borderWidth: 0,
     background: "white",
     padding: (props) => props?.padding || 20,
+    [theme.breakpoints.down('sm')] : {
+      padding : "0px !important",
+      margin : "0px !important",
+      paddingTop : '16px !important',
+    }
   },
   childBox : {
     marginTop :20
