@@ -58,7 +58,7 @@ export const COLUMNS = [
 ]
 
 
-export const TICKET_STATUS_LIST = ['ALL','OPEN', 'PROCESSING', 'CLOSE'];
+export const TICKET_STATUS_LIST = ['ALL','OPEN', 'PROCESSING', 'CLOSED'];
 export const REPAIR_STATUS_LIST = ['ALL','PENDING', 'REPAIRED', 'PROCESSING', 'FAILED'];
 
 export const API = {

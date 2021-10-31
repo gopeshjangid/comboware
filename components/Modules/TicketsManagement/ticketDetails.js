@@ -658,18 +658,18 @@ function TicketDetails({
                   />
                   }
                    &nbsp;
-                   <Typography variant="subtitle2" color="textSecondary"></Typography>
-                  <Typography variant="subtitle2" color="textSecondary">
+                   <Typography variant="subtitle2" color="primary"></Typography>
+                  <Typography variant="subtitle2" color="primary">
                     Created
                   </Typography>
-                  <Typography variant="subtitle2">
+                  <Typography variant="caption">
                     {ticketDetails?.form?.ticket?.ticket_date}
                   </Typography>
                    &nbsp;&nbsp;
-                  <Typography variant="subtitle2" color="textSecondary">
+                  <Typography variant="subtitle2" color="primary">
                     Last Updated
                   </Typography>
-                  <Typography variant="subtitle2">
+                  <Typography variant="caption">
                     {ticketDetails?.form?.ticket?.ticket_date}
                   </Typography>
                 </GridItem>
