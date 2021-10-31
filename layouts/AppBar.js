@@ -18,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import logo from "assets/img/logo.svg";
 import Hidden from "@material-ui/core/Hidden";
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks";
+import PushNotification from "components/Notification/PushNotification";
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -118,7 +119,9 @@ export default function PrimarySearchAppBar({handleDrawerToggle}) {
               inputProps={{ 'aria-label': 'search' }}
             /> *
           </Search> */ }
-          <Box sx={{ flexGrow: 1 }} />
+          
+         {/* <Box sx={{ flexGrow: 1 , textAlign  : 'center' }} ><PushNotification /></Box>
+           */}
           <Box sx={{ display: { xs: 'none', md: 'flex' } ,width: '10%'}}>
             <AdminNavbarLinks />
           </Box>
