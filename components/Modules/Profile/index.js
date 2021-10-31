@@ -415,7 +415,7 @@ function Profile({
               ),
             },
             {
-              hide: userType !== "ADMIN",
+              hide: userType === "ADMIN",
               icon: <NetworkCell />,
               label: "Domain and Project",
               panel: (
@@ -505,7 +505,7 @@ function Profile({
               ),
             },
             {
-              hide: userType !== "ADMIN",
+              hide: userType === "ADMIN",
               label: "Company",
               icon: <Work />,
               panel: (
@@ -598,7 +598,7 @@ function Profile({
               ),
             },
             {
-              hide: userType !== "ADMIN",
+              hide: userType === "ADMIN",
               icon: <Storage />,
               label: "Work",
               panel: (
