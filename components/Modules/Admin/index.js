@@ -90,9 +90,9 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
     setLoader(true);
     console.log("data", data);
     updateRequest({
-      workspaceId: data?.row?.id,
+      workspaceId: data?.id,
       requestStatus: "APPROVED",
-      userId: data?.row?.user_id,
+      userId: data?.user_id,
     });
   };
 

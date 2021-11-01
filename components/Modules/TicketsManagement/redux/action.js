@@ -129,13 +129,19 @@ export const getTicketDetails = (ticketId ,userId) => (dispatch) =>{
 
 }
 
-export const getAllTickets = (qStr) => (dispatch) =>{
+export const getAllTickets = (qStr ,callBack) => (dispatch) =>{
   dispatch(start({message : "Fetching ticket details..."}));
   Service.get(API.getAllTickets+qStr).then(res=>{
     console.log("res" ,res?.response)
     dispatch(saveTicket({ ticketList : [...res?.data?.data]}));
+    if(callBack){
+      callBack();
+    }
   }).catch(err =>{
     console.log("err--" ,err)
+    if(callBack){
+      callBack();
+    }
     dispatch(failed({data  : null, error : errorHandler()}));
   })
 

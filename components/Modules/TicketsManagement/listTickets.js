@@ -74,7 +74,7 @@ function TicketsList({ getAllTickets, getProfile }) {
       localStorage.getItem("userType") !== "ADMIN"
         ? "?userId=" + Number(localStorage.getItem("userId"))+'&ticket_status=ALL&repair_status=ALL'
         : "?ticket_status=ALL&repair_status=ALL";
-    getAllTickets(query);
+    getAllTickets(query ,manageMessage);
     return () => {};
   }, []);
 
