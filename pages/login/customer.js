@@ -8,7 +8,7 @@ export default function Index() {
       let userType =  localStorage.getItem('userType');
       let token = sessionStorage.getItem("token");
       if(token && userType && userType === 'USER'){
-        router.push("/dashboard")
+        //router.push("/dashboard")
       } 
   },[])
   return <CustomerLogin />;
