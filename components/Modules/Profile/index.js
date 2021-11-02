@@ -505,7 +505,7 @@ function Profile({
               ),
             },
             {
-              hide: userType === "ADMIN",
+              hide: userType === "ADMIN" || userType === "USER",
               label: "Company",
               icon: <Work />,
               panel: (
@@ -598,7 +598,7 @@ function Profile({
               ),
             },
             {
-              hide: userType === "ADMIN",
+              hide: userType === "ADMIN" || userType === "USER",
               icon: <Storage />,
               label: "Work",
               panel: (

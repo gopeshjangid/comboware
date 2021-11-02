@@ -16,7 +16,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-
+import Loader from  "components/Loader/circular";
 // core components
 import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
@@ -123,22 +123,7 @@ export default function Sidebar(props) {
       })}
     </List>
   );
-  var brand = (
-    <div className={classes.logo}>
-      <a
-        href="https://www.creative-tim.com?ref=njsmd-sidebar"
-        className={classNames(classes.logoLink, {
-          [classes.logoLinkRTL]: props.rtlActive,
-        })}
-        target="_blank"
-      >
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
-        {logoText}
-      </a>
-    </div>
-  );
+  
   return (
     <div>
        <Hidden smUp implementation="css">
@@ -156,7 +141,7 @@ export default function Sidebar(props) {
             keepMounted: true, // Better open performance on mobile.
           }}
         >
-         <div className={classes.sidebarWrapper}>{links}</div>
+         <div className={classes.sidebarWrapper}>{!user_type ? <Loader/> :  links}</div>
         
         </Drawer>
       </Hidden>
@@ -171,6 +156,7 @@ export default function Sidebar(props) {
             }),
           }}
         >
+          <div style={{margin: '0 auto'}}>{!user_type ? <Loader/> : ''}</div>
           <div className={classes.sidebarWrapper}>{links}</div>
           {image !== undefined ? (
             <div

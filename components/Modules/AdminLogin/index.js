@@ -13,7 +13,7 @@ import {useRouter} from  "next/router";
 import {login} from  "./redux/action";
 import Snackbar from "components/Snackbar";
 
-import Loader from  "components/Loader/linear";
+import LinearProgress from  "components/Loader/linear";
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   console.log("form" ,form)
   return (
     <Container component="main" maxWidth="sm">
-      {loading && <Loader />}
+      {loading && <LinearProgress align="top" />}
         <Snackbar
         open={!!message?.text}
         type={message?.type}

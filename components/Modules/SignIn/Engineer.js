@@ -16,11 +16,13 @@ import { signUp } from "./redux/action";
 import Snackbar from "components/Snackbar";
 import getConfig from "next/config";
 import { Button } from "@material-ui/core";
+import { LoadingButton } from '@mui/lab';
 const { publicRuntimeConfig } = getConfig();
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import TextField from "../../CustomInput/TextField";
 import logo from "assets/img/logo.svg";
+import LinearProgress from  "components/Loader/linear";
 
 function Copyright() {
   return (
@@ -176,6 +178,7 @@ function CustomerLogin(props) {
 
   return (
     <Container component="main" maxWidth="xs">
+      {loading && <LinearProgress align="top" /> }
       <Snackbar
         open={error || message}
         type={message ? "success" : "error"}
@@ -186,7 +189,7 @@ function CustomerLogin(props) {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Box mt={5}>
+        {/* <Box mt={5}>
           {loaded && !reduxState?.loading && (
             <GoogleLogin
               clientId={clientId}
@@ -196,7 +199,7 @@ function CustomerLogin(props) {
               cookiePolicy={"single_host_origin"}
             />
           )}
-        </Box>
+        </Box> */}
         <Box mt={2}>
           {reduxState?.loading && <CircularProgress color="primary" />}
         </Box>
@@ -258,21 +261,23 @@ function CustomerLogin(props) {
               required
             />
           </GridItem>
-          <Grid item xs={12}>
+          {!isLogin &&  <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I agree with terms and conditions."
                 />
               </Grid>
+          }
           <GridItem xs={12}>
-            <Button
+            <LoadingButton
               onClick={loginHandler}
               fullWidth
-              color="primary"
+              loading={loading}
+              color="secondary"
               variant="contained"
             >
                 {isLogin  ? 'Login' : 'Sign Up'}
-            </Button>
+            </LoadingButton>
           </GridItem>
           <Grid item xs={12} style={{textAlign : 'right'}}>
             <Button className={classes.link}  variant="subtitle2" onClick={()=>setLogin((login)=> !login)}>

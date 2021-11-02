@@ -113,7 +113,9 @@ export default function PrimarySearchAppBar({handleDrawerToggle}) {
           
          {/* <Box sx={{ flexGrow: 1 , textAlign  : 'center' }} ><PushNotification /></Box>
            */}
-          <Box sx={{ display: { xs: 'none', md: 'flex' } ,width: '10%'}}>
+
+         <Box sx={{ flexGrow: 1 }}/>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } ,width: 'auto'}}>
             <AdminNavbarLinks />
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
