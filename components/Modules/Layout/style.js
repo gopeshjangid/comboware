@@ -50,5 +50,10 @@ export default makeStyles(() => ({
         fontWeight: '500', 
         fontSize: '16px', 
         lineHeight: '16px'
+    },
+    footer : {
+      paddingTop: '20px',
+      background: 'white',
+      height: '600px'
     }
 }));

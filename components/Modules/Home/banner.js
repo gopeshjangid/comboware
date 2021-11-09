@@ -8,27 +8,28 @@ import { PrimaryButton, SecondaryButton, WhiteButton } from '../Common/button';
 import Carousel from  "../../Carousel";
 import ComboSTackBannerImg from  "assets/img/combostack-banner.jpeg";
 import EngineerBannerImg from "assets/img/engineero-banner.png";
+
 export default function Banner(props) {
     const classes = useStyle();
 
     return (
         <div>
-           <Carousel stopOnHover  showArrows={true}  showIndicators={true}  infiniteLoop={true} interval={3000} >
+           <Carousel stopOnHover  showArrows={true} autoPlay={true} showIndicators={true}  infiniteLoop={true} interval={3000} >
              <Grid container spacing={2} className={classes.bannerBox} justifyContent="center" direction='row' alignItems="center">
                 <Grid xs={7} sm={6}>
-                    <Box className={classes.firstLeftBox}>
+                    <Box className={classes.contentBox}>
                         <Typography variant="h3" component="h3" gutterBottom className={classes.banenrHeading}>
                           COMBOSTACK
                         </Typography>
-                        <Typography color="secondary" variant="subtitle2" component="h6" gutterBottom className={classes.bannerSubHeading}>
+                        <Typography  variant="p" component="p" gutterBottom className={classes.bannerSubHeading}>
                            Combostack is a cloud platform that can be combined with private clouds and public clouds. It is a standard hybrid cloud platform and we provide it to customers##The view more button needs to take comboware first part  ##
                         </Typography>
-                        <PrimaryButton variant="contained" className={classes.marginTop10}>
+                        <PrimaryButton variant="contained" className={classes.viewMore}>
                             VIEW MORE
                         </PrimaryButton>
                     </Box>
                 </Grid>
-                <Grid xs={5} sm={6} className={classes.firstBoxImage}>
+                <Grid xs={5} sm={6} className={classes.contentBox}>
                     <img src={ComboSTackBannerImg} alt="Logo" height='100%' width="100%" className={classes.firstImage} />
                 </Grid>
             </Grid>
@@ -38,10 +39,10 @@ export default function Banner(props) {
                         <Typography variant="h3" component="h3" gutterBottom className={classes.banenrHeading}>
                           ENGINEERO
                         </Typography>
-                        <Typography color="secondary" variant="subtitle2" component="h6" gutterBottom className={classes.boxHeading2}>
+                        <Typography  variant="p" component="p" gutterBottom className={classes.bannerSubHeading}>
                            EngineerO is a platform for assisting technical engineers to maintain and accept cases. One can receive tickets, handle maintenance for each customer, and obtain some additional income. ##The view more button needs to take EngineerO page  first part  ##
                         </Typography>
-                        <PrimaryButton variant="contained" className={classes.marginTop10}>
+                        <PrimaryButton variant="contained" className={classes.viewMore}>
                             VIEW MORE
                         </PrimaryButton>
                     </Box>
