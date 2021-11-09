@@ -73,7 +73,7 @@ export default function Footer(props) {
             </Box>
 
             <Typography variant="p" component="p" align='center' style={{ color: 'white', width: '100%', marginBottom: '50px' }}>
-                Copyright © 2019 ComboWare.,lnc. All Rights Reserved.
+                Copyright © 2021 ComboWare.,lnc. All Rights Reserved.
             </Typography>
         </Grid>)
 }

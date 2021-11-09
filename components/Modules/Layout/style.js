@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 export default makeStyles(() => ({
     header: {
-        backgroundColor: "#FFFFFF",
+        backgroundColor: "#477ad0",
         position: 'inherit'
     },
     logo: {
@@ -15,11 +15,12 @@ export default makeStyles(() => ({
     },
     linkButton: {
         marginRight: '20px', 
-        color: '#71747F', 
+        color: '#fff', 
         fontStyle: 'normal', 
         fontWeight: '500', 
         fontSize: '16px', 
-        lineHeight: '16px'
+        lineHeight: '16px',
+        textDecoration : 'none'
     },
     linkButtonColor: {
         color: 'white', 
@@ -33,10 +34,21 @@ export default makeStyles(() => ({
     },
     menuButton: {
         width: '50%',
-        textAlign: 'center',
+        textAlign: 'left',
         top: '52px'
     },
     buttonGroup : {
-        display :'flex'
+        display :'flex',
+        justifyContent : 'flex-end'
+    },
+    selectedLink : {
+        borderBottom: '3px solid',
+        paddingBottom: '6px',
+        marginRight: '20px', 
+        color: '#fff', 
+        fontStyle: 'normal', 
+        fontWeight: '500', 
+        fontSize: '16px', 
+        lineHeight: '16px'
     }
 }));

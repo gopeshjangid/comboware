@@ -42,7 +42,10 @@ export const WhiteButton = withStyles((props)=>({
         border: '1px solid #5179FE',
         marginRight: '10px',
         height: '35px',
-         width: '210px'
+         width: '210px',
+         '&:hover' : {
+             background : 'white'
+         }
     },
     label: {
         textTransform: 'capitalize',

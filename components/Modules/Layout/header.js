@@ -1,19 +1,26 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Link, Button, withStyles, Box } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Link, Button, withStyles, Box  ,Grid} from "@material-ui/core";
 import useStyles from './style';
 import { PrimaryButton, WhiteButton } from '../Common/button';
 import {useRouter} from  "next/router";
+import HomeLogo from  "../../../assets/img/comboware-home-logo.png";
 const headersData = [
     {
-        label: "Brand Introduction",
+        label: "Company",
         href: "/#",
     },
     {
-        label: "Branded Advantages",
-        href: "/#",
+        label: "Combostack",
+        href: "/combostack",
     },
     {
-        label: "Product Description",
+        label: "EngineerO",
+        href: "/#",
+    },{
+        label: "Program",
+        href: "/#",
+    },{
+        label: "Service",
         href: "/#",
     },
     {
@@ -34,13 +41,16 @@ const contactInfo = [
 ]
 
 export const GetMenuButtons = ({flag, contackLink}) => {
-    const {  linkButton, linkButtonColor } = useStyles();
+    const {  linkButton, linkButtonColor ,selectedLink } = useStyles();
     const classNames = flag ? linkButtonColor : linkButton;
     const linkArray = contackLink ? contactInfo: headersData;
+    const router = useRouter();
+    const {pathname} = router;
+    console.log("router" ,router)
     return linkArray.map(({ label, href }) => {
         return (
             <Link
-                className={classNames}
+                className={pathname === href ? selectedLink : classNames}
                 component="button"
                 key={label}
                 variant="body2"
@@ -65,21 +75,26 @@ export default function Header() {
     return (
         <AppBar className={header}>
             <Toolbar className={ToolbarHeight}>
-                <Typography variant="h6" component="h1" className={logo}>
-                    COMBOWARE
-                </Typography>
-
-                <Box className={menuButton}>
+                <Grid container spacing={1} justify="space-between" alignContent="center" alignItems="center">
+                  <Grid item xs={6}>
+                     <img src={HomeLogo} width ="200" height="50" />
+                 </Grid>
+                 <Grid item xs={6} style={{textAlign : 'right'}}>
+                    <Box className={buttonGroup}>
+                        <WhiteButton onClick={()=>router.push("/login/customer")} variant="outlined">
+                        CUSTOMER LOGIN
+                        </WhiteButton>
+                        <WhiteButton onClick={()=>router.push("/login/engineer")} variant="outlined">
+                        ENGINEER  LOGIN
+                        </WhiteButton>
+                    </Box>
+                 </Grid>
+                 <Grid item xs={12}>
+                 <Box className={menuButton}>
                     <GetMenuButtons />
                 </Box>
-                <Box className={buttonGroup}>
-                    <WhiteButton onClick={()=>router.push("/login/customer")} variant="outlined">
-                    CUSTOMER LOGIN
-                    </WhiteButton>
-                    <PrimaryButton onClick={()=>router.push("/login/engineer")} variant="contained">
-                     ENGINEER  LOGIN
-                    </PrimaryButton>
-                </Box>
+                 </Grid>
+                </Grid>
             </Toolbar>
         </AppBar>
     );

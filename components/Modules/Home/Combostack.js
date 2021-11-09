@@ -19,7 +19,6 @@ import Banner8 from 'assets/img/8.png';
 import Banner9 from 'assets/img/9.png';
 import Banner10 from 'assets/img/10.png';
 const ChatSystem = Dynamic(() => import("../../Chat"));
-import Banner from "./banner";
 const bannerImaeges = [
     Banner1, Banner2, Banner3, Banner4, Banner5, Banner6
 ]
@@ -28,7 +27,24 @@ export default function Homes(props) {
 
     return (
         <Layout>
-            <Banner />
+            <Grid  container item className={classes.firstBox} justifyContent="center" direction='row' alignItems="center">
+                <Grid xs={7} sm={6} item>
+                    <Box className={classes.firstLeftBox}>
+                        <Typography variant="h1" component="h1" gutterBottom className={classes.firstLeftBoxHeading}>
+                            Comboware Blockchain
+                        </Typography>
+                        <Typography variant="hp" component="h6" gutterBottom className={classes.firstLeftBoxDetail}>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text
+                        </Typography>
+                        <WhiteButton variant="contained" className={classes.marginTop10}>
+                            VIEW MORE
+                        </WhiteButton>
+                    </Box>
+                </Grid>
+                <Grid xs={5} sm={6} item className={classes.firstBoxImage}>
+                    <img src={homeImg} alt="Logo" height='100%' width="90%" className={classes.firstImage} />
+                </Grid>
+            </Grid>
             <Grid container className={classes.secondBox} justifyContent="center" direction='column' alignItems="center" spacing={20}>
                 <Grid xs={12} item className={classes.midHeading}>
                     Trusted by smartest companies around the world
@@ -55,7 +71,27 @@ export default function Homes(props) {
 
                 </Grid>
             </Grid>
-            
+            <Grid container className={classes.secondBox} justifyContent="center" direction='row' alignItems="center">
+                <Grid xs={7} sm={6}>
+                    <Box className={classes.firstLeftBox}>
+                        <Typography variant="h6" component="h6" gutterBottom className={classes.boxHeading2}>
+                            responsive and retina-ready
+                        </Typography>
+                        <Typography variant="h1" component="h1" gutterBottom className={classes.boxHeading3}>
+                            Lorem ipsum dolor sit consectetur.
+                        </Typography>
+                        <Typography variant="hh6" component="h6" gutterBottom className={classes.fontSize12}>
+                            Lorem ipsum dolor sit amet, consectetur adip iscing elit. Duis ultrices nunc a quam gravida ornare. Proin imperdie vel risus eget frin, unc ut posuere urna, vitae sodal
+                        </Typography>
+                        <PrimaryButton variant="contained" className={classes.marginTop10}>
+                            VIEW MORE
+                        </PrimaryButton>
+                    </Box>
+                </Grid>
+                <Grid xs={5} sm={6} className={classes.firstBoxImage}>
+                    <img src={Banner7} alt="Logo" height='100%' width="100%" className={classes.firstImage} />
+                </Grid>
+            </Grid>
             <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
                 <Grid xs={65} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
                     <img src={Banner8} alt="Logo" height='100%' width="75%" className={classes.firstImage} />

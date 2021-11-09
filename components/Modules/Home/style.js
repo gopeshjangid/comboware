@@ -7,12 +7,26 @@ export default makeStyles(() => ({
     },
     firstLeftBox: {
         width: '65%',
-        marginLeft: '20%'
+        marginLeft: '20%',
+        paddingRight : 30
     },
     firstLeftBoxHeading: {
-        color: 'white',
+        color: '#fff',
         fontSize: '75px',
         fontWeight: 'bold'
+    },
+    banenrHeading : {
+        color: '#3d81fd',
+        fontSize: '55px',
+        fontWeight: 'bold'
+    },
+    bannerSubHeading : {
+     color : '#464E5F',
+     fontFamily: 'sans-serif',
+      fontStyle: 'normal',
+      fontWeight: 'bold',
+      fontSize: '11px',
+      textAlign: 'justify'
     },
     secondBox: {
         backgroundColor: 'white',
