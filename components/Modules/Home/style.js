@@ -17,7 +17,7 @@ export default makeStyles(() => ({
     },
     banenrHeading : {
         color: '#3d81fd',
-        fontSize: '55px',
+        fontSize: '40px',
         fontWeight: 'bold'
     },
     bannerSubHeading : {
@@ -30,6 +30,10 @@ export default makeStyles(() => ({
     },
     secondBox: {
         backgroundColor: 'white',
+    },
+    bannerBox: {
+        width : '90%',
+        margin : '0 auto'
     },
     thirdBox: {
         backgroundColor: '#E5E5E5',
@@ -78,7 +82,7 @@ export default makeStyles(() => ({
         fontSize: '12px'
     },
     backgroundColorPeach: {
-        backgroundColor: '#F6F8FF'
+        backgroundColor: '#fff'
     },
     imageLeftThird: {
         textAlign: 'center'
