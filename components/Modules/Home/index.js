@@ -213,7 +213,7 @@ export default function Homes(props) {
                </Grid>
               
            </Grid>
-        
+           <ChatSystem />
             <Grid container className={classes.secondBox} style={{marginBottom : 20,marginTop : 20}} justifyContent='center' direction='row' alignItems='center'>
                 <Box style={{ flexDirection: 'row', display: 'flex', margin: 'auto' }}>
                     <Box style={{ width: '100%', padding: '20px' }}>
