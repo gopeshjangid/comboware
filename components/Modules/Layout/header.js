@@ -7,7 +7,7 @@ import HomeLogo from  "../../../assets/img/comboware-home-logo.png";
 const headersData = [
     {
         label: "Company",
-        href: "/#",
+        href: "/company",
     },
     {
         label: "Combostack",
