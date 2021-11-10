@@ -1,8 +1,10 @@
-import React from 'react';
-import { AppBar, Toolbar,Button, Typography, Link, withStyles, Box  ,Grid} from "@material-ui/core";
+import React ,{useState} from 'react';
+import { AppBar, Toolbar,Button,IconButton, Typography,Hidden, Link, withStyles, Box  ,Grid} from "@material-ui/core";
+import { Menu} from "@material-ui/icons";
 import useStyles from './style';
 import { PrimaryButton, WhiteButton } from '../Common/button';
 import {useRouter} from  "next/router";
+import Drawer from  "./drawer";
 import HomeLogo from  "../../../assets/img/comboware-home-logo.png";
 const headersData = [
     {
@@ -46,6 +48,7 @@ const contactInfo = [
 
 export const GetMenuButtons = ({flag, contackLink}) => {
     const {  linkButton, linkButtonColor ,selectedLink } = useStyles();
+   
     const classNames = flag ? linkButtonColor : linkButton;
     const linkArray = contackLink ? contactInfo: headersData;
     const router = useRouter();
@@ -71,18 +74,24 @@ export const GetMenuButtons = ({flag, contackLink}) => {
 export default function Header() {
 
     const { header, logo, ToolbarHeight, menuButton, buttonGroup,buttons } = useStyles();
-
+    const [mobileOpen, setMobile] = useState(false);
     const router = useRouter();
 
     
 
     return (
         <AppBar className={header}>
+            
             <Toolbar className={ToolbarHeight}>
                 <Grid container spacing={1} justify="space-between" alignContent="center" alignItems="center">
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={10} sm={6}>
                      <img className={logo} src={HomeLogo} width ="300" height="50" />
                  </Grid>
+                 <Hidden smUp={true}>
+                    <Grid item xs={2}>
+                        <Drawer open={mobileOpen} listLinks={headersData}  />
+                    </Grid>
+                 </Hidden> 
                  <Grid item xs={12} sm={6} style={{textAlign : 'right'}}>
                     <Box className={buttonGroup}>
                         <Button  className={buttons} onClick={()=>router.push("/login/customer")} variant="outlined">
@@ -93,11 +102,13 @@ export default function Header() {
                         </Button>
                     </Box>
                  </Grid>
-                 <Grid item xs={12}>
-                 <Box className={menuButton}>
-                    <GetMenuButtons />
-                </Box>
-                 </Grid>
+                 <Hidden smDown={true}>
+                        <Grid item xs={12}>
+                        <Box className={menuButton}>
+                            <GetMenuButtons />
+                        </Box>
+                        </Grid>
+                 </Hidden>
                 </Grid>
             </Toolbar>
         </AppBar>

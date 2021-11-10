@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
         backgroundColor: "#477ad0",
         position: 'inherit',
         [theme.breakpoints.down('sm')]: {
-            height: '178px',
+            height: '130px',
         },
     },
     logo: {
@@ -17,7 +17,8 @@ export default makeStyles((theme) => ({
         fontSize: 'xx-large',
         [theme.breakpoints.down('sm')]: {
             marginTop: "75px",
-            width: '100%',
+            marginLeft: "10px",
+            width: '80%',
           },
     },
     linkButton: {
@@ -49,6 +50,10 @@ export default makeStyles((theme) => ({
     },
     ToolbarHeight: {
         height:'120px',
+        [theme.breakpoints.down('sm')]: {
+           height: '40px',
+            
+        },
     },
     menuButton: {
         width: '100%',
