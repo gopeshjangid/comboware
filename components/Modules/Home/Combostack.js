@@ -134,8 +134,9 @@ export default function Homes(props) {
               src={CombostackBanner}
               alt="Logo"
               height="100%"
-              width="90%"
+              width="100%"
               className={classes.firstImage}
+              style={{width: '100%'}}
             />
           </Box>
         </Grid>
