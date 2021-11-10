@@ -44,6 +44,7 @@ export const WhiteButton = withStyles((props)=>({
         background: 'white',
         border: '1px solid #5179FE',
         marginRight: '10px',
+        fontSize: 10,
         height: '35px',
          '&:hover' : {
              background : 'white'

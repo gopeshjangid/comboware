@@ -28,6 +28,13 @@ export default makeStyles((theme) => ({
         fontSize: '16px', 
         lineHeight: '16px',
         textDecoration : 'none',
+        '&:hover' : {
+            background: 'white',
+            color: '#477ad0',
+            padding: '6px',
+            'text-decoration': 'none',
+            'border-radius': '5px'
+        },
         [theme.breakpoints.down('sm')]: {
             whiteSpace: 'nowrap',
             
@@ -51,12 +58,20 @@ export default makeStyles((theme) => ({
             display: 'flex',
             overflow: 'auto',
             width: '100%',
-            '&::-webkit-scrollbar' : {
-                color : 'white',
-            }
+            
         },
     },
     buttons : {
+        background: 'white',
+        border: '1px solid #5179FE',
+        marginRight: '10px',
+        height: '35px',
+         '&:hover' : {
+             background : 'white'
+         },
+         textTransform: 'capitalize',
+        color: '#5179FE',
+        letterSpacing: '0.25em!important',
         [theme.breakpoints.down('sm')]: {
             fontSize: "10px",
             width : '154px !important'

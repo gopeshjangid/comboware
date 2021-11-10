@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Link, Button, withStyles, Box  ,Grid} from "@material-ui/core";
+import { AppBar, Toolbar,Button, Typography, Link, withStyles, Box  ,Grid} from "@material-ui/core";
 import useStyles from './style';
 import { PrimaryButton, WhiteButton } from '../Common/button';
 import {useRouter} from  "next/router";
@@ -85,12 +85,12 @@ export default function Header() {
                  </Grid>
                  <Grid item xs={12} sm={6} style={{textAlign : 'right'}}>
                     <Box className={buttonGroup}>
-                        <WhiteButton className={buttons} onClick={()=>router.push("/login/customer")} variant="outlined">
+                        <Button  className={buttons} onClick={()=>router.push("/login/customer")} variant="outlined">
                         CUSTOMER LOGIN
-                        </WhiteButton>
-                        <WhiteButton className={buttons} onClick={()=>router.push("/login/engineer")} variant="outlined">
+                        </Button>
+                        <Button className={buttons} onClick={()=>router.push("/login/engineer")} variant="outlined">
                         ENGINEER  LOGIN
-                        </WhiteButton>
+                        </Button>
                     </Box>
                  </Grid>
                  <Grid item xs={12}>
