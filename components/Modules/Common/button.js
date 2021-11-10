@@ -6,7 +6,10 @@ export const PrimaryButton = withStyles({
         border: 'none',
         marginRight: '10px',
         height: '35px',
-         width: '210px'
+         width: '210px',
+         '&:hover' : {
+             background : '#2360ce'
+         }
     },
     label: {
         textTransform: 'capitalize',

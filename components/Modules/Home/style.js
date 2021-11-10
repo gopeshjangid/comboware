@@ -10,22 +10,44 @@ export default makeStyles(() => ({
         marginLeft: '20%',
         paddingRight : 30
     },
+    contentBox : {
+        width: '70%',
+        margin : '0 auto'
+    },
     firstLeftBoxHeading: {
         color: '#fff',
         fontSize: '75px',
         fontWeight: 'bold'
     },
     banenrHeading : {
-        color: '#3d81fd',
+        color: '#2d62c2',
         fontSize: '40px',
-        fontWeight: 'bold'
+        fontWeight: '400',
+        textAlign : 'left',
+
+    },
+    banenrHeadingBlack : {
+        color: '#000',
+        fontSize: '40px',
+        fontWeight: '400',
+        textAlign : 'left',
+    },
+    viewMore : {
+        background: '#2d62c2',
+        width : '100% !important',
+        marginTop :20
+    },
+    banenrSubtitle : {
+        color: '#2d62c2',
+        fontSize: '25px',
+        fontWeight: '300'
     },
     bannerSubHeading : {
-     color : '#464E5F',
-     fontFamily: 'sans-serif',
+      color : '#000',
+      fontFamily: 'sans-serif',
       fontStyle: 'normal',
-      fontWeight: 'bold',
-      fontSize: '11px',
+      fontWeight: '400',
+      fontSize: '15px',
       textAlign: 'justify'
     },
     secondBox: {
@@ -33,7 +55,8 @@ export default makeStyles(() => ({
     },
     bannerBox: {
         width : '90%',
-        margin : '0 auto'
+        margin : '0 auto',
+        background : 'white'
     },
     thirdBox: {
         backgroundColor: '#E5E5E5',
