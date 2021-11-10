@@ -80,7 +80,9 @@ export default makeStyles((theme) => ({
     buttonGroup : {
         display :'flex',
         justifyContent : 'flex-end',
-       
+        [theme.breakpoints.down('sm')]: {
+            justifyContent : 'center',
+        },
     },
     selectedLink : {
         borderBottom: '5px solid',
