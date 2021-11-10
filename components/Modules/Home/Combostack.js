@@ -35,9 +35,12 @@ import LowerCostImg from "assets/img/lower-cost.png";
 import { makeStyles } from "@material-ui/core";
 // import { BorderVerticalRounded } from "@material-ui/icons";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   performanceImg: {
     height: "435px",
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto !important',
+    },
   },
   performanceTitle: {
     fontSize: "50px",
@@ -46,6 +49,9 @@ const useStyles = makeStyles(() => ({
     "font-family": "sans-serif",
     "font-style": "normal",
     "font-weight": 400,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: "30px",
+    },
   },
   performanceSubTitle: {
     "text-align": "left",
@@ -111,6 +117,9 @@ const useStyles = makeStyles(() => ({
   },
   tileimg: {
     height: "130px",
+    [theme.breakpoints.down('sm')]: {
+      height: 'auto !important',
+    },
   },
 }));
 export default function Homes(props) {
@@ -628,7 +637,7 @@ export default function Homes(props) {
             </Box>
             <Box
               style={{
-                textAlign: "center",
+                textAlign: "left",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",
@@ -665,7 +674,7 @@ export default function Homes(props) {
             </Box>
             <Box
               style={{
-                textAlign: "center",
+                textAlign: "left",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",
@@ -704,7 +713,7 @@ export default function Homes(props) {
             </Box>
             <Box
               style={{
-                textAlign: "center",
+                textAlign: "left",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",
@@ -743,7 +752,7 @@ export default function Homes(props) {
             </Box>
             <Box
               style={{
-                textAlign: "center",
+                textAlign: "left",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",

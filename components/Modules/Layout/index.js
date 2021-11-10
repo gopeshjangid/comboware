@@ -7,7 +7,7 @@ export default function Layout(props) {
     return (
         <Grid  container direction="column">
             <Header />
-            <div>{props.children}</div>
+            <div style={{background : 'white'}}>{props.children}</div>
             <Footer />
         </Grid>
     )

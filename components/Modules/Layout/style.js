@@ -1,17 +1,24 @@
 import { makeStyles } from "@material-ui/core";
 
-export default makeStyles(() => ({
+export default makeStyles((theme) => ({
     header: {
         backgroundColor: "#477ad0",
-        position: 'inherit'
+        position: 'inherit',
+        [theme.breakpoints.down('sm')]: {
+            height: '178px',
+        },
     },
     logo: {
         fontFamily: "Work Sans, sans-serif",
         fontWeight: 600,
         color: "#5179FE",
         textAlign: "center",
-        width: '25%',
+       
         fontSize: 'xx-large',
+        [theme.breakpoints.down('sm')]: {
+            marginTop: "75px",
+            width: '100%',
+          },
     },
     linkButton: {
         marginRight: '20px', 
@@ -20,7 +27,11 @@ export default makeStyles(() => ({
         fontWeight: '500', 
         fontSize: '16px', 
         lineHeight: '16px',
-        textDecoration : 'none'
+        textDecoration : 'none',
+        [theme.breakpoints.down('sm')]: {
+            whiteSpace: 'nowrap',
+            
+        },
     },
     linkButtonColor: {
         color: 'white', 
@@ -35,11 +46,26 @@ export default makeStyles(() => ({
     menuButton: {
         width: '50%',
         textAlign: 'left',
-        top: '52px'
+        top: '52px',
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+            overflow: 'auto',
+            width: '100%',
+            '&::-webkit-scrollbar' : {
+                color : 'white',
+            }
+        },
+    },
+    buttons : {
+        [theme.breakpoints.down('sm')]: {
+            fontSize: "10px",
+            width : '154px !important'
+        },
     },
     buttonGroup : {
         display :'flex',
-        justifyContent : 'flex-end'
+        justifyContent : 'flex-end',
+       
     },
     selectedLink : {
         borderBottom: '5px solid',
@@ -55,6 +81,7 @@ export default makeStyles(() => ({
     footer : {
       paddingTop: '20px',
       background: 'white',
-      height: '600px'
+      height: '600px',
+      marginTop : 30
     }
 }));

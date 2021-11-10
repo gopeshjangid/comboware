@@ -1,4 +1,4 @@
-import { Box, Grid, TextField, Typography, Avatar } from "@material-ui/core";
+import { Box, Grid, TextField, Typography, Avatar ,Divider } from "@material-ui/core";
 import React from "react";
 import { WhiteButton } from "../Common/button";
 import useStyle from "../Home/style";
@@ -19,10 +19,17 @@ export default function Footer(props) {
       container
       item
       className={classes.footer}
+      style={{
+        paddingTop: '20px',
+        background: 'white',
+        height: '600px',
+        marginTop : 30
+      }}
       justifyContent="center"
       direction="row"
       alignItems="center"
     >
+      <Divider/>
       <Typography
         variant="p"
         component="p"
@@ -42,15 +49,15 @@ export default function Footer(props) {
           paddingRight: 40,
         }}
       >
-        <Box style={{width  :'50%', alignItems : 'center', margin : '0 auto', display: "flex",
+        <Box style={{width  :'100%', alignItems : 'flex-end', margin : '0 auto', display: "flex",
           flexDirection: "column",}}>
-          <Typography align="justify" variant="subtitle1" component="p">
+          <Typography style={{fontWeight : 'bold'}} align="justify" variant="subtitle1" component="p">
             Comboware.,Inc
           </Typography>
-          <Typography align="justify" variant="p" component="p">
+          <Typography style={{fontWeight : 'bold'}} align="justify" variant="p" component="p">
             1007 N. Orange Street Floor 4 Wilmington, DE 19801
           </Typography>
-          <Typography align="justify" variant="p" component="p">
+          <Typography style={{fontWeight : 'bold'}} align="justify" variant="p" component="p">
             marcom@comboware.io
           </Typography>
         </Box>

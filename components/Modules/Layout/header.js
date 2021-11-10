@@ -70,7 +70,7 @@ export const GetMenuButtons = ({flag, contackLink}) => {
 
 export default function Header() {
 
-    const { header, logo, ToolbarHeight, menuButton, buttonGroup } = useStyles();
+    const { header, logo, ToolbarHeight, menuButton, buttonGroup,buttons } = useStyles();
 
     const router = useRouter();
 
@@ -80,15 +80,15 @@ export default function Header() {
         <AppBar className={header}>
             <Toolbar className={ToolbarHeight}>
                 <Grid container spacing={1} justify="space-between" alignContent="center" alignItems="center">
-                  <Grid item xs={6}>
-                     <img src={HomeLogo} width ="300" height="50" />
+                  <Grid item xs={12} sm={6}>
+                     <img className={logo} src={HomeLogo} width ="300" height="50" />
                  </Grid>
-                 <Grid item xs={6} style={{textAlign : 'right'}}>
+                 <Grid item xs={12} sm={6} style={{textAlign : 'right'}}>
                     <Box className={buttonGroup}>
-                        <WhiteButton onClick={()=>router.push("/login/customer")} variant="outlined">
+                        <WhiteButton className={buttons} onClick={()=>router.push("/login/customer")} variant="outlined">
                         CUSTOMER LOGIN
                         </WhiteButton>
-                        <WhiteButton onClick={()=>router.push("/login/engineer")} variant="outlined">
+                        <WhiteButton className={buttons} onClick={()=>router.push("/login/engineer")} variant="outlined">
                         ENGINEER  LOGIN
                         </WhiteButton>
                     </Box>
