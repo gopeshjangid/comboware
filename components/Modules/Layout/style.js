@@ -51,7 +51,7 @@ export default makeStyles((theme) => ({
         height:'120px',
     },
     menuButton: {
-        width: '50%',
+        width: '100%',
         textAlign: 'left',
         top: '52px',
         [theme.breakpoints.down('sm')]: {
