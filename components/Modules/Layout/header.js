@@ -6,6 +6,10 @@ import {useRouter} from  "next/router";
 import HomeLogo from  "../../../assets/img/comboware-home-logo.png";
 const headersData = [
     {
+        label: "Home",
+        href: "/",
+    },
+    {
         label: "Company",
         href: "/#",
     },
@@ -77,7 +81,7 @@ export default function Header() {
             <Toolbar className={ToolbarHeight}>
                 <Grid container spacing={1} justify="space-between" alignContent="center" alignItems="center">
                   <Grid item xs={6}>
-                     <img src={HomeLogo} width ="200" height="50" />
+                     <img src={HomeLogo} width ="300" height="50" />
                  </Grid>
                  <Grid item xs={6} style={{textAlign : 'right'}}>
                     <Box className={buttonGroup}>

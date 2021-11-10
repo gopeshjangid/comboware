@@ -14,7 +14,7 @@ export default function Banner(props) {
 
     return (
         <div>
-           <Carousel stopOnHover  showArrows={true} autoPlay={true} showIndicators={true}  infiniteLoop={true} interval={3000} >
+           <Carousel stopOnHover  showArrows={true} autoPlay={false} showIndicators={true}  infiniteLoop={true} interval={3000} >
              <Grid container spacing={2} className={classes.bannerBox} justifyContent="center" direction='row' alignItems="center">
                 <Grid xs={7} sm={6}>
                     <Box className={classes.contentBox}>

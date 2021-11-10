@@ -42,14 +42,15 @@ export default makeStyles(() => ({
         justifyContent : 'flex-end'
     },
     selectedLink : {
-        borderBottom: '3px solid',
+        borderBottom: '5px solid',
         paddingBottom: '6px',
         marginRight: '20px', 
         color: '#fff', 
         fontStyle: 'normal', 
         fontWeight: '500', 
         fontSize: '16px', 
-        lineHeight: '16px'
+        lineHeight: '16px',
+        marginTop :8
     },
     footer : {
       paddingTop: '20px',
