@@ -11,7 +11,7 @@ const headersData = [
     },
     {
         label: "Company",
-        href: "/#",
+        href: "/company",
     },
     {
         label: "Combostack",
