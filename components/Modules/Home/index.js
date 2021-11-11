@@ -3,8 +3,7 @@ import { Box, Divider, Grid, Typography, Avatar, TextField } from '@material-ui/
 import React from 'react';
 import Layout from '../Layout';
 import useStyle from './style';
-import homeImg from "assets/img/home1.png";
-import { Airplay, Work, Lock, AccountCircle, Contacts, MailOutline, Call } from '@material-ui/icons';
+import {  AccountCircle, Contacts, MailOutline, Call } from '@material-ui/icons';
 import Dynamic from  "next/dynamic";
 import { PrimaryButton, SecondaryButton, WhiteButton } from '../Common/button';
 import Testimonal from './Testimonal';
@@ -34,26 +33,26 @@ export default function Homes(props) {
         <Layout>
             <Banner />
             <Grid container className={classes.secondBox} justifyContent="center" direction='column' alignItems="center" spacing={20}>
-                <Grid xs={12} item className={classes.midHeading}>
-                    Trusted by smartest companies around the world
+                <Grid xs={12} item style={{textAlign : 'center'}} className={classes.midHeading}>
+                    <Typography className={classes.partnerHeading} variant="p" align="center"> Trusted by smartest companies around the world</Typography>
                 </Grid>
-                <Grid  container item alignItems="center" className={classes.bannerImageContainer}>
-                    <Box xs={1} className={classes.bannerImageBox}>
+                <Grid   container item alignItems="center" className={classes.bannerImageContainer}>
+                    <Box xs={6} sm={1} className={classes.bannerImageBox}>
                         <img src={Banner1} alt={Banner1} height='75%' width="75%" className={classes.bannerImage1} />
                     </Box>
-                    <Box xs={1} className={classes.bannerImageBox}>
+                    <Box xs={6} sm={1} className={classes.bannerImageBox}>
                         <img src={Banner3} alt={Banner3} height='35%' width="75%" className={classes.bannerImage2} />
                     </Box>
-                    <Box xs={1} className={classes.bannerImageBox}>
+                    <Box xs={6} sm={1} className={classes.bannerImageBox}>
                         <img src={Banner2} alt={Banner2} height='75%' width="35%" className={classes.bannerImage3} />
                     </Box>
-                    <Box xs={1} className={classes.bannerImageBox}>
+                    <Box xs={6} sm={1} className={classes.bannerImageBox}>
                         <img src={Banner4} alt={Banner4} height='35%' width="75%" className={classes.bannerImage2} />
                     </Box>
-                    <Box xs={1} className={classes.bannerImageBox}>
+                    <Box xs={6} sm={1} className={classes.bannerImageBox}>
                         <img src={Banner5} alt={Banner5} height='75%' width="35%" className={classes.bannerImage3} />
                     </Box>
-                    <Box xs={1} className={classes.bannerImageBox}>
+                    <Box xs={6} sm={1} className={classes.bannerImageBox}>
                         <img src={Banner6} alt={Banner6} height='35%' width="75%" className={classes.bannerImage2} />
                     </Box>
 
@@ -62,7 +61,7 @@ export default function Homes(props) {
             
             <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
                
-                <Grid xs={6} sm={6}>
+                <Grid xs={12} sm={6}>
                      <Box className={classes.contentBox}>
                         <Typography variant="h3" component="h3" gutterBottom className={classes.banenrHeading}>
                           COMBOSTACK CLOUD
@@ -75,16 +74,21 @@ export default function Homes(props) {
                         </PrimaryButton>
                     </Box>
                 </Grid>
-                <Grid xs={6} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
-                    <img src={comboTSackCloud} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+                <Grid xs={12} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
+                    <Box className={classes.imageBox}>
+                      <img src={comboTSackCloud} alt="Logo" height='100%' width="75%" className={classes.homeBoxImg} />
+                    </Box>
+                   
                 </Grid>
             </Grid>
 
             <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
-               <Grid xs={6} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
-                   <img src={maintenacePlateformImg} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+               <Grid xs={12} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
+               <Box className={classes.imageBox}>
+                   <img src={maintenacePlateformImg} alt="Logo" height='100%' width="75%" className={classes.homeBoxImg} />
+                   </Box>
                </Grid>
-               <Grid xs={6} sm={6}>
+               <Grid xs={12} sm={6}>
                     <Box className={classes.contentBox}>
                        <Typography variant="h3" component="h3" gutterBottom className={classes.banenrHeadingBlack}>
                        Combostack multi tenant
@@ -100,9 +104,9 @@ export default function Homes(props) {
                
            </Grid>
            
-            <Grid style={{marginBottom : 20,marginTop : 20}} container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
+            <Grid  container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
                
-               <Grid xs={6} sm={6}>
+               <Grid xs={12} sm={6}>
                     <Box className={classes.contentBox}>
                        <Typography component="p" gutterBottom className={classes.banenrSubtitle}>
                        EnginerO Maintanance Platofrm
@@ -115,16 +119,20 @@ export default function Homes(props) {
                        </PrimaryButton>
                    </Box>
                </Grid>
-               <Grid xs={6} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
-                   <img src={EngineerPerformance} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+               <Grid xs={12} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
+               <Box className={classes.imageBox}>
+                   <img src={EngineerPerformance} alt="Logo" height='100%' width="75%" className={classes.homeBoxImg} />
+                   </Box>
                </Grid>
            </Grid>
 
-           <Grid style={{marginBottom : 20,marginTop : 20}} container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
-               <Grid xs={6} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
-                   <img src={customerServiceImg} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+           <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
+               <Grid xs={12} sm={6} className={classes.firstBoxImage, classes.imageLeftThird}>
+               <Box className={classes.imageBox}>
+                   <img src={customerServiceImg} alt="Logo" height='100%' width="75%" className={classes.homeBoxImg} />
+                   </Box>
                </Grid>
-               <Grid xs={6} sm={6}>
+               <Grid xs={12} sm={6}>
                     <Box className={classes.contentBox}>
                        <Typography  component="p" gutterBottom className={classes.banenrSubtitle}>
                          Customer Service 
@@ -140,24 +148,24 @@ export default function Homes(props) {
                </Grid>
               
            </Grid>
-           <Grid style={{marginBottom : 20,marginTop : 20}} container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
+           <Grid  container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
               
                <Grid xs={12} sm={4}>
-                    <Box className={classes.contentBox}>
+                    <Box className={classes.smallImgBox}>
                        <Typography  component="p" gutterBottom style={{fontWeight : 'bold', fontSize : '19px' ,color : '#000'}}>
                          The technical team has 100 people
                        </Typography>
                    </Box>
                </Grid>
                <Grid xs={12} sm={4}>
-                    <Box className={classes.contentBox}>
+                    <Box className={classes.smallImgBox}>
                        <Typography  component="p" gutterBottom  style={{fontWeight : 'bold', fontSize : '19px' ,color : '#000'}}>
                          There are 100 successful cases
                        </Typography>
                    </Box>
                </Grid>
                <Grid xs={12} sm={4}>
-                    <Box className={classes.contentBox}>
+                    <Box className={classes.smallImgBox}>
                        <Typography  component="p" gutterBottom  style={{fontWeight : 'bold', fontSize : '19px' ,color : '#000'}}>
                        Sales area has 5 countries
                        </Typography>
@@ -169,11 +177,12 @@ export default function Homes(props) {
            <Divider   />
 
 
-           <Grid container style={{marginBottom : 20,marginTop : 20}} className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
+           <Grid container className={classes.backgroundColorPeach} justifyContent="center" direction='row' alignItems="center">
               
                <Grid xs={12} sm={4}>
-                  <Box className={classes.contentBox}>
-                      <img src={Premise} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+                  <Box className={classes.smallImgBox}>
+
+                      <img src={Premise} alt="Logo" height='100%' width="75%" className={classes.homeBoxImg} />
                        <Typography textAlign="center" align="center"  component="h6" gutterBottom style={{fontWeight : 'bold', fontSize : '22px' ,color : '#000'}}>
                        on Premise
                        </Typography>
@@ -185,8 +194,8 @@ export default function Homes(props) {
                    </Box>
                </Grid>
                <Grid xs={12} sm={4}>
-                  <Box className={classes.contentBox}>
-                      <img src={DataCenter} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+                  <Box className={classes.smallImgBox}>
+                      <img src={DataCenter} alt="Logo" height='100%' width="75%" className={classes.homeBoxImg} />
                        <Typography textAlign="center" align="center"  component="h6" gutterBottom style={{fontWeight : 'bold', fontSize : '22px' ,color : '#000'}}>
                          on Datacenter 
                        </Typography>
@@ -199,8 +208,8 @@ export default function Homes(props) {
                </Grid>
 
                <Grid xs={12} sm={4}>
-                  <Box className={classes.contentBox}>
-                      <img src={PayGImg} alt="Logo" height='100%' width="75%" className={classes.firstImage} />
+                  <Box className={classes.smallImgBox}>
+                      <img src={PayGImg} alt="Logo" height='100%' width="75%" className={classes.paygImg} />
                        <Typography  component="h6" textAlign="center" align="center" gutterBottom style={{fontWeight : 'bold', fontSize : '22px' ,color : '#000'}}>
                          PAGY
                        </Typography>
@@ -214,14 +223,14 @@ export default function Homes(props) {
               
            </Grid>
            <ChatSystem />
-            <Grid container className={classes.secondBox} style={{marginBottom : 20,marginTop : 20}} justifyContent='center' direction='row' alignItems='center'>
+            <Grid container className={classes.backgroundColorPeach} style={{marginBottom : 20,marginTop : 20}} justifyContent='center' direction='row' alignItems='center'>
                 <Box style={{ flexDirection: 'row', display: 'flex', margin: 'auto' }}>
-                    <Box style={{ width: '100%', padding: '20px' }}>
+                    <Box style={{ width: '100%', padding: '20px' }} className={classes.callBox}>
                        
-                        <Typography variant="h3" component="h4" style={{textAlign : 'left', color: '#0F1634',fontWeight : 'bold',}}>
+                        <Typography className={classes.callTitle} variant="h3" component="h4" style={{textAlign : 'left', color: '#0F1634',fontWeight : 'bold',}}>
                             SCHEDULE A CALL
                         </Typography>
-                        <Typography style={{textAlign : 'left', color: '#0F1634' , fontWeight : 'bold', fontSize : '18px' }} variant='p' component='p'>
+                        <Typography className={classes.callMsg} style={{textAlign : 'left', color: '#0F1634' , fontWeight : 'bold', fontSize : '18px' }} variant='p' component='p'>
                           The Message info need:
                         </Typography>
                         {/* <Typography variant="hh6" component="h6" align="left" className={classes.fontSize12}>
