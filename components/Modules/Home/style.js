@@ -58,14 +58,14 @@ export default makeStyles((theme) => ({
     },
     bannerViewMore : {
         width: 'auto !important',
-        background: '#11161f',
+        background: '#11161f !important',
         'margin-top': '20px',
-        color: 'white',
+        color: 'white !important',
         'font-weight': 400,
         'font-size': '14px',
-        border: '2px solid #1f479c',
-        borderRadius : '0',
-        height: '41px',
+        border: '2px solid #1f479c !important',
+        borderRadius : '0 !important',
+        height: '41px !important',
         marginTop :20,
         textTransform : 'none',
         '&:hover' : {
@@ -73,8 +73,8 @@ export default makeStyles((theme) => ({
             border : '1px solid #255fcd'
         },
         [theme.breakpoints.down('sm')]: {
-            'font-size': '10px',
-            height: '20px'
+            'font-size': '10px !important',
+            height: '20px !important'
           },
     },
     viewMore : {
