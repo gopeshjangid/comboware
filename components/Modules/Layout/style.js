@@ -56,9 +56,11 @@ export default makeStyles((theme) => ({
         },
     },
     menuButton: {
-        width: '100%',
-        textAlign: 'left',
+        width: '89%',
         top: '52px',
+        display: 'flex',
+        'justify-content': 'space-around',
+        margin: '0 auto',
         [theme.breakpoints.down('sm')]: {
             display: 'flex',
             overflow: 'auto',
