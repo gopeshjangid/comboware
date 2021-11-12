@@ -31,7 +31,7 @@ const CarouselPage = () => {
       <MDBCarousel
         activeItem={1}
         length={2}
-        interval={113000}
+        interval={5000}
         showIndicators={false}
         showControls={true}
         className="z-depth-1"

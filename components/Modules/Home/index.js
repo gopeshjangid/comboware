@@ -313,10 +313,12 @@ export default function Homes(props) {
           sm={6}
           className={(classes.firstBoxImage, classes.imageLeftThird)}
         >
-          <Box  className={classes.performImgBox}>
+          <Box className={classes.performanceImg}>
             <img
               src={EngineerPerformance}
               alt="Logo"
+              height="100%"
+              width="75%"
               className={classes.homeBoxImg}
             />
           </Box>

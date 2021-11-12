@@ -310,7 +310,7 @@ export default makeStyles((theme) => ({
        },
       
     },
-    performImgBox : {
+    performanceImg : {
         padding : 10,
         [theme.breakpoints.down('sm')]: {
             'padding-right': '268px',
