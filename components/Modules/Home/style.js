@@ -89,7 +89,7 @@ export default makeStyles((theme) => ({
         'margin-top': '20px',
         color: 'white !important',
         'font-weight': 400,
-        'font-size': '14px',
+        'font-size': '14px !important',
         border: '2px solid #7d9de0 !important',
         borderRadius : '0 !important',
         height: '53px !important',
