@@ -105,5 +105,12 @@ export default makeStyles((theme) => ({
       background: 'white',
       height: '600px',
       marginTop : 30
+    },
+    contentLayout : {
+        [theme.breakpoints.up('sm')]: {
+            margin: '0 auto',
+            width: '80%',
+            
+        },
     }
 }));
