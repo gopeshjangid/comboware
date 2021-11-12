@@ -32,8 +32,8 @@ const CarouselPage = () => {
         activeItem={1}
         length={2}
         interval={5000}
-        showIndicators={false}
-        showControls={true}
+        showIndicators={true}
+        showControls={false}
         className="z-depth-1"
         
       >
