@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 // import { BorderVerticalRounded } from "@material-ui/icons";
-
+import EngineeroBg from "assets/img/engineero-maintenance-bg.png";
 const color = '#5e82c4d9';
 export default makeStyles((theme) => ({
     firstBox: {
@@ -369,6 +369,6 @@ export default makeStyles((theme) => ({
         marginTop :20
     },
     peachBackground : {
-        backgroundColor: '#e7936b'
+        backgroundImage : `url(${EngineeroBg})`
     } 
 }));

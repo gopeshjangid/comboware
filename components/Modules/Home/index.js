@@ -28,6 +28,7 @@ import maintenacePlateformImg from "assets/img/maintenace-plateform.png";
 import Premise from "assets/img/premise.png";
 import DataCenter from "assets/img/data-center.png";
 import PayGImg from "assets/img/pagy.png";
+
 //import Video from "assets/img/home-video.mov";
 
 const ChatSystem = Dynamic(() => import("../../Chat"));
@@ -282,7 +283,7 @@ export default function Homes(props) {
               gutterBottom
               style={{
                   color: 'white',
-                'font-weight': 600,
+                'font-weight': '600 !important',
                 'text-transform': 'uppercase'
             }}
               className={classes.banenrSubtitle}
@@ -295,7 +296,8 @@ export default function Homes(props) {
               gutterBottom
               style={{
                 color: 'white',
-                'margin-top': '23px'
+                'margin-top': '23px',
+                'font-weight': '500 !important',
               }}
               className={classes.bannerSubHeading}
             >
