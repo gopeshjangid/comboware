@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 // import { BorderVerticalRounded } from "@material-ui/icons";
 
-const color = '#1e5ac7d9';
+const color = '#5e82c4d9';
 export default makeStyles((theme) => ({
     firstBox: {
         backgroundColor: '#1853F9',
@@ -40,7 +40,7 @@ export default makeStyles((theme) => ({
     },
     banenrHeading : {
         color: color,
-        fontSize: '40px',
+        fontSize: '55px',
         fontWeight: '700',
         textAlign : 'left',
         [theme.breakpoints.down('sm')]: {
@@ -48,54 +48,127 @@ export default makeStyles((theme) => ({
           },
     },
     banenrHeadingBlack : {
-        color: '#000',
-        fontSize: '40px',
-        fontWeight: '400',
+        color: '#fff',
+        fontSize: '41px',
+        fontWeight: '600',
         textAlign : 'left',
+        'text-transform': 'uppercase',
         [theme.breakpoints.down('sm')]: {
-            fontSize: '26px',
+            'font-size': '17px !important',
+            height: '36px !important',
+            width: '100% !important',
+          },
+    },
+    customerButton : {
+        width: '200px !important',
+        background: '#7d9de0 !important',
+        'margin-top': '20px',
+        color: 'white !important',
+        'font-weight': 400,
+        'font-size': '14px',
+        border: '2px solid #7d9de0 !important',
+        borderRadius : '0 !important',
+        height: '53px !important',
+        marginTop :20,
+        textTransform : 'none',
+        '&:hover' : {
+            background : '#cbd4d3 !important',
+            border : 'none !important',
+            color : 'black !important',
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: '123px !important',
+            'font-size': '8px !important',
+            height: '30px !important',
+            'line-height': '1px'
           },
     },
     bannerViewMore : {
-        width: 'auto !important',
+        width: '200px !important',
         background: '#11161f !important',
         'margin-top': '20px',
         color: 'white !important',
         'font-weight': 400,
         'font-size': '14px',
-        border: '2px solid #1f479c !important',
+        border: '2px solid #7d9de0 !important',
         borderRadius : '0 !important',
-        height: '41px !important',
+        height: '53px !important',
         marginTop :20,
         textTransform : 'none',
         '&:hover' : {
-            background : '#255fcd',
-            border : '1px solid #255fcd'
+            background : '#cbd4d3 !important',
+            border : 'none !important',
+            color : 'black !important',
         },
         [theme.breakpoints.down('sm')]: {
-            'font-size': '10px !important',
-            height: '20px !important'
+            'font-size': '11px !important',
+            'line-height': '1px',
+            height: '36px !important',
+            width: '106px !important',
           },
     },
     viewMore : {
-        background: '#2d62c2',
-        width : '100% !important',
-        marginTop :20
+        width: '200px !important',
+        background: '#11161f !important',
+        'margin-top': '20px',
+        color: 'white !important',
+        'font-weight': 400,
+        'font-size': '14px',
+        border: '2px solid #7d9de0 !important',
+        borderRadius : '0 !important',
+        height: '53px !important',
+        marginTop :20,
+        textTransform : 'none',
+        '&:hover' : {
+            background : '#cbd4d3 !important',
+            border : 'none !important',
+            color : 'black !important',
+        },
+        [theme.breakpoints.down('sm')]: {
+            'font-size': '8px !important',
+            height: '36px !important',
+            width: '121px !important',
+            textTransform : 'none',
+            'line-height': '1px'
+          },
     },
     banenrSubtitle : {
         color: color,
         fontSize: '25px',
         fontWeight: '300'
     },
+    bannerDesc : {
+        color : '#161433',
+        fontFamily: 'sans-serif',
+        fontStyle: 'normal',
+        fontWeight: '700',
+        fontSize: '24px',
+        textAlign: 'justify',
+        [theme.breakpoints.down('sm')]: {
+          fontSize: '12px',
+          width : '57%'
+        },
+      },
+      bannerCustomerService : {
+        color : '#fff',
+        fontFamily: 'sans-serif',
+        fontStyle: 'normal',
+        fontWeight: '700',
+        fontSize: '17px',
+        textAlign: 'justify',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '14px',
+        },
+      },
     bannerSubHeading : {
-      color : '#000',
+      color : '#161433',
       fontFamily: 'sans-serif',
       fontStyle: 'normal',
-      fontWeight: '500',
+      fontWeight: '700',
       fontSize: '17px',
       textAlign: 'justify',
       [theme.breakpoints.down('sm')]: {
-        fontSize: '10px',
+        fontSize: '13px',
       },
     },
     secondBox: {
@@ -106,6 +179,19 @@ export default makeStyles((theme) => ({
         margin : '0 auto',
         background : 'white',
         
+    },
+    bannerContentBox : {
+        width : '100%',
+        margin : '0 auto',
+        background : 'white',
+        height : '335px',
+        padding : 20,
+        paddingTop : 0,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '10px',
+            height : '200px',
+            paddingTop: 20
+          },
     },
     thirdBox: {
         backgroundColor: '#E5E5E5',
@@ -224,6 +310,13 @@ export default makeStyles((theme) => ({
        },
       
     },
+    performImgBox : {
+        padding : 10,
+        [theme.breakpoints.down('sm')]: {
+            'padding-right': '268px',
+            'padding-left': '0px',
+       },
+    },
     homeBoxImg : {
         [theme.breakpoints.down('sm')]: {
             width: '90%',
@@ -252,5 +345,30 @@ export default makeStyles((theme) => ({
             'margin-right': '261px',
             'font-size': '15px'
       },
-    }
+    },
+    videoContainer : {
+        position : 'relative',
+    },
+    videoImgBox : {
+        
+    },
+    caption : {
+        'color': 'black',
+        'text-transform': 'none'
+    },
+    clientImg : {
+        width : '80%'
+    },
+    clientImgBox : {
+        display: 'flex',
+        'flex-direction': 'column',
+        'align-items': 'center'
+    } ,
+    customerServiceBackground : {
+        backgroundColor: '#2b0d5b',
+        marginTop :20
+    },
+    peachBackground : {
+        backgroundColor: '#e7936b'
+    } 
 }));

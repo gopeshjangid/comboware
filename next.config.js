@@ -4,9 +4,11 @@ const withSass = require("@zeit/next-sass");
 const withCSS = require("@zeit/next-css");
 const webpack = require("webpack");
 const path = require("path");
+const withVideos = require('next-videos')
 
+module.exports = withVideos();
 module.exports = withPlugins([[withSass], [withImages], [withCSS]], {
-  webpack(config, options) {
+  webpack(config, { isServer, webpack }) {
     config.resolve.modules.push(path.resolve("./"));
     return config;
   },

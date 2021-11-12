@@ -19,21 +19,23 @@ import {
   MDBCarouselInner,
   MDBCarouselItem,
 } from "mdbreact";
+import {useRouter} from  "next/router";
 //import '@fortawesome/fontawesome-free/css/all.min.css';
 import "bootstrap-css-only/css/bootstrap.min.css";
 //import 'mdbreact/dist/css/mdb.css';
 const CarouselPage = () => {
   const classes = useStyle();
+  const router = useRouter();
   return (
     <div size="xl" style={{width : '100%' ,maxWidth : '100%'}}>
       <MDBCarousel
         activeItem={1}
         length={2}
         interval={113000}
+        showIndicators={false}
         showControls={true}
-        showIndicators={true}
         className="z-depth-1"
-        thumbnails
+        
       >
         <MDBCarouselInner>
           <MDBCarouselItem itemId="1">
@@ -46,7 +48,7 @@ const CarouselPage = () => {
               alignItems="center"
             >
               <Grid xs={12} sm={6}>
-                <Box className={classes.contentBox}>
+                <Box className={classes.bannerContentBox}>
                   <Typography
                     variant="h3"
                     component="h3"
@@ -59,14 +61,13 @@ const CarouselPage = () => {
                     variant="p"
                     component="p"
                     gutterBottom
-                    className={classes.bannerSubHeading}
+                    className={classes.bannerDesc}
                   >
                     Combostack is a cloud platform that can be combined with
                     private clouds and public clouds. It is a standard hybrid
-                    cloud platform and we provide it to customers##The view more
-                    button needs to take comboware first part ##
+                    cloud platform and we provide it to customers.
                   </Typography>
-                  <IconButton variant="contained" className={classes.bannerViewMore}>
+                  <IconButton variant="contained" onClick={()=> router.push("/combostack")} className={classes.bannerViewMore}>
                     View More &nbsp; <ArrowRight />
                   </IconButton>
                 </Box>
@@ -101,7 +102,7 @@ const CarouselPage = () => {
                 />
               </Grid>
               <Grid xs={12} sm={6}>
-                <Box className={classes.contentBox}>
+                <Box className={classes.bannerContentBox}>
                   <Typography
                     variant="h3"
                     component="h3"
@@ -114,13 +115,12 @@ const CarouselPage = () => {
                     variant="p"
                     component="p"
                     gutterBottom
-                    className={classes.bannerSubHeading}
+                    className={classes.bannerDesc}
                   >
                     EngineerO is a platform for assisting technical engineers to
                     maintain and accept cases. One can receive tickets, handle
                     maintenance for each customer, and obtain some additional
-                    income. ##The view more button needs to take EngineerO page
-                    first part ##
+                    income.
                   </Typography>
                   <IconButton variant="contained" className={classes.bannerViewMore}>
                     View More &nbsp; <ArrowRight />
