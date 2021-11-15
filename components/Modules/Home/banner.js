@@ -22,7 +22,7 @@ const CarouselPage = () => {
         activeItem={1}
         length={2}
         interval={3000}
-        showIndicators={true}
+        showIndicators={false}
         showControls={false}
         className="z-depth-1"
       >
@@ -130,6 +130,7 @@ const CarouselPage = () => {
                   </Typography>
                   <IconButton
                     variant="contained"
+                    onClick={() => router.push("/engineero")}
                     className={classes.bannerViewMore}
                   >
                     View More &nbsp; <ArrowRight />
