@@ -33,6 +33,17 @@ export default makeStyles((theme) => ({
             'padding-right': '300px'
           },
     },
+    engineeroContentBox : {
+        width: '90%',
+        margin : '0 auto',
+        textAlign  :'left',
+        padding : 20,
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+            height: 'auto',
+            'padding-right': '300px'
+          },
+    },
     firstLeftBoxHeading: {
         color: '#fff',
         fontSize: '75px',

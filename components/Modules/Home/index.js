@@ -272,7 +272,7 @@ export default function Homes(props) {
         alignItems="center"
       >
         <Grid xs={12} sm={6}>
-          <Box className={classes.contentBox}>
+          <Box className={classes.engineeroContentBox}>
             <Typography
               component="p"
               gutterBottom
