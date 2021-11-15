@@ -43,7 +43,6 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
     return () => {};
   }, [reduxState?.workspace?.serverList]);
 
-  console.log("reduxState", reduxState);
   useEffect(() => {
     setMessage({text : reduxState?.workspace?.message || reduxState?.workspace?.error , type : reduxState?.workspace?.error ? "error" : "success" });
    

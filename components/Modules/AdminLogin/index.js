@@ -67,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
     login({...form,password: btoa(form?.password) , user_type : 'ADMIN'} ,router,callBack);
   }
 
-  console.log("form" ,form)
   return (
     <Container component="main" maxWidth="sm">
       {loading && <LinearProgress align="top" />}

@@ -46,7 +46,6 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
     return () => {};
   }, [reduxState?.workspace?.serverList]);
 
-  console.log("reduxState", reduxState);
   useEffect(() => {
     setMessage({
       text: reduxState?.workspace?.message || reduxState?.workspace?.error,

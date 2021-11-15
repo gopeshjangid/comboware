@@ -73,7 +73,6 @@ function CustomerLogin(props) {
   let reduxState = useSelector((state) => state);
   let clientId = publicRuntimeConfig?.clientId;
 
-  console.log("reduxState", reduxState);
   const [form, setForm] = useState({
     email: "",
     password: "",

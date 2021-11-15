@@ -82,7 +82,6 @@ function Settings({  }) {
     const formData = new FormData();
     let file = event.target.files[0];
 
-    console.log("file", file);
     setSubmitted(true);
     setLoader(true);
     // Update the formData object

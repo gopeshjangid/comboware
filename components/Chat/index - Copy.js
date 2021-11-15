@@ -117,7 +117,6 @@ class SimpleForm extends Component {
 
   
   render() {
-    console.log("steps" ,this.state.steps);
     return (
       <ChatBot
       floating={true}

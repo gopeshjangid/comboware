@@ -72,7 +72,6 @@ function Settings({ saveHost, settings }) {
     return () => {};
   }, [reduxState?.user?.loading]);
 
-  console.log("reduxState=====", reduxState);
 
   const hostSubmitHandler = (e, type) => {
     e.preventDefault();

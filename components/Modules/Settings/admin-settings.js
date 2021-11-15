@@ -92,7 +92,6 @@ function Settings({ saveResource, getResources, settings }) {
     return () => {};
   }, [reduxState?.user?.loading]);
 
-  console.log("reduxState=====", reduxState);
 
   const resourceSubmitHandler = (e, type) => {
     e.preventDefault();

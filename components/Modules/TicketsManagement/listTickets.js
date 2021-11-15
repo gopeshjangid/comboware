@@ -55,7 +55,6 @@ function TicketsList({ getAllTickets, getProfile }) {
     return () => {};
   }, [reduxState?.ticket?.ticketList]);
 
-  console.log("reduxState", reduxState);
   useEffect(() => {
     setMessage({
       text: reduxState?.ticket?.message || reduxState?.ticket?.error,
@@ -99,7 +98,6 @@ function TicketsList({ getAllTickets, getProfile }) {
 
 
   const viewTicket = (details) => {
-    console.log("details" ,details)
     router.push("/ticket/"+details?.ticket_number);
   };
 

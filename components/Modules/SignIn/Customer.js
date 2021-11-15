@@ -77,7 +77,6 @@ function CustomerLogin(props) {
   let reduxState = useSelector((state) => state);
   let clientId = publicRuntimeConfig?.clientId;
 
-  console.log("reduxState", reduxState);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -126,7 +125,6 @@ function CustomerLogin(props) {
   }
 
   const responseGoogle = async (data) => {
-    console.log("success data", data);
     let postData = {
       email: data?.profileObj?.email,
       first_name: data?.profileObj?.name,

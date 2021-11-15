@@ -125,7 +125,6 @@ function Server({ serverRequest ,getWorkSpaceDetails }) {
     setServer({ ...server, form: { ...server?.form, server: {...server?.form?.server, [name]: value } } });
   };
 
-  console.log("reduxState=====", reduxState);
 
   return (
     <Wrapper>

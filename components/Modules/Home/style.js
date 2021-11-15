@@ -142,10 +142,10 @@ export default makeStyles((theme) => ({
         fontFamily: 'sans-serif',
         fontStyle: 'normal',
         fontWeight: '700',
-        fontSize: '24px',
+        fontSize: '14px',
         textAlign: 'justify',
         [theme.breakpoints.down('sm')]: {
-          fontSize: '12px',
+          fontSize: '10px',
           width : '57%'
         },
       },
@@ -189,7 +189,7 @@ export default makeStyles((theme) => ({
         paddingTop : 0,
         [theme.breakpoints.down('sm')]: {
             fontSize: '10px',
-            height : '200px',
+            height : '250px',
             paddingTop: 20
           },
     },
@@ -318,6 +318,7 @@ export default makeStyles((theme) => ({
        },
     },
     homeBoxImg : {
+        width: '75%',
         [theme.breakpoints.down('sm')]: {
             width: '90%',
             'margin-right': '10px'

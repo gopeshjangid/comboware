@@ -9,7 +9,6 @@ function Settings() {
   const reduxState = useSelector((state) => state);
   const [userType, setUserType] = useState("");
   const [settings, setSettings] = useState(null);
-console.log("reduxState====" ,reduxState)
   useEffect(() => {
     setSettings(reduxState?.settings);
     return () => {};

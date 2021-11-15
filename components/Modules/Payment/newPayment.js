@@ -91,7 +91,6 @@ function newPayment({
     getBillingAmount(query)
   }, []);
 
-console.log("billing" ,billing)
 
   const onSuccess = (data) => {
      createPayment({...data,payment_id : billing?.payment_id, payment_status : 'COMPLETED'  ,payment_description : "Payment success"} );

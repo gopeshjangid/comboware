@@ -25,9 +25,9 @@ import comboTSackCloud from "assets/img/combostack-cloud.jpeg";
 import EngineerPerformance from "assets/img/engineer-mainatanence-platform.png";
 import customerServiceImg from "assets/img/customer-service.png";
 import maintenacePlateformImg from "assets/img/maintenace-plateform.png";
-import Premise from "assets/img/premise.png";
-import DataCenter from "assets/img/data-center.png";
-import PayGImg from "assets/img/pagy.png";
+import Premise from "assets/img/combostack-hyper-private-cloud.png";
+import DataCenter from "assets/img/hyper-private-cloud.png";
+import PayGImg from "assets/img/combostack-datacenter.png";
 
 //import Video from "assets/img/home-video.mov";
 
@@ -193,10 +193,7 @@ export default function Homes(props) {
               gutterBottom
               className={classes.bannerSubHeading}
             >
-              The platform has basic dashboard functions, a hyper-converged
-              architecture, can use hybrid cloud, and can achieve permission
-              control and management classification, which is very effective to
-              help IT personnel manage.
+              ComboStack is a private cloud platform that can transfer data to the cloud or to the ground, and it can also be connected to the public cloud. It is a standard hybrid cloud platform architecture. It can provide engineers with good management of all company systems or customer systems. It can also provide R&D personnel with the existing environment of K8s to save the time and trouble of setting up the environment. It can also package all systems into a template for all projects.
             </Typography>
             <PrimaryButton variant="contained" className={classes.viewMore}>
               View More &nbsp; <ArrowRight />
@@ -258,9 +255,7 @@ export default function Homes(props) {
               gutterBottom
               className={classes.bannerCustomerService}
             >
-              In Multi-tenant user management, we can easily classify companies
-              or departments, and they are all independent individuals. This
-              View More button needs to take combostack page.
+              The function of multi-tenant users allows us to easily classify companies or departments, and assign and manage them. These are all independent individuals, which are different from general public cloud management methods.
             </Typography>
             <PrimaryButton variant="contained" className={classes.customerButton}>
               View More &nbsp; <ArrowRight />
@@ -301,9 +296,7 @@ export default function Homes(props) {
               }}
               className={classes.bannerSubHeading}
             >
-              Customers can directly report for repairs online on this platform,
-              eliminating the trouble of finding no one. The engineers on this
-              platform can also easily maintain their needs for customers
+              This is a maintenance and operation platform that gathers engineers from all over the world. You can join this platform in simple steps. Each engineer can choose to pick up the ticket by himself to provide transportation services for customers. When the customer requests maintenance, the system will proceed. Match it to the engineer, you can choose to accept it! And you can manage every ticket you have served well. Whenever a service is completed and the customer is satisfied, you may get all the bonuses.
             </Typography>
             <PrimaryButton variant="contained" className={classes.viewMore}>
               View More &nbsp; <ArrowRight />
@@ -364,10 +357,8 @@ export default function Homes(props) {
               gutterBottom
               className={classes.bannerSubHeading}
             >
-              Customers can easily use the system to apply for repairs, so that
-              engineers can assist them. In addition, not all companies have
-              engineers. At this time, it is very convenient to apply for
-              repairs by yourself.
+              We understand that not all customers have engineers stationed, so in order to provide more customers with maintenance channels, this platform was created, it can be very convenient and simple to use, a few steps can complete the online maintenance service application, and we An engineer will be sent to carry out the maintenance requirements you applied for. 
+
             </Typography>
             <PrimaryButton variant="contained" className={classes.viewMore}>
               View More &nbsp; <ArrowRight />
@@ -442,7 +433,8 @@ export default function Homes(props) {
               gutterBottom
               style={{ fontWeight: "bold", fontSize: "22px", color: "#000" }}
             >
-              on Premise
+              ComboStack hyper-converged private cloud platform
+
             </Typography>
             <Typography
               variant="p"
@@ -450,10 +442,7 @@ export default function Homes(props) {
               gutterBottom
               className={classes.bannerSubHeading}
             >
-              Customers can easily use the system to apply for repairs, so that
-              engineers can assist them. In addition, not all companies have
-              engineers. At this time, it is very convenient to apply for
-              repairs by yourself.
+              Provide physical machines that meet the capacity at home according to customer needs.
             </Typography>
           </Box>
         </Grid>
@@ -473,7 +462,7 @@ export default function Homes(props) {
               gutterBottom
               style={{ fontWeight: "bold", fontSize: "22px", color: "#000" }}
             >
-              on Datacenter
+              ComboStack hyper-converged private cloud platform
             </Typography>
             <Typography
               variant="p"
@@ -481,10 +470,7 @@ export default function Homes(props) {
               gutterBottom
               className={classes.bannerSubHeading}
             >
-              Customers can easily use the system to apply for repairs, so that
-              engineers can assist them. In addition, not all companies have
-              engineers. At this time, it is very convenient to apply for
-              repairs by yourself.
+              Provide physical machines that meet the capacity according to customer needs in IDC.
             </Typography>
           </Box>
         </Grid>
@@ -496,7 +482,7 @@ export default function Homes(props) {
               alt="Logo"
               height="100%"
               width="75%"
-              className={classes.paygImg}
+              className={classes.homeBoxImg}
             />
             <Typography
               component="h6"
@@ -505,7 +491,7 @@ export default function Homes(props) {
               gutterBottom
               style={{ fontWeight: "bold", fontSize: "22px", color: "#000" }}
             >
-              PAGY
+              ComboStack Virtual machine on DataCenter
             </Typography>
             <Typography
               variant="p"
@@ -513,10 +499,7 @@ export default function Homes(props) {
               gutterBottom
               className={classes.bannerSubHeading}
             >
-              Customers can easily use the system to apply for repairs, so that
-              engineers can assist them. In addition, not all companies have
-              engineers. At this time, it is very convenient to apply for
-              repairs by yourself.
+              Provide the number and capacity and bandwidth of virtual machines in IDC according to customer needs, and Pay as you go (PAGY) per month according to RAM & HDD usage.
             </Typography>
           </Box>
         </Grid>
