@@ -24,6 +24,7 @@ import { updateProfile, getProfile, updateSystemInfo } from "./redux/action";
 import { createDomain } from "../Workspace/redux/action";
 import { SKILLS } from "./redux/constants";
 import FieldSet from "components/Form/fieldset";
+import PhoneField from "components/PhoneFormat";
 import Wrapper from "components/Wrapper";
 import Tabs from "components/CustomTabs";
 function Profile({
@@ -198,6 +199,15 @@ function Profile({
     setProfile({ ...profile, form: { ...profile?.form, [name]: value } });
   };
 
+  const userpPoneHandler = (value) =>{
+    setProfile({ ...profile, form: { ...profile?.form, phone: value } });
+  }
+
+  const companyPhoneHandler = (value) =>{
+    setProfile({ ...profile, form: { ...profile?.form, company_phone: value } });
+  }
+  
+
   const skillHandler = (e, itemIndex) => {
     let name = e.target.name;
     let value = e.target.value;
@@ -368,13 +378,14 @@ function Profile({
                           />
                         </GridItem>
                         <GridItem xs={12} sm={4}>
-                          <TextField
+                          <PhoneField
                             fullWidth
-                            onChange={profileChangeHandler}
+                            variant="outlined"
+                            onChange={(e) => userpPoneHandler(e)}
                             name="phone"
-                            type="number"
                             label="Phone"
-                            inputProps={{ maxLength: 10 }}
+                            defaultCountry={"tw"}
+                            inputProps={{ maxLength: 14 }}
                             value={profile?.form?.phone}
                           />
                         </GridItem>
@@ -557,12 +568,13 @@ function Profile({
                           />
                         </GridItem>
                         <GridItem xs={12} sm={4}>
-                          <TextField
+                         <PhoneField
                             fullWidth
-                            onChange={profileChangeHandler}
+                            variant="outlined"
+                            onChange={(e) => companyPhoneHandler(e)}
                             name="company_phone"
-                            type="number"
-                            inputProps={{ maxLength: 10 }}
+                            defaultCountry={"tw"}
+                            inputProps={{ maxLength: 14 }}
                             label="Company Phone"
                             value={profile?.form?.company_phone}
                           />
@@ -678,13 +690,14 @@ function Profile({
         xs={12}
         sm={12}
         md={12}>
+           
             <Button
               variant="contained"
               color="primary"
               className={classes.submit}
               onClick={submitHandler}
             >
-              { is_profile_setup ? "Save" : "Save & Next" }
+              { "Save" }
             </Button>
         </GridItem>
       </GridContainer>

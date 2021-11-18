@@ -12,7 +12,7 @@ export const MESSAGE = {
   accountSuccess : 'Created success.'
 }
 
-export const SKILLS = ["BEGINNER" ,"INTERMEDIATE" ,"EXPERT"];
+export const SKILLS = ["Level 5: I'm an Expert" ,"Level 4+: I'm a Specialist" ,"Level 3+: I'm Good","Level 2+: I'm Intermediate","Level 1+: I'm a Beginner"];
 
 
 export const API = {
