@@ -204,6 +204,8 @@ function Profile({
   }
 
   const companyPhoneHandler = (value) =>{
+
+    console.log("value phooeee" ,value)
     setProfile({ ...profile, form: { ...profile?.form, company_phone: value } });
   }
   

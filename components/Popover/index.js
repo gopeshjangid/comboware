@@ -18,8 +18,8 @@ export default function PositionedPopper(props) {
   };
 
   return (
-    <Box>
-      <Popper style={{zIndex :999}} open={open} anchorEl={anchorEl} placement={'top-start'} transition>
+    <Box display="flex" alignContent="center" alignItems="center">
+      <Popper style={{zIndex :999}} open={open} anchorEl={anchorEl} placement={'top'} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper style={{width: '50%', margin: '0 auto', padding:20}}>
@@ -28,7 +28,7 @@ export default function PositionedPopper(props) {
           </Fade>
         )}
       </Popper>
-      <IconButton onClick={handleClick('top-start')}>{props.icon}</IconButton>
+      <Box style={{cursor: 'pointer', textStyle:'normal' }} display="flex" alignContent="center" alignItems="center" onClick={handleClick('top')}>{props.icon}</Box>
     </Box>
   );
 }

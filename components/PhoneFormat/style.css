@@ -1,0 +1,19 @@
+.form-control {
+    width: 100% !important;
+    height: 55px !important;
+}
+.phone-container{
+    position: relative;
+}
+.label-box{
+    position: absolute;
+    left: 43px;
+    bottom: 45px;
+    padding: 0px 3px 0px 3px;
+    z-index: 1;
+    background: white;
+}
+
+label{
+    font-size: 12px;
+}
