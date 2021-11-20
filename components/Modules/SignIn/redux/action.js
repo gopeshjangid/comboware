@@ -19,7 +19,8 @@ export const signUp = (data,callBack ,router) => (dispatch) =>{
   Service.post(API.signUp ,data).then(res=>{
     localStorage.setItem("userId" ,res?.data?.data?.id);
     localStorage.setItem('userType' ,res?.data?.data?.user_type);
-    sessionStorage.setItem("token" , res?.data?.data?.token);
+    localStorage.setItem("token" , res?.data?.data?.token);
+    localStorage.setItem("refreshToken" , res?.data?.data?.refreshToken);
     dispatch(saveProfile({user  : res?.data?.data}));
     if(callBack){
       callBack(true ," Logged in success!");
@@ -36,6 +37,21 @@ export const signUp = (data,callBack ,router) => (dispatch) =>{
       callBack(false ,err?.response?.data?.message);
     }
     dispatch(signUpFailed({data  : null, error : err?.response?.data?.message}));
+  })
+
+}
+
+export const getAuthToken = (callBack) => (dispatch) =>{
+  Service.get(API.getAuthToken+"?userId="+localStorage.getItem("userId")  ,{'x-access-token': localStorage.getItem("refreshToken")}).then(res=>{
+    localStorage.setItem("token" , res?.data?.data);
+    if(callBack){
+      callBack(true ," Logged in success!");
+    }
+    
+  }).catch(err =>{
+    if(callBack){
+      callBack(false ,"Something went wrong. Please try login.");
+    }
   })
 
 }

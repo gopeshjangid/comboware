@@ -12,5 +12,6 @@ export const MESSAGE = {
 
 
 export const API = {
-  signUp : API_BASE_URL+'/v1/user/register'
+  signUp : API_BASE_URL+'/v1/user/register',
+  getAuthToken : API_BASE_URL+"/v1/user/getAuthToken"
 }

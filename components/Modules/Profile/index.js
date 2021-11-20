@@ -385,7 +385,6 @@ function Profile({
                             name="phone"
                             label="Phone"
                             defaultCountry={"tw"}
-                            inputProps={{ maxLength: 14 }}
                             value={profile?.form?.phone}
                           />
                         </GridItem>
@@ -574,7 +573,6 @@ function Profile({
                             onChange={(e) => companyPhoneHandler(e)}
                             name="company_phone"
                             defaultCountry={"tw"}
-                            inputProps={{ maxLength: 14 }}
                             label="Company Phone"
                             value={profile?.form?.company_phone}
                           />

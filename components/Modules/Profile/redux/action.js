@@ -76,6 +76,8 @@ export const updateSystemInfo = (data) => (dispatch) =>{
 }
 
 export const logoutUser = (data) => (dispatch) =>{
+  localStorage.removeItem("token");
+  localStorage.removeItem("keepLogin");
   dispatch(requestInit({message : "Logging out... "}));
   dispatch(saveProfile({profile : {}}));
   dispatch(saveRequest({domain :{id : "" ,name : ""} ,project : {id : "" ,name : "" }}));
