@@ -12,7 +12,7 @@ export const login = (data , router ,callBack) => (dispatch) =>{
     callBack(true ,"Logged in success !")
     localStorage.setItem('userId' ,data?.data?.id);
     localStorage.setItem('userType' ,data?.data?.user_type);
-    sessionStorage.setItem("token" , data?.data?.token);
+    localStorage.setItem("token" , data?.data?.token);
     router.push("/dashboard")
   }).catch(err =>{
     console.log("err--" ,err)
