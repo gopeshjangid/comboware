@@ -174,7 +174,8 @@ function CustomerLogin(props) {
     }
   };
 
-  const loginHandler = async (data) => {
+  const loginHandler = async (e) => {
+    e.preventDefault();
     if (validateForm()) {
       setLoading(true);
       let postData = {
@@ -259,181 +260,194 @@ function CustomerLogin(props) {
           </Box>
 
           <Box mt={5}>
-            <GridContainer
-              spacing={3}
-              alignContent="space-between"
-              justifyContent="space-between"
-            >
-              {!isLogin && (
-                <>
-                  {" "}
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      autoComplete="fname"
-                      name="first_name"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      autoFocus
-                      onChange={changeHandler}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="last_name"
-                      autoComplete="lname"
-                      onChange={changeHandler}
-                    />
-                  </Grid>
-                </>
-              )}
-              <GridItem xs={12}>
-                <TextField
-                  fullWidth
-                  onChange={changeHandler}
-                  name="email"
-                  type="email"
-                  autocomplete="off"
-                  label="Email"
-                  required
-                  error={emailError}
-                  helperText={emailError && "Invalid email."}
-                />
-              </GridItem>
-              <GridItem xs={12}>
-                <TextField
-                  fullWidth
-                  onChange={changeHandler}
-                  name="password"
-                  type="password"
-                  inputProps={{ maxLength: 10 }}
-                  label="Password"
-                  required
-                />
-              </GridItem>
-              {!isLogin && (
-                <Grid item xs={12}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox value="allowExtraEmails" color="primary" />
-                    }
-                    label="I agree with terms and conditions."
+            <Box component="form" noValidate onSubmit={loginHandler}>
+              <GridContainer
+                spacing={3}
+                alignContent="space-between"
+                justifyContent="space-between"
+              >
+                {!isLogin && (
+                  <>
+                    {" "}
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        autoComplete="fname"
+                        name="first_name"
+                        required
+                        fullWidth
+                        id="firstName"
+                        label="First Name"
+                        autoFocus
+                        onChange={changeHandler}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        required
+                        fullWidth
+                        id="lastName"
+                        label="Last Name"
+                        name="last_name"
+                        autoComplete="lname"
+                        onChange={changeHandler}
+                      />
+                    </Grid>
+                  </>
+                )}
+                <GridItem xs={12}>
+                  <TextField
+                    fullWidth
+                    onChange={changeHandler}
+                    name="email"
+                    type="email"
+                    autocomplete="off"
+                    label="Email"
+                    required
+                    error={emailError}
+                    helperText={emailError && "Invalid email."}
                   />
-                </Grid>
-              )}
-              <GridItem xs={12}>
-                <LoadingButton
-                  onClick={loginHandler}
-                  fullWidth
-                  loading={loading}
-                  color="secondary"
-                  variant="contained"
-                >
-                  {isLogin ? "Login" : "Sign Up"}
-                </LoadingButton>
-              </GridItem>
-              {isLogin ? (
-                <Grid item xs={12} style={{ textAlign: "left" }}>
-                  <FormGroup style={{ flexDirection: "row" }}>
+                </GridItem>
+                <GridItem xs={12}>
+                  <TextField
+                    fullWidth
+                    onChange={changeHandler}
+                    name="password"
+                    type="password"
+                    inputProps={{ maxLength: 10 }}
+                    label="Password"
+                    required
+                  />
+                </GridItem>
+                {!isLogin && (
+                  <Grid item xs={12}>
                     <FormControlLabel
                       control={
-                        <Checkbox
-                          checked={keepLogin}
-                          onChange={KeepSignedLogin}
-                        />
+                        <Checkbox value="allowExtraEmails" color="primary" />
                       }
-                      label="Keep me signed in"
+                      label="I agree with terms and conditions."
                     />
-                    <BasicPopover
-                      icon={
-                        <>
-                          <KeyboardArrowUp />
-                          <Typography style={{ fontSize: "13px" }} variant="p">
-                            Details
-                          </Typography>
-                        </>
+                  </Grid>
+                )}
+                <GridItem xs={12}>
+                  <LoadingButton
+                    onClick={loginHandler}
+                    fullWidth
+                    loading={loading}
+                    color="primary"
+                    variant="contained"
+                    onKeyPress={(event) => {
+                      if (event.key === "Enter") {
+                        loginHandler(event);
                       }
-                    >
-                      <Box>
-                        <Typography
-                          component="h5"
-                          varaint="h6"
-                          style={{
-                            fontWeight: 500,
-                            textTransform: "none",
-                            "margin-bottom": "8px",
-                          }}
-                        >
-                          "Keep me Signed In" checkbox
-                        </Typography>
-                        <Divider />
-                        <Typography
-                          varaint="subtitle1"
-                          style={{ padding: 10, fontStyle: "italic" }}
-                        >
-                          Choosing "Keep me signed in" reduces the number of
-                          times you're asked to sign-In on this device.
-                        </Typography>
-                        <Typography
-                          varaint="subtitle1"
-                          style={{ padding: 10, fontStyle: "italic" }}
-                        >
-                          To keep your account secure, use this option only on
-                          your personal devices."
-                        </Typography>
-                      </Box>
-                    </BasicPopover>
-                  </FormGroup>
+                    }}
+                  >
+                    {isLogin ? "Login" : "Sign Up"}
+                  </LoadingButton>
+                </GridItem>
+                {isLogin ? (
+                  <Grid item xs={12} style={{ textAlign: "left" }}>
+                    <FormGroup style={{ flexDirection: "row" }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            color="primary"
+                            checked={keepLogin}
+                            onChange={KeepSignedLogin}
+                          />
+                        }
+                        label="Keep me signed in"
+                        color="primary"
+                      />
+                      <BasicPopover
+                        icon={
+                          <>
+                            <KeyboardArrowUp />
+                            <Typography
+                              color="primary"
+                              style={{ fontSize: "13px" }}
+                              variant="p"
+                            >
+                              Details
+                            </Typography>
+                          </>
+                        }
+                      >
+                        <Box>
+                          <Typography
+                            component="h5"
+                            varaint="h6"
+                            style={{
+                              fontWeight: 500,
+                              textTransform: "none",
+                              "margin-bottom": "8px",
+                            }}
+                          >
+                            "Keep me Signed In" checkbox
+                          </Typography>
+                          <Divider />
+                          <Typography
+                            varaint="subtitle1"
+                            style={{ padding: 10, fontStyle: "italic" }}
+                          >
+                            Choosing "Keep me signed in" reduces the number of
+                            times you're asked to sign-In on this device.
+                          </Typography>
+                          <Typography
+                            varaint="subtitle1"
+                            style={{ padding: 10, fontStyle: "italic" }}
+                          >
+                            To keep your account secure, use this option only on
+                            your personal devices."
+                          </Typography>
+                        </Box>
+                      </BasicPopover>
+                    </FormGroup>
+                  </Grid>
+                ) : (
+                  ""
+                )}
+                <Grid item xs={12} style={{ textAlign: "right" }}>
+                  <Button
+                    className={classes.link}
+                    variant="subtitle2"
+                    onClick={() => setLogin((login) => !login)}
+                  >
+                    {!isLogin
+                      ? "Already have an account? Sign in"
+                      : "Don't have account? Sign up"}
+                  </Button>
                 </Grid>
-              ) : (
-                ""
-              )}
-              <Grid item xs={12} style={{ textAlign: "right" }}>
-                <Button
-                  className={classes.link}
-                  variant="subtitle2"
-                  onClick={() => setLogin((login) => !login)}
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    "justify-content": "space-between",
+                  }}
                 >
-                  {!isLogin
-                    ? "Already have an account? Sign in"
-                    : "Don't have account? Sign up"}
-                </Button>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                style={{
-                  display: "flex",
-                  width: "100%",
-                  "justify-content": "space-between",
-                }}
-              >
-                <Link
-                  className={classes.normalLink}
-                  href="/"
-                  underline="none"
-                  variant="body2"
-                >
-                  {"Back to home"}
-                </Link>
-                <Link
-                  underline="none"
-                  className={classes.normalLink}
-                  href={
-                    loginType === "ER" ? "/login/customer" : "/login/engineer"
-                  }
-                >
-                  {loginType === "ER"
-                    ? "Login as customer"
-                    : "Login as engineer"}
-                </Link>
-              </Grid>
-            </GridContainer>
+                  <Link
+                    className={classes.normalLink}
+                    href="/"
+                    underline="none"
+                    variant="body2"
+                  >
+                    {"Back to home"}
+                  </Link>
+                  <Link
+                    underline="none"
+                    className={classes.normalLink}
+                    href={
+                      loginType === "ER" ? "/login/customer" : "/login/engineer"
+                    }
+                  >
+                    {loginType === "ER"
+                      ? "Login as customer"
+                      : "Login as engineer"}
+                  </Link>
+                </Grid>
+              </GridContainer>
+            </Box>
           </Box>
         </Box>
       ) : (
