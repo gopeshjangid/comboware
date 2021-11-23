@@ -17,12 +17,13 @@ const useStyles = makeStyles((theme) => ({
     borderColor: theme?.palette?.borderColor,
     borderStyle: "solid",
     paddingTop: 16,
-    borderWidth: 0,
+    borderWidth: 1,
     background: "white",
     padding: (props) => props?.padding || 20,
     [theme.breakpoints.down('sm')] : {
       margin : "0px !important",
       paddingTop : '16px !important',
+      borderWidth: 0,
     }
   },
   childBox : {

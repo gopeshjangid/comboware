@@ -46,79 +46,44 @@ function hostsListBox({ getAllHosts,domainsList, hostsList, profile }) {
 
   const getColumns = () => {
     return [
-      { field: "select", select: true },
       {
-        field: "host_name",
-        header: "HOST",
+        field: "cluster_Info",
+        header: "Cluster Name",
+        align : 'center',
         width : 200,
         renderCell: (row) => {
           return (
             <>
               <Typography variant="body1" color="primary">
-                {row?.hypervisor_hostname}
+                {row?.clusterInfo?.cluster_name}
               </Typography>
-              <Typography variant="p" fontSize="11" color='secondaryText'>
-                {row?.host_ip}
-              </Typography>{" "}
             </>
           );
         },
       },
-      { field: "domain",header : "Domain",width : 100,
-      renderCell: (row) => {
-        return (
-          <Button onClick={() => setDomainModal(true)} type="action">
-             View Domains
-          </Button>
-        );
-      }, },
       {
         field: "cpu",
-        header: "CPU",
-        width  : 50,
+        header: "Cluster IP",
+        width  : 100,
         renderCell: (row) => {
           return (
             <>
               <Typography variant="body2" color="primary">
-                {row?.vcpus> row?.vcpus_used ? row?.vcpus-row?.vcpus_used : 0}
-              </Typography>
-              <Typography variant="p" fontSize="11" color="secondary">
-                {row?.vcpus}
-              </Typography>{" "}
+                 {row?.clusterInfo?.cluster_ip}
+                </Typography>
             </>
           );
         },
       },
       {
         field: "ram",
-        header: "RAM",
+        header: "Cluster Username",
         width  : 100,
         renderCell: (row) => {
           return (
-            <>
-              <Typography variant="body2" color="primary">
-                {row?.memory_mb-row?.memory_mb_used}
-              </Typography>
-              <Typography variant="p" fontSize="11" color="secondary">
-                {row?.memory_mb}
-              </Typography>{" "}
-            </>
-          );
-        },
-      },
-      {
-        field: "disk",
-        header: "HDD",
-        renderCell: (row) => {
-          return (
-            <>
-              <Typography variant="body2" color="primary">
-                {row?.free_disk_gb}
-              </Typography>
-              <Typography variant="p" fontSize="11" color="secondary">
-                {row?.free_disk_gb}
-              </Typography>{" "}
-            </>
+            <Typography variant="body2" color="primary">
+            {row?.clusterInfo?.cluster_username}
+           </Typography>
           );
         },
       },
@@ -141,7 +106,7 @@ function hostsListBox({ getAllHosts,domainsList, hostsList, profile }) {
         renderCell: (row) => {
           return (
             <Button onClick={() => setDomainModal(true)} type="action">
-             View details
+             View Hosts
           </Button>
           );
         },

@@ -26,13 +26,25 @@ export const saveResource = (data ,hideNotification) => (dispatch) =>{
 
 }
 
-export const saveHost = (data ,hideNotification) => (dispatch) =>{
-  dispatch(requestInit({message : "Please wait... "}));
-  Service.post(API.saveHost ,data).then(res=>{
+export const getAllClusters = (data ,hideNotification) => (dispatch) =>{
+  Service.get(API.getClusters ,data).then(res=>{
     hideNotification();
-    getAllHosts(hideNotification);
+    dispatch(saveResourceData({clusters :res?.data?.data}));
   }).catch(err =>{
     console.log("err--" ,err)
+    dispatch(requestStop({error : err?.message}));
+  })
+
+}
+
+export const saveCluster = (data ,hideNotification) => (dispatch) =>{
+  dispatch(requestInit({message : "Please wait... "}));
+  Service.post(API.saveCluster ,data).then(res=>{
+    hideNotification(true);
+    getAllClusters(hideNotification);
+  }).catch(err =>{
+    console.log("err--" ,err)
+    hideNotification(false);
     dispatch(requestStop({error : err?.message}));
   })
 

@@ -1,6 +1,7 @@
 import { START, FAILED, SAVE_RESOURCE } from "./constants";
 const initialState = {
   resources : [],
+  clusters : [],
   loading : false,
   message : '',
   error : ''

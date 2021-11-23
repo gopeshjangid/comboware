@@ -20,5 +20,7 @@ export const API = {
   getProfile : API_BASE_URL+'/v1/user/getProfile',
   getResources : API_BASE_URL+'/v1/workspace/getAllResourceQuotations',
   addResource : API_BASE_URL+'/v1/workspace/addResourceQuotation',
-  saveHost : API_BASE_URL+'/v1/workspace/saveHost'
+  saveHost : API_BASE_URL+'/v1/workspace/saveHost',
+  saveCluster: API_BASE_URL+'/v1/workspace/saveCluster',
+  getClusters: API_BASE_URL+'/v1/workspace/getAllClusters'
 }
