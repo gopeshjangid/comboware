@@ -119,177 +119,121 @@ function Settings ({ saveResource, getResources, settings }) {
       <Wrapper>
         <GridContainer spacing={2}>
           <GridItem xs={12}>
-            <FieldSet padding={30} title="Resource Management">
-              <Tabs
-                tabs={[
-                  {
-                    label: 'Fixed  Quotation',
-                    panel: (
-                      <GridContainer spacing={3}>
-                        <GridItem xs={12} sm={12} md={12}>
-                          <GridContainer spacing={2}>
-                            <GridItem
-                              container
-                              style={{ textAlign: 'center' }}
-                              className={classes.gridRow}
-                              xs={4}
-                            >
-                              <Typography>RAM</Typography>
-                            </GridItem>
-                            <GridItem className={classes.gridRow} xs={8}>
-                              <TextField
-                                name='RAM'
-                                fullWidth
-                                label='RAM Charge ($/GBi)'
-                                value={resource?.RAM}
-                                onChange={resourceChangeHandler}
-                                type='number'
-                                inputProps={{ min: 0 }}
-                              />
-                            </GridItem>
+            <FieldSet padding={30} title='Resource Quotation Management'>
+              <GridContainer spacing={3}>
+                <GridItem
+                  container
+                  style={{ textAlign: 'center' }}
+                  className={classes.gridRow}
+                  xs={2}
+                >
+                  <Typography>Fixed Quotation</Typography>
+                </GridItem>
+                <GridItem className={classes.gridRow} xs={3}>
+                  <TextField
+                    name='RAM'
+                    fullWidth
+                    label='RAM Charge ($/GiB)'
+                    value={resource?.RAM}
+                    onChange={resourceChangeHandler}
+                    type='number'
+                    inputProps={{ min: 0 }}
+                  />
+                </GridItem>
+                <GridItem className={classes.gridRow} xs={3}>
+                  <TextField
+                    name='CPU'
+                    fullWidth
+                    label='CPU Charge ($/Core)'
+                    value={resource?.CPU}
+                    onChange={resourceChangeHandler}
+                    type='number'
+                    inputProps={{ min: 0 }}
+                  />
+                </GridItem>
 
-                            <GridItem
-                              container
-                              className={classes.gridRow}
-                              xs={4}
-                            >
-                              <Typography>CPUs</Typography>
-                            </GridItem>
-                            <GridItem className={classes.gridRow} xs={8}>
-                              <TextField
-                                name='CPU'
-                                fullWidth
-                                label='CPU Charge ($/Core)'
-                                value={resource?.CPU}
-                                onChange={resourceChangeHandler}
-                                type='number'
-                                inputProps={{ min: 0 }}
-                              />
-                            </GridItem>
+                <GridItem className={classes.gridRow} xs={3}>
+                  <TextField
+                    name='VOLUME'
+                    fullWidth
+                    label='Volume Charge ($/GiB)'
+                    value={resource?.VOLUME}
+                    onChange={resourceChangeHandler}
+                    type='number'
+                    inputProps={{ min: 0 }}
+                  />
+                </GridItem>
+                <GridItem justify='flex-end' xs={1}>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    onClick={e => resourceSubmitHandler(e, 'FIXED')}
+                    disabled={!resource?.VOLUME}
+                  >
+                    Save
+                  </Button>
+                </GridItem>
+              </GridContainer>
 
-                            <GridItem
-                              container
-                              className={classes.gridRow}
-                              xs={4}
-                            >
-                              <Typography>Volume</Typography>
-                            </GridItem>
-                            <GridItem className={classes.gridRow} xs={8}>
-                              <TextField
-                                name='VOLUME'
-                                fullWidth
-                                label='Volume Charge ($/GB)'
-                                value={resource?.VOLUME}
-                                onChange={resourceChangeHandler}
-                                type='number'
-                                inputProps={{ min: 0 }}
-                              />
-                            </GridItem>
-                            <GridItem
-                              justify='flex-end'
-                              xs={12}
-                              style={{ textAlign: 'right' }}
-                            >
-                              <Button
-                                variant='outlined'
-                                color='primary'
-                                onClick={e => resourceSubmitHandler(e, 'FIXED')}
-                                disabled={!resource?.VOLUME}
-                              >
-                                Save
-                              </Button>
-                            </GridItem>
-                          </GridContainer>
-                        </GridItem>
-                      </GridContainer>
-                    )
-                  },
-                  {
-                    label: 'Unlimited Quotation',
-                    panel: (
-                      <GridContainer spacing={3}>
-                        <GridItem xs={12} sm={12} md={12}>
-                          <GridContainer spacing={2}>
-                            <GridItem
-                              container
-                              style={{ textAlign: 'center' }}
-                              className={classes.gridRow}
-                              xs={4}
-                            >
-                              <Typography>RAM</Typography>
-                            </GridItem>
-                            <GridItem className={classes.gridRow} xs={8}>
-                              <TextField
-                                name='RAM'
-                                fullWidth
-                                label='RAM Charge ($/GBi)'
-                                value={resource?.RAM}
-                                onChange={resourceChangeHandler}
-                                type='number'
-                                inputProps={{ min: 0 }}
-                              />
-                            </GridItem>
+              <GridContainer spacing={3} style={{marginTop :20}}>
+                <GridItem xs={12} sm={12} md={12}>
+                  <GridContainer spacing={2}>
+                    <GridItem
+                      container
+                      style={{ textAlign: 'center' }}
+                      className={classes.gridRow}
+                      xs={2}
+                    >
+                      <Typography>Unlimited Quotation</Typography>
+                    </GridItem>
+                    <GridItem className={classes.gridRow} xs={3}>
+                      <TextField
+                        name='RAM'
+                        fullWidth
+                        label='RAM Charge ($/GiB)'
+                        value={resource?.RAM}
+                        onChange={resourceChangeHandler}
+                        type='number'
+                        inputProps={{ min: 0 }}
+                      />
+                    </GridItem>
 
-                            <GridItem
-                              container
-                              className={classes.gridRow}
-                              xs={4}
-                            >
-                              <Typography>CPUs</Typography>
-                            </GridItem>
-                            <GridItem className={classes.gridRow} xs={8}>
-                              <TextField
-                                name='CPU'
-                                fullWidth
-                                label='CPU Charge ($/Core)'
-                                value={resource?.CPU}
-                                onChange={resourceChangeHandler}
-                                type='number'
-                                inputProps={{ min: 0 }}
-                              />
-                            </GridItem>
+                    <GridItem className={classes.gridRow} xs={3}>
+                      <TextField
+                        name='CPU'
+                        fullWidth
+                        label='CPU Charge ($/Core)'
+                        value={resource?.CPU}
+                        onChange={resourceChangeHandler}
+                        type='number'
+                        inputProps={{ min: 0 }}
+                      />
+                    </GridItem>
 
-                            <GridItem
-                              container
-                              className={classes.gridRow}
-                              xs={4}
-                            >
-                              <Typography>Volume</Typography>
-                            </GridItem>
-                            <GridItem className={classes.gridRow} xs={8}>
-                              <TextField
-                                name='VOLUME'
-                                fullWidth
-                                label='Volume Charge ($/GB)'
-                                value={resource?.VOLUME}
-                                onChange={resourceChangeHandler}
-                                type='number'
-                                inputProps={{ min: 0 }}
-                              />
-                            </GridItem>
-                            <GridItem
-                              justify='flex-end'
-                              xs={12}
-                              style={{ textAlign: 'right' }}
-                            >
-                              <Button
-                                variant='outlined'
-                                color='primary'
-                                onClick={e =>
-                                  resourceSubmitHandler(e, 'UNLIMITED')
-                                }
-                                disabled={!resource?.VOLUME}
-                              >
-                                Save
-                              </Button>
-                            </GridItem>
-                          </GridContainer>
-                        </GridItem>
-                      </GridContainer>
-                    )
-                  }
-                ]}
-              />
+                    <GridItem className={classes.gridRow} xs={3}>
+                      <TextField
+                        name='VOLUME'
+                        fullWidth
+                        label='Volume Charge ($/GiB)'
+                        value={resource?.VOLUME}
+                        onChange={resourceChangeHandler}
+                        type='number'
+                        inputProps={{ min: 0 }}
+                      />
+                    </GridItem>
+                    <GridItem justify='flex-end' xs={1}>
+                      <Button
+                        variant='outlined'
+                        color='primary'
+                        onClick={e => resourceSubmitHandler(e, 'UNLIMITED')}
+                        disabled={!resource?.VOLUME}
+                      >
+                        Save
+                      </Button>
+                    </GridItem>
+                  </GridContainer>
+                </GridItem>
+              </GridContainer>
             </FieldSet>
           </GridItem>
           <GridItem xs={12}>
@@ -303,7 +247,7 @@ function Settings ({ saveResource, getResources, settings }) {
           </GridItem>
 
           <GridItem xs={12}>
-            <FieldSet title='Environment Plan'>
+            <FieldSet title='Environment Configuration'>
               <Environment />
             </FieldSet>
           </GridItem>

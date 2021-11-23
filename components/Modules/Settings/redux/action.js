@@ -63,5 +63,30 @@ export const getResources = (query ,callback) => (dispatch) =>{
 }
 
 
+export const getAllEnvironments = (data ,hideNotification) => (dispatch) =>{
+  Service.get(API.getEnvironments ,data).then(res=>{
+    hideNotification();
+    dispatch(saveResourceData({environments :res?.data?.data}));
+  }).catch(err =>{
+    console.log("err--" ,err)
+    dispatch(requestStop({error : err?.message}));
+  })
+
+}
+
+export const saveEnvironment = (data ,hideNotification) => (dispatch) =>{
+  dispatch(requestInit({message : "Please wait... "}));
+  Service.post(API.saveEnvironment ,data).then(res=>{
+    hideNotification(true);
+    getAllEnvironments(hideNotification);
+  }).catch(err =>{
+    console.log("err--" ,err)
+    hideNotification(false);
+    dispatch(requestStop({error : err?.message}));
+  })
+
+}
+
+
 
 
