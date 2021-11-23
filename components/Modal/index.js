@@ -1,41 +1,42 @@
-import React, {useEffect} from 'react';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import {DialogTitle,Grid, Box, Button,DialogContent,DialogActions,Dialog} from '@material-ui/core';
-import Modal from '@material-ui/core/Modal';
-
+import React from 'react';
 
 const useStyles = makeStyles((theme) => ({
-  buttonWrapper : {
-    justifyContent : 'space-between'
+  buttonWrapper: {
+    justifyContent: 'space-between'
   },
-  body : {
-    minWidth : 500
+  body: {
+    minWidth: 500
   },
-  title : {
-    minWidth : 500
+  title: {
+    minWidth: 500
   }
 }));
 
-export default function MOdal(prop) {
-  const {isOpen, onSubmit,onChange, title , SaveText}  = prop;
+export default function Modal(prop) {
+  const { isOpen, onSubmit, onChange, title, SaveText, maxWidth, fullWidth } = prop;
   const classes = useStyles();
 
   return (
-    <Dialog maxWidth="sm" onClose={() => onChange ?  onChange(false) : ''}  open={isOpen}>
-    <DialogTitle id="customized-dialog-title" onClose={() => onChange ?  onChange(false) : ''} className={classes.title}>
-       {title}
-    </DialogTitle>
-    <DialogContent dividers className={classes.body}>
-      {prop.children}
-    </DialogContent>
-    <DialogActions>
-      <Button autoFocus onClick={() => onChange ?  onChange(false) : ''} color="primary" variant="outlined">
-        Close
-      </Button>
-      <Button autoFocus onClick={onSubmit} color="primary" variant="contained">
-        {SaveText || "Save"}
-      </Button>
-    </DialogActions>
+    <Dialog
+      maxWidth={maxWidth || 'sm'}
+      onClose={() => (onChange ? onChange(false) : '')}
+      open={isOpen}
+      fullWidth={fullWidth || true}
+    >
+      <DialogTitle id='customized-dialog-title' onClose={() => (onChange ? onChange(false) : '')}>
+        {title}
+      </DialogTitle>
+      <DialogContent dividers>{prop.children}</DialogContent>
+      <DialogActions>
+        <Button autoFocus onClick={() => (onChange ? onChange(false) : '')} color='primary' variant='outlined'>
+          Close
+        </Button>
+        <Button autoFocus onClick={onSubmit} color='primary' variant='contained'>
+          {SaveText || 'Save'}
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }
