@@ -89,18 +89,18 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
           )
         }
       },
-      {
-        field: 'status',
-        header: 'STATUS',
-        renderCell: row => {
-          return (
-            <Chip
-              label={row?.status === 'enabled' ? 'ACTIVE' : 'INACTIVE'}
-              type={row?.status === 'enabled' ? 'filled' : 'outlined'}
-            />
-          )
-        }
-      },
+      // {
+      //   field: 'status',
+      //   header: 'STATUS',
+      //   renderCell: row => {
+      //     return (
+      //       <Chip
+      //         label={row?.status === 'enabled' ? 'ACTIVE' : 'INACTIVE'}
+      //         type={row?.status === 'enabled' ? 'filled' : 'outlined'}
+      //       />
+      //     )
+      //   }
+      // },
       {
         header: 'Action',
         width: 70,
@@ -166,18 +166,18 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
           )
         }
       },
-      // {
-      //   field: 'status',
-      //   header: 'STATUS',
-      //   renderCell: row => {
-      //     return (
-      //       <Chip
-      //         label={row?.status === 'enabled' ? 'ACTIVE' : 'INACTIVE'}
-      //         type={row?.status === 'enabled' ? 'filled' : 'outlined'}
-      //       />
-      //     )
-      //   }
-      // }
+      {
+        field: 'status',
+        header: 'STATUS',
+        renderCell: row => {
+          return (
+            <Chip
+              label={row?.status === 'enabled' ? 'ACTIVE' : 'INACTIVE'}
+              type={row?.status === 'enabled' ? 'filled' : 'outlined'}
+            />
+          )
+        }
+      }
     ]
   }
 
