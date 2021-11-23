@@ -75,7 +75,7 @@ export default function CustomTab(props) {
             ))}
         </Tabs>
       </AppBar>
-        <Box sx={{minHeight :'70vh'}}>
+        <Box sx={{}}>
             {tabs &&
             tabs?.filter(tab=> !tab?.hide).map((tab, key) => (
                 <TabPanel

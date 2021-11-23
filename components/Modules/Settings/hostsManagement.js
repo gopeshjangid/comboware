@@ -1,30 +1,29 @@
-import React, { useState, useEffect, useRef } from 'react'
-
-import { connect, useSelector } from 'react-redux'
-import GridItem from 'components/Grid/GridItem.js'
-import GridContainer from 'components/Grid/GridContainer.js'
-import { Typography, IconButton, Box } from '@material-ui/core'
-import { CloseOutlined } from '@material-ui/icons'
-import TextField from '../../CustomInput/TextField'
-import useStyles from './styles'
-import Button from 'components/CustomButtons'
-import CircularProgress from 'components/Loader/circular'
-import Snackbar from 'components/Snackbar'
-import { saveCluster } from './redux/action'
-import FieldSet from 'components/Form/fieldset'
-import HostList from 'components/Modules/Dashboard/hostsList'
-function Settings ({ saveCluster, settings }) {
-  const classes = useStyles()
-  const reduxState = useSelector(state => state)
-  const [message, setMessage] = useState({ type: 'success', content: '' })
-  const [isNew, setNew] = useState(false)
-  const [loader, setLoader] = useState(false)
+import { Box, IconButton } from '@material-ui/core';
+import { CloseOutlined } from '@material-ui/icons';
+import Button from 'components/CustomButtons';
+import FieldSet from 'components/Form/fieldset';
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import CircularProgress from 'components/Loader/circular';
+import HostList from 'components/Modules/Dashboard/hostsList';
+import Snackbar from 'components/Snackbar';
+import React, { useState } from 'react';
+import { connect, useSelector } from 'react-redux';
+import TextField from '../../CustomInput/TextField';
+import { saveCluster } from './redux/action';
+import useStyles from './styles';
+function Settings({ saveCluster, settings }) {
+  const classes = useStyles();
+  const reduxState = useSelector((state) => state);
+  const [message, setMessage] = useState({ type: 'success', content: '' });
+  const [isNew, setNew] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [error, setError] = useState({
     cluster_ip: false,
     cluster_uuid: false,
     cluster_flavor_ref: false,
     cluster_image_ref: false
-  })
+  });
   const [cluster, setCluster] = useState({
     cluster_name: '',
     cluster_ip: '',
@@ -33,77 +32,66 @@ function Settings ({ saveCluster, settings }) {
     cluster_password: '',
     cluster_flavor_ref: '',
     cluster_image_ref: ''
-  })
-  const [isSubmitted, setSubmitted] = useState(false)
+  });
+  const [isSubmitted, setSubmitted] = useState(false);
   const manageMessage = () => {
     setTimeout(() => {
-      setSubmitted(false)
-    }, 4000)
-  }
+      setSubmitted(false);
+    }, 4000);
+  };
 
-  const hideNotification = status => {
-    setSubmitted(false)
-    setLoader(false)
+  const hideNotification = (status) => {
+    setSubmitted(false);
+    setLoader(false);
     setMessage({
-      content: status
-        ? 'Cluster has been saved.'
-        : 'Something went wrong. Please try again later.',
+      content: status ? 'Cluster has been saved.' : 'Something went wrong. Please try again later.',
       type: status ? 'success' : 'error'
-    })
-  }
+    });
+  };
 
   const checkValidation = (type, value) => {
-    const _error = { ...error }
+    const _error = { ...error };
     if (type === 'cluster_ip') {
       _error.cluster_ip = !/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
         value
-      )
+      );
     } else {
-      _error[type] = value && value?.length < 36
+      _error[type] = value && value?.length < 36;
     }
-    setError(_error)
-  }
+    setError(_error);
+  };
 
-  const hostSubmitHandler = e => {
-    setSubmitted(true)
-    e.preventDefault()
-    if (Object.values(cluster).every(val => val !=='') && Object.values(error).every(err => !err)) {
-      setLoader(true)
-      setMessage({type : 'success' ,content : 'Please wait...'});
-      saveCluster(cluster, hideNotification)
+  const hostSubmitHandler = (e) => {
+    setSubmitted(true);
+    e.preventDefault();
+    if (Object.values(cluster).every((val) => val !== '') && Object.values(error).every((err) => !err)) {
+      setLoader(true);
+      setMessage({ type: 'success', content: 'Please wait...' });
+      saveCluster(cluster, hideNotification);
     } else {
       manageMessage();
-      setMessage({type : 'error' ,content : 'Please fill all the valid details.'});
+      setMessage({ type: 'error', content: 'Please fill all the valid details.' });
     }
-  }
+  };
 
-  const blurHandler = e => {
-    checkValidation(e.target.name, e.target.value)
-  }
+  const blurHandler = (e) => {
+    checkValidation(e.target.name, e.target.value);
+  };
 
-  const hostChangeHandler = e => {
-    let name = e.target.name
-    let value = e.target.value
-    setCluster({ ...cluster, [name]: value })
-  }
+  const hostChangeHandler = (e) => {
+    let name = e.target.name;
+    let value = e.target.value;
+    setCluster({ ...cluster, [name]: value });
+  };
 
   return (
     <div>
-      <Snackbar
-        open={isSubmitted}
-        type={message?.type}
-        message={message?.content}
-      />
+      <Snackbar open={isSubmitted} type={message?.type} message={message?.content} />
       <GridContainer spacing={3}>
         {!isNew ? (
           <GridItem xs={12} sm={12} md={12}>
-            {' '}
             <FieldSet padding={10} title='Clusters List'>
-              <Box
-                style={{ marginBottom: 20 }}
-                display='flex'
-                justifyContent='flex-end'
-              >
+              <Box style={{ marginBottom: 20 }} display='flex' justifyContent='flex-end'>
                 <Button onClick={() => setNew(true)}>Add New</Button>
               </Box>
               <HostList />
@@ -113,13 +101,10 @@ function Settings ({ saveCluster, settings }) {
           <GridItem xs={12} sm={12} md={12}>
             <FieldSet padding={30} title='Add New Cluster'>
               <GridContainer spacing={2}>
-                <GridItem style={{ textAlign: 'right' }} className={classes.gridRow}
-                  xs={6}>{loader && <CircularProgress />} </GridItem>
-                <GridItem
-                  className={classes.gridRow}
-                  xs={6}
-                  style={{ textAlign: 'right' }}
-                >
+                <GridItem style={{ textAlign: 'right' }} className={classes.gridRow} xs={6}>
+                  {loader && <CircularProgress />}{' '}
+                </GridItem>
+                <GridItem className={classes.gridRow} xs={6} style={{ textAlign: 'right' }}>
                   <IconButton onClick={() => setNew(false)}>
                     <CloseOutlined />
                   </IconButton>{' '}
@@ -133,7 +118,6 @@ function Settings ({ saveCluster, settings }) {
                     onChange={hostChangeHandler}
                   />
                 </GridItem>
-
                 <GridItem className={classes.gridRow} xs={6}>
                   <TextField
                     fullWidth
@@ -144,7 +128,6 @@ function Settings ({ saveCluster, settings }) {
                     type='text'
                   />
                 </GridItem>
-
                 <GridItem className={classes.gridRow} xs={3}>
                   <TextField
                     fullWidth
@@ -153,7 +136,7 @@ function Settings ({ saveCluster, settings }) {
                     value={cluster?.cluster_password}
                     onChange={hostChangeHandler}
                     type='password'
-                    autocomplete="off"
+                    autocomplete='off'
                   />
                 </GridItem>
                 <GridItem className={classes.gridRow} xs={3}>
@@ -167,9 +150,7 @@ function Settings ({ saveCluster, settings }) {
                     inputProps={{ min: 0 }}
                     onKeyPress={blurHandler}
                     error={error?.cluster_ip}
-                    helperText={
-                      error?.cluster_ip ? 'Cluster ip is not valid.' : ''
-                    }
+                    helperText={error?.cluster_ip ? 'Cluster ip is not valid.' : ''}
                   />
                 </GridItem>
                 <GridItem className={classes.gridRow} xs={6}>
@@ -182,10 +163,7 @@ function Settings ({ saveCluster, settings }) {
                     type='text'
                     onKeyPress={blurHandler}
                     error={error?.cluster_image_ref}
-                    helperText={
-                      error?.cluster_image_ref &&
-                      'Image template ref is not valid.'
-                    }
+                    helperText={error?.cluster_image_ref && 'Image template ref is not valid.'}
                   />
                 </GridItem>
                 <GridItem className={classes.gridRow} xs={6}>
@@ -198,12 +176,9 @@ function Settings ({ saveCluster, settings }) {
                     onKeyPress={blurHandler}
                     type='text'
                     error={error?.cluster_flavor_ref}
-                    helperText={
-                      error?.cluster_flavor_ref && 'Flavor ref is not valid.'
-                    }
+                    helperText={error?.cluster_flavor_ref && 'Flavor ref is not valid.'}
                   />
                 </GridItem>
-
                 <GridItem className={classes.gridRow} xs={6}>
                   <TextField
                     fullWidth
@@ -214,18 +189,11 @@ function Settings ({ saveCluster, settings }) {
                     onChange={hostChangeHandler}
                     type='text'
                     error={error?.cluster_uuid}
-                    helperText={
-                      error?.cluster_uuid && 'Network UUID is not valid.'
-                    }
+                    helperText={error?.cluster_uuid && 'Network UUID is not valid.'}
                   />
                 </GridItem>
-
                 <GridItem style={{ textAlign: 'right' }} xs={12}>
-                  <Button
-                    variant='outlined'
-                    color='primary'
-                    onClick={e => hostSubmitHandler(e)}
-                  >
+                  <Button variant='outlined' color='primary' onClick={(e) => hostSubmitHandler(e)}>
                     Save
                   </Button>
                 </GridItem>
@@ -235,12 +203,12 @@ function Settings ({ saveCluster, settings }) {
         )}
       </GridContainer>
     </div>
-  )
+  );
 }
 
 export default connect(
-  state => {
-    return { ...state }
+  (state) => {
+    return { ...state };
   },
   { saveCluster }
-)(Settings)
+)(Settings);
