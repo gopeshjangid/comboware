@@ -23,7 +23,7 @@ export const API = {
   saveHost : API_BASE_URL+'/v1/workspace/saveHost',
   saveCluster: API_BASE_URL+'/v1/workspace/saveCluster',
   getClusters: API_BASE_URL+'/v1/workspace/getAllClusters',
-  saveEnvironment: API_BASE_URL+'/v1/workspace/saveEnvironment',
+  saveEnvironment: API_BASE_URL+'/v1/workspace/saveEnvPlan',
   getEnvironments: API_BASE_URL+'/v1/workspace/getEnvironments',
-  
+  getSettings: API_BASE_URL+'/v1/user/getSettings'
 }

@@ -14,10 +14,11 @@ export const saveResourceData = (data) =>{
   return {type : SAVE_RESOURCE , payload : data}
 }
 
+
 export const getAllHosts = (hideNotification) => (dispatch) =>{
   
   Service.get(API.getAllHosts).then(res=>{
-    hideNotification(true ,"Fetched.");
+    hideNotification(true);
     dispatch(saveResourceData({hostsList : res?.data?.data}));
   }).catch(err =>{
     hideNotification(false , "Something went wrong. Please try again");

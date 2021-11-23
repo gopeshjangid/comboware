@@ -1,6 +1,7 @@
 export const START = 'START';
 export const FAILED = 'FAILED';
 export const SAVE_RESOURCE = 'SAVE_RESOURCE';
+export const SELECT_CLUSTER = 'SELECT_CLUSTER';
 import getConfig from "next/config";
 const { publicRuntimeConfig } = getConfig();
 //export const API_BASE_URL = 'http://210.242.250.38:8000';

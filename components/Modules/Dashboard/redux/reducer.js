@@ -1,9 +1,10 @@
-import { START, FAILED, SAVE_RESOURCE } from "./constants";
+import { START, FAILED, SAVE_RESOURCE , SELECT_CLUSTER } from "./constants";
 const initialState = {
   hostsList : [],
   domainsList : [],
   selectedHost : null,
   selectedUser : null,
+  selectedCluster : null,
   loading : false,
   message : '',
   error : ''
@@ -39,6 +40,15 @@ function reducer(state = initialState, action) {
         ...action.payload
       };
       break;
+
+      case SELECT_CLUSTER:
+
+        return {
+          ...state,
+          domainsList : [],
+          selectedCluster:action.payload
+        };
+        break;  
 
     default:
       return state;

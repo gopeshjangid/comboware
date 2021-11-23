@@ -41,8 +41,12 @@ function Settings({ saveCluster, settings }) {
   };
 
   const hideNotification = (status) => {
-    setSubmitted(false);
     setLoader(false);
+    manageMessage();
+    if(status){
+      setNew(false);
+    }
+
     setMessage({
       content: status ? 'Cluster has been saved.' : 'Something went wrong. Please try again later.',
       type: status ? 'success' : 'error'
@@ -193,7 +197,7 @@ function Settings({ saveCluster, settings }) {
                   />
                 </GridItem>
                 <GridItem style={{ textAlign: 'right' }} xs={12}>
-                  <Button variant='outlined' color='primary' onClick={(e) => hostSubmitHandler(e)}>
+                  <Button disabled={loader} variant='outlined' color='primary' onClick={(e) => hostSubmitHandler(e)}>
                     Save
                   </Button>
                 </GridItem>

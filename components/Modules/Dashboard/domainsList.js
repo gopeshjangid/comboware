@@ -1,4 +1,4 @@
-import Alert from '@mui/material/Alert';
+import {Alert ,Box} from '@mui/material';
 import AlertTitle from '@mui/material/AlertTitle';
 import { Chip, Typography } from 'components/Custom';
 import Loader from 'components/Loader/circular';
@@ -21,16 +21,13 @@ function hostsListBox({ getAllDomains, domainsList, profile, domainClusterUrl })
     }
   };
 
-  useEffect(() => {
-    if (domainsList?.length === 0) {
-      setLoading(true);
-      getAllDomains(hideNotification, domainClusterUrl);
-    } else {
-      setLoading(false);
-    }
+  
 
+  useEffect(() => {
+      setLoading(true);
+      getAllDomains(hideNotification, reduxState?.dashboard?.selectedCluster?.cluster_url);
     return () => {};
-  }, []);
+  }, [reduxState?.dashboard?.selectedCluster]);
 
   if (profile?.user_type !== 'ADMIN') {
     return null;
@@ -67,11 +64,11 @@ function hostsListBox({ getAllDomains, domainsList, profile, domainClusterUrl })
   };
 
   const handleClick = () => {};
-
+console.log("loading" ,isLoading)
   return (
     <div>
       {isLoading ? (
-        <Loader />
+        <Box display="flex" justify="center" ><Loader /></Box>
       ) : error ? (
         <Alert severity='error'>
           <AlertTitle>Error</AlertTitle>

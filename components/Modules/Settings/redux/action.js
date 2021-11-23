@@ -1,6 +1,6 @@
 import { START, FAILED, SAVE_RESOURCE, API } from './constants';
 import Service from '../../../../service/index';
-
+import {getAllHosts} from "../../Dashboard/redux/action";
 export const requestInit = (data) => {
   return { type: START, payload: data };
 };
@@ -27,7 +27,7 @@ export const saveResource = (data, hideNotification) => (dispatch) => {
 };
 
 export const getAllClusters = (data, hideNotification) => (dispatch) => {
-  Service.get(API.getClusters, data)
+  Service.get(API.getClusters)
     .then((res) => {
       hideNotification();
       dispatch(saveResourceData({ clusters: res?.data?.data }));
@@ -39,9 +39,9 @@ export const getAllClusters = (data, hideNotification) => (dispatch) => {
 };
 
 export const getAllEnvironments = (data ,hideNotification) => (dispatch) =>{
-  Service.get(API.getEnvironments ,data).then(res=>{
+  Service.get(API.getSettings+data ).then(res=>{
     hideNotification();
-    dispatch(saveResourceData({environments :res?.data?.data}));
+    dispatch(saveResourceData(res?.data?.data));
   }).catch(err =>{
     console.log("err--" ,err)
     dispatch(requestStop({error : err?.message}));
@@ -67,8 +67,7 @@ export const saveCluster = (data, hideNotification) => (dispatch) => {
   dispatch(requestInit({ message: 'Please wait... ' }));
   Service.post(API.saveCluster, data)
     .then((res) => {
-      hideNotification(true);
-      getAllClusters(hideNotification);
+      dispatch(getAllHosts(hideNotification));
     })
     .catch((err) => {
       console.log('err--', err);

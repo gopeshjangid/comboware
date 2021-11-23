@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import GridItem from 'components/Grid/GridItem.js'
 import GridContainer from 'components/Grid/GridContainer.js'
@@ -6,13 +6,15 @@ import {
   Typography,
   Checkbox,
   FormControlLabel,
-  FormGroup
+  FormGroup,
+  Box
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '../../CustomInput/TextField'
-import Button from 'components/CustomButtons';
-import {getAllEnvironments ,saveEnvironment} from "./redux/action";
-import {connect} from  "react-redux";
+import Button from 'components/CustomButtons'
+import CircularProgress from 'components/Loader/circular'
+import { getAllEnvironments, saveEnvironment } from './redux/action'
+import { connect } from 'react-redux'
 const useStyles = makeStyles(theme => ({
   box: {
     [theme.breakpoints.between('sm', 'md')]: {
@@ -31,76 +33,118 @@ const useStyles = makeStyles(theme => ({
     padding: 5
   }
 }))
-function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
+function EnvironmentPlan ({ getAllEnvironments, saveEnvironment, ...props }) {
   const classes = useStyles()
   const reduxState = useSelector(state => state)
+  const [loader, setLoader] = useState(false)
   const [fixedEnvironment, setFixedEnvironment] = useState({
-    plan_type: 'FIXED',
-    ram: 0,
-    disk: 0,
-    cpu: 0,
-    status: false
+    env_plan: 'FIXED',
+    env_configuration: { ram: 0, disk: 0, cpu: 0 },
+    status: 'inactive'
   })
 
   const [unlimitedEnvironment, setUnlimitedEnvironment] = useState({
-    plan_type: 'UNLIMITED',
-    ram: 0,
-    disk: 0,
-    cpu: 0,
-    status: false
+    env_plan: 'UNLIMITED',
+    env_configuration: {
+      ram: 0,
+      disk: 0,
+      cpu: 0
+    },
+    status: 'inactive'
   })
 
-  const [settings, setSettings] = useState(null)
+  const planDataItem = type => {
+    const list = reduxState?.settings?.envPlans.filter(
+      plan => plan.env_plan === type
+    )
+    return list.length ? list[0] : null
+  }
 
   useEffect(() => {
-    setSettings(reduxState?.settings)
+    const unlimitedPlan = planDataItem('UNLIMITED')
+    const fixedPlans = planDataItem('FIXED')
+    console.log('fixedPlans', fixedPlans)
+    console.log('unlimitedPlan', unlimitedPlan)
+    if (unlimitedPlan) {
+      setUnlimitedEnvironment({
+        ...unlimitedPlan,
+        env_configuration: JSON.parse(unlimitedPlan?.env_configuration),
+        status: unlimitedPlan?.env_plan_status
+      })
+    }
+
+    if (fixedPlans) {
+      setFixedEnvironment({
+        ...fixedPlans,
+        env_configuration: JSON.parse(fixedPlans?.env_configuration),
+        status: fixedPlans?.env_plan_status
+      })
+    }
     return () => {}
-  }, [props])
+  }, [reduxState?.settings?.envPlans])
+
+  const callBack = () => {
+    setLoader(false)
+  }
 
   const environmentSubmitHandler = (e, type) => {
     e.preventDefault()
-    setSubmitted(true)
-    setLoading(true)
+    setLoader(true)
 
     if (type === 'FIXED') {
+      saveEnvironment(fixedEnvironment, callBack)
     } else {
+      saveEnvironment(unlimitedEnvironment, callBack)
     }
-    //saveenvironment({environment_type : type, size : 1 ,price:environment[type] ,userId : Number(localStorage.getItem("userId"))},hideNotification);
   }
+
+  useEffect(() => {
+    getAllEnvironments('?user_type=ADMIN', () => {})
+  }, [])
 
   const unlimitedChangeHandler = e => {
     let name = e.target.name
     let value = e.target.value
-    setUnlimitedEnvironment({ ...unlimitedEnvironment, [name]: value })
+    setUnlimitedEnvironment({
+      ...unlimitedEnvironment,
+      env_configuration: {
+        ...unlimitedEnvironment?.env_configuration,
+        [name]: value
+      }
+    })
   }
 
   const fixedChangeHandler = e => {
     let name = e.target.name
     let value = e.target.value
-    setFixedEnvironment({ ...fixedEnvironment, [name]: value })
+    setFixedEnvironment({
+      ...fixedEnvironment,
+      env_configuration: {
+        ...fixedEnvironment?.env_configuration,
+        [name]: value
+      }
+    })
   }
 
-  useEffect(() => {
-    // setUserType(localStorage.getItem("userType"));
-    return () => {}
-  }, [])
-
-  console.log("unlined" ,unlimitedEnvironment)
+  console.log('unlined', unlimitedEnvironment)
   return (
     <div>
       <Typography>Environment Criteria</Typography>
       <GridContainer spacing={3}>
+        <GridItem className={classes.gridRow} xs={12}>
+          {loader && <Box display="flex" justify="center"><CircularProgress /></Box>}
+        </GridItem>
         <GridItem className={classes.gridRow} xs={3}>
           <FormGroup>
             <FormControlLabel
               control={
                 <Checkbox
                   color='primary'
-                  checked={fixedEnvironment?.status}
+                  checked={fixedEnvironment?.status === 'active'}
                   onChange={e =>
                     setFixedEnvironment({
                       ...fixedEnvironment,
-                      status: e.target.checked
+                      status: e.target.checked ? 'active' : 'inactive'
                     })
                   }
                 />
@@ -117,7 +161,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             type='number'
             autocomplete='off'
             inputProps={{ min: 0 }}
-            value={fixedEnvironment?.ram}
+            value={fixedEnvironment?.env_configuration?.ram}
             onChange={fixedChangeHandler}
           />
         </GridItem>
@@ -129,7 +173,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             type='number'
             inputProps={{ min: 0 }}
             autocomplete='off'
-            value={fixedEnvironment?.cpu}
+            value={fixedEnvironment?.env_configuration?.cpu}
             onChange={fixedChangeHandler}
           />
         </GridItem>
@@ -141,7 +185,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             type='number'
             autocomplete='off'
             inputProps={{ min: 0 }}
-            value={fixedEnvironment?.disk}
+            value={fixedEnvironment?.env_configuration?.disk}
             onChange={fixedChangeHandler}
           />
         </GridItem>
@@ -152,7 +196,13 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             color='primary'
             onClick={e => environmentSubmitHandler(e, 'FIXED')}
             inputProps={{ min: 0 }}
-            disabled={!(Number(fixedEnvironment?.ram) && Number(fixedEnvironment?.cpu) && Number(fixedEnvironment?.disk))}
+            disabled={
+              !(
+                Number(fixedEnvironment?.env_configuration?.ram) &&
+                Number(fixedEnvironment?.env_configuration?.cpu) &&
+                Number(fixedEnvironment?.env_configuration?.disk)
+              )
+            }
           >
             Save
           </Button>
@@ -167,10 +217,10 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
                   onChange={e =>
                     setUnlimitedEnvironment({
                       ...unlimitedEnvironment,
-                      status: e.target.checked
+                      status: e.target.checked ? 'active' : 'inactive'
                     })
                   }
-                  checked={unlimitedEnvironment?.status}
+                  checked={unlimitedEnvironment?.status === 'active'}
                   color='primary'
                 />
               }
@@ -186,7 +236,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             type='number'
             autocomplete='off'
             inputProps={{ min: 0 }}
-            value={unlimitedEnvironment?.ram}
+            value={unlimitedEnvironment?.env_configuration?.ram}
             onChange={unlimitedChangeHandler}
           />
         </GridItem>
@@ -198,7 +248,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             type='number'
             autocomplete='off'
             inputProps={{ min: 0 }}
-            value={unlimitedEnvironment?.cpu}
+            value={unlimitedEnvironment?.env_configuration?.cpu}
             onChange={unlimitedChangeHandler}
           />
         </GridItem>
@@ -210,7 +260,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             type='number'
             autocomplete='off'
             inputProps={{ min: 0 }}
-            value={unlimitedEnvironment?.disk}
+            value={unlimitedEnvironment?.env_configuration?.disk}
             onChange={unlimitedChangeHandler}
           />
         </GridItem>
@@ -220,7 +270,13 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
             variant='outlined'
             color='primary'
             onClick={e => environmentSubmitHandler(e, 'UNLIMITED')}
-            disabled={!(Number(unlimitedEnvironment?.ram) && Number(unlimitedEnvironment?.cpu) && Number(unlimitedEnvironment?.disk))}
+            disabled={
+              !(
+                Number(unlimitedEnvironment?.env_configuration?.ram) &&
+                Number(unlimitedEnvironment?.env_configuration?.cpu) &&
+                Number(unlimitedEnvironment?.env_configuration?.disk)
+              )
+            }
           >
             Save
           </Button>
@@ -230,4 +286,7 @@ function EnvironmentPlan ({getAllEnvironments ,saveEnvironment, ...props}) {
   )
 }
 
-export default  connect(state => state?.settings ,{saveEnvironment , getAllEnvironments})(EnvironmentPlan); 
+export default connect(state => state?.settings, {
+  saveEnvironment,
+  getAllEnvironments
+})(EnvironmentPlan)
