@@ -8,6 +8,7 @@ import {
   NetworkCell,
   Storage,
   Work,
+  CloudUpload
 } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
@@ -39,6 +40,7 @@ function Profile({
   const defaultSkill = { skill_name: "", skill_level: "" };
   const [skills, setSkills] = useState([defaultSkill]);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const imageRef = useRef();
   const [profile, setProfile] = useState({
     form: {
@@ -68,6 +70,7 @@ function Profile({
   const [environmentType, setEnvironmentType] = useState("FIXED");
   const [domain, setDomain] = useState({ name: "", description: "" });
   const [isSubmitted, setSubmitted] = useState(false);
+  const [formData, setForm] = useState("");
   const [project, setProject] = useState({
     name: "Service",
     description: "xx",
@@ -119,11 +122,7 @@ function Profile({
     return () => {};
   }, [reduxState?.user?.system_image]);
 
-  useEffect(() => {
-    manageMessage();
-    setMessage(reduxState?.user?.message || reduxState?.user?.error);
-    return () => {};
-  }, [reduxState?.user?.message]);
+ 
 
   useEffect(() => {
     setLoader(reduxState?.user?.loading);
@@ -156,10 +155,24 @@ function Profile({
     return !Object.values(_profile?.error).some((field) => field);
   };
 
+  const callback = (status , message) =>{
+    if(status !== 0){
+      setSubmitted(false);
+      setLoader(false);
+    }
+    if(status !==2){ 
+      setMessage(message);
+    } else {
+      setError(message);
+    }
+    
+  }
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (profileValidation()) {
       setSubmitted(true);
+      setLoader(true);
       updateProfile({
         ...profile?.form,
         password: window?.btoa(profile?.form?.password),
@@ -167,7 +180,7 @@ function Profile({
         skills,
         project_id: project?.id,
         userId: reduxState?.user?.profile?.id || 1,
-      });
+      },callback);
     }
   };
 
@@ -176,6 +189,7 @@ function Profile({
     setSubmitted(true);
     createDomain({
       domain,
+      plan_type : 'FIXED',
       project: { ...project, name: "Service" },
       userId: reduxState?.user?.profile?.id || 1,
     });
@@ -233,12 +247,14 @@ function Profile({
     // Create an object of formData
     const formData = new FormData();
     let file = event.target.files[0];
-
-    console.log("file", file);
-    setSubmitted(true);
-    setLoader(true);
     // Update the formData object
     formData.append("server_image", file, file?.name);
+    setForm(formData);
+  };
+
+
+
+   const  onUpload = () =>{
     updateSystemInfo(
       {
         query: "?userId=" + Number(localStorage.getItem("userId")),
@@ -246,21 +262,16 @@ function Profile({
       },
       hideNotification
     );
-  };
 
-  const imageClick = () => {
-    if (imageRef.current) {
-      imageRef.current.click();
-    }
-  };
+   }
   const { is_profile_setup } = reduxState?.user?.profile;
   return (
     <Wrapper>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
-        type={reduxState?.workspace?.error ? "error" : "success"}
-        message={message}
+        type={message ? 'success' :  'error'}
+        message={message || error}
       />
       <Modal
         title="Create Domain and Project"
@@ -580,28 +591,32 @@ function Profile({
                           />
                         </GridItem>
                         <GridItem
-                          sm={8}
+                          sm={4}
                           xs={12}
                         >
-                          <Typography>System image</Typography>
-                          <img
+                          <Typography>{system_image ? "System image" : "" }</Typography>
+                          {system_image && <img
                             src={system_image}
                             width={300}
                             height={250}
                             alt="system image"
-                          />
-                      
-                          <IconButton onClick={imageClick}>
-                            <AttachFileOutlined />
-                          </IconButton>
-                          <input
+                          />} 
+                          <div>&nbsp;</div>
+                          <div style={{display:'flex'}}>
+                          <TextField
                             accept="image/png, image/gif, image/jpeg, image/jpg"
                             onChange={onFileUpload}
                             name="system_image"
                             type="file"
                             ref={imageRef}
-                            style={{ display: "none" }}
+                            label="Upload new system image"
+                            inputProps={{accept:"image/png, image/gif, image/jpeg, image/jpg"}}
                           />
+                       
+                            <IconButton onClick={onUpload}>
+                              <CloudUpload /> Upload
+                            </IconButton>
+                            </div>
                         </GridItem>
                       </GridContainer>
                     </FieldSet>

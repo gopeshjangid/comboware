@@ -20,6 +20,69 @@ const dashboardRoutes = [
     accessors : ['USER' ,'ER' ,'ADMIN']
   },
   {
+    path: "/#",
+    name: "Customer Tickets ",
+    accessors : ['USER' ,'ER' ,'ADMIN'],
+    rtlName: "إخطارات",
+    icon: Notifications,
+
+    layout: "/ticket",
+  },
+  {
+    path: "/#",
+    name: "Payments",
+    accessors : ['USER' ,'ER' ,'ADMIN'],
+    rtlName: "إخطارات",
+    icon: PaymentOutlined,
+    layout: "/payment",
+  },
+  {
+    path: "/#",
+    name: "Skills Management",
+    accessors : ['USER' ,'ER' ,'ADMIN'],
+    rtlName: "المهندسين",
+    icon: PaymentOutlined,
+    layout: "/skills-management",
+  },
+  
+  {
+    path: "/",
+    name: "Settings",
+    accessors : ['ADMIN'],
+    icon: Setting,
+    layout: "/settings",
+  },
+  {
+    path: "/",
+    name: "Support",
+    accessors : ['ADMIN'],
+    icon: Support,
+    layout: "/support",
+  },{
+    path: "/",
+    name: "System Monitoring",
+    accessors : ['ADMIN'],
+    icon: Monitor,
+    layout: "/monitoring",
+  },
+  
+  {
+    path: "/#",
+    name: "Ticket Settings",
+    accessors : ['USER' ,'ER' ,'ADMIN'],
+    rtlName: "المهندسين",
+    icon: PaymentOutlined,
+    layout: "/engineers",
+  },
+  {
+    path: "/requests",
+    name: "Workspace Requests",
+    accessors : ['ADMIN'],
+    rtlName: "إخطارات",
+    icon: Notifications,
+    layout: "/admin",
+  },
+  {
     path: "/servers",
     name: "Workspace",
     icon: LocationOn,
@@ -48,59 +111,6 @@ const dashboardRoutes = [
     //     name : 'Virtual Servers'
     //   }
     // ]
-  },
-  {
-    path: "/requests",
-    name: "Manage Server Requests",
-    accessors : ['ADMIN'],
-    rtlName: "إخطارات",
-    icon: Notifications,
-    layout: "/admin",
-  },
-  {
-    path: "/#",
-    name: "Ticket Management",
-    accessors : ['USER' ,'ER' ,'ADMIN'],
-    rtlName: "إخطارات",
-    icon: Notifications,
-
-    layout: "/ticket",
-  },
-  {
-    path: "/#",
-    name: "Payments",
-    accessors : ['USER' ,'ER' ,'ADMIN'],
-    rtlName: "إخطارات",
-    icon: PaymentOutlined,
-    layout: "/payment",
-  },
-  {
-    path: "/#",
-    name: "Engineers",
-    accessors : ['USER' ,'ER' ,'ADMIN'],
-    rtlName: "المهندسين",
-    icon: PaymentOutlined,
-    layout: "/engineers",
-  },
-  {
-    path: "/",
-    name: "Settings",
-    accessors : ['ADMIN'],
-    icon: Setting,
-    layout: "/settings",
-  },
-  {
-    path: "/",
-    name: "Support",
-    accessors : ['ADMIN'],
-    icon: Support,
-    layout: "/support",
-  },{
-    path: "/",
-    name: "System Monitoring",
-    accessors : ['ADMIN'],
-    icon: Monitor,
-    layout: "/monitoring",
   },
 ];
 

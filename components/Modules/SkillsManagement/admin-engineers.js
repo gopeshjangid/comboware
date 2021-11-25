@@ -165,16 +165,14 @@ const Engineers = () => {
       <Wrapper>
         <GridContainer spacing={2}>
           <GridItem xs={12} sm={6}>
-            <FieldSet padding={30} title='ENGINEERS SKILLS'>
+            <FieldSet padding={30} title='SKILLS'>
               <GridContainer spacing={2} mb={3} style={{ marginBottom: 30 }}>
-                <GridItem container style={{ textAlign: 'center' }} className={classes.gridRow} xs={12}>
-                  <Typography>SKILLS</Typography>
-                </GridItem>
+               
                 <GridItem className={classes.gridRow} xs={10}>
                   <TextField
                     name='skill'
                     fullWidth
-                    label='Skills'
+                    label='New Skill'
                     value={fromData.skill}
                     onChange={inputChangeHandler}
                     type='text'
@@ -194,16 +192,14 @@ const Engineers = () => {
             </FieldSet>
           </GridItem>
           <GridItem xs={12} sm={6}>
-            <FieldSet padding={30} title='ENGINEERS SKILLS'>
+            <FieldSet padding={30} title='LEVEL'>
               <GridContainer spacing={2} mb={3} style={{ marginBottom: 30 }}>
-                <GridItem container style={{ textAlign: 'center' }} className={classes.gridRow} xs={12}>
-                  <Typography>LEVEL</Typography>
-                </GridItem>
+               
                 <GridItem className={classes.gridRow} xs={10}>
                   <TextField
                     name='level'
                     fullWidth
-                    label='Skill Level'
+                    label='New Skill Level'
                     value={fromData.level}
                     onChange={inputChangeHandler}
                     type='text'
