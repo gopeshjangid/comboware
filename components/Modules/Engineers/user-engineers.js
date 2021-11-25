@@ -100,7 +100,7 @@ const Engineers = ({}) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Loader open={loader} />
       <Snackbar open={isSubmitted} type={reduxState?.workspace?.error ? 'error' : 'success'} message={message} />
       <GridContainer spacing={1}>
@@ -181,7 +181,7 @@ const Engineers = ({}) => {
           </Button>
         </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 };
 

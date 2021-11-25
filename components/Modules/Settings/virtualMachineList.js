@@ -85,7 +85,7 @@ function VM ({ getAllVirtualMachines, selectedHost }) {
   const handleClick = () => {}
   console.log('loading', isLoading)
   return (
-    <div>
+    <React.Fragment>
       <Box display="flex" mb='10px' pb='10px'>
       <Typography
           style={{ textTransform: 'none' }}
@@ -130,7 +130,7 @@ function VM ({ getAllVirtualMachines, selectedHost }) {
           />
         </Box>
       )}
-    </div>
+    </React.Fragment>
   )
 }
 

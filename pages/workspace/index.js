@@ -1,13 +1,9 @@
-import React from "react";
-import Admin from "layouts/Admin.js";
-import WorkspaceComponent from "components/Modules/Workspace";
+import React from 'react';
+import Admin from 'layouts/Admin.js';
+import WorkspaceComponent from 'components/Modules/Workspace';
 
 function Workspace() {
-  return (
-    <div>
-      <WorkspaceComponent />
-   </div>
-  );
+  return <WorkspaceComponent />;
 }
 
 Workspace.layout = Admin;

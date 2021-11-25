@@ -114,7 +114,7 @@ function usersListDataBox({ usersList, profile }) {
   const handleClick = () => {};
 
   return (
-    <div>
+    <React.Fragment>
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -133,7 +133,7 @@ function usersListDataBox({ usersList, profile }) {
           ]}
         />
       )}
-    </div>
+    </React.Fragment>
   );
 }
 

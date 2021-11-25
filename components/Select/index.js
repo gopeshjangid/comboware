@@ -22,24 +22,22 @@ export default function CustomSelect(props) {
     setOptionValue(value);
   },[value])
   return (
-    <div>
-      <FormControl className={classes.select} variant="outlined">
-        <InputLabel htmlFor="demo-customized-select-native">{label}</InputLabel>
-        <Select
-          {...props}
-          value={optionValue}
-          onChange={(e) => onChange  ? onChange(e) : ''}
-          className={classes.select}
-          style={style}
-          labelId="demo-controlled-open-select-label"
-          id="demo-controlled-open-select"
-        >
-         
-          {
-            options && options.length ? options?.map(option =><MenuItem value={option.value}>{option.label}</MenuItem>) : <MenuItem value="">{"No record found !"}</MenuItem>
-          }
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl className={classes.select} variant="outlined">
+      <InputLabel htmlFor="demo-customized-select-native">{label}</InputLabel>
+      <Select
+        {...props}
+        value={optionValue}
+        onChange={(e) => onChange  ? onChange(e) : ''}
+        className={classes.select}
+        style={style}
+        labelId="demo-controlled-open-select-label"
+        id="demo-controlled-open-select"
+      >
+        
+        {
+          options && options.length ? options?.map(option =><MenuItem value={option.value}>{option.label}</MenuItem>) : <MenuItem value="">{"No record found !"}</MenuItem>
+        }
+      </Select>
+    </FormControl>
   );
 }

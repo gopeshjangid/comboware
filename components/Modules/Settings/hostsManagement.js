@@ -89,7 +89,7 @@ function Settings({ saveCluster, settings }) {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Snackbar open={isSubmitted} type={message?.type} message={message?.content} />
       <GridContainer spacing={3}>
         {!isNew ? (
@@ -206,7 +206,7 @@ function Settings({ saveCluster, settings }) {
           </GridItem>
         )}
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 }
 

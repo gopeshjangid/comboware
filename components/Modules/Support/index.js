@@ -89,7 +89,7 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
 
 
   return (
-    <div>
+    <React.Fragment>
       {/* <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -140,7 +140,7 @@ function Support({ getAllWorkspace, updateRequest, getProfile }) {
           </Card>
         </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -39,7 +39,7 @@ export default function RTLNavbarLinks() {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <div className={classes.searchWrapper}>
         <CustomInput
           formControlProps={{
@@ -158,6 +158,6 @@ export default function RTLNavbarLinks() {
           <p className={classes.linkText}>حساب کاربری</p>
         </Hidden>
       </Button>
-    </div>
+    </React.Fragment>
   );
 }

@@ -1,44 +1,40 @@
-import React from "react";
+import Icon from '@material-ui/core/Icon';
 // react plugin for creating charts
 //import ChartistGraph from "react-chartist";
 // @material-ui/core
-import { makeStyles } from "@material-ui/core/styles";
-import Icon from "@material-ui/core/Icon";
+import { makeStyles } from '@material-ui/core/styles';
+import Accessibility from '@material-ui/icons/Accessibility';
+import DateRange from '@material-ui/icons/DateRange';
+import LocalOffer from '@material-ui/icons/LocalOffer';
 // @material-ui/icons
-import Store from "@material-ui/icons/Store";
-import Warning from "@material-ui/icons/Warning";
-import DateRange from "@material-ui/icons/DateRange";
-import LocalOffer from "@material-ui/icons/LocalOffer";
-import Update from "@material-ui/icons/Update";
-import Accessibility from "@material-ui/icons/Accessibility";
-
-// layout for this page
-import Admin from "layouts/Admin.js";
+import Store from '@material-ui/icons/Store';
+import Update from '@material-ui/icons/Update';
+import Warning from '@material-ui/icons/Warning';
+import styles from 'assets/jss/nextjs-material-dashboard/views/dashboardStyle.js';
+import Card from 'components/Card/Card.js';
+import CardFooter from 'components/Card/CardFooter.js';
+import CardHeader from 'components/Card/CardHeader.js';
+import CardIcon from 'components/Card/CardIcon.js';
+import GridContainer from 'components/Grid/GridContainer.js';
 // core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Tasks from "components/Tasks/Tasks.js";
-import Danger from "components/Typography/Danger.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardIcon from "components/Card/CardIcon.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import HostsList from "../../components/Modules/Dashboard/hostsList";
-import UsersList from "../../components/Modules/Dashboard/usersList";
-
-import styles from "assets/jss/nextjs-material-dashboard/views/dashboardStyle.js";
+import GridItem from 'components/Grid/GridItem.js';
+import Danger from 'components/Typography/Danger.js';
+// layout for this page
+import Admin from 'layouts/Admin.js';
+import React from 'react';
+import HostsList from '../../components/Modules/Dashboard/hostsList';
+import UsersList from '../../components/Modules/Dashboard/usersList';
 
 function Dashboard() {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   return (
-    <div>
+    <React.Fragment>
       <GridContainer spacing={3}>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="warning" stats icon>
-              <CardIcon color="warning">
+            <CardHeader color='warning' stats icon>
+              <CardIcon color='warning'>
                 <Icon>content_copy</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Used Space</p>
@@ -51,7 +47,7 @@ function Dashboard() {
                 <Danger>
                   <Warning />
                 </Danger>
-                <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                <a href='#pablo' onClick={(e) => e.preventDefault()}>
                   Get more space
                 </a>
               </div>
@@ -60,8 +56,8 @@ function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="dark" stats icon>
-              <CardIcon color="dark">
+            <CardHeader color='dark' stats icon>
+              <CardIcon color='dark'>
                 <Store />
               </CardIcon>
               <p className={classes.cardCategory}>Revenue</p>
@@ -77,8 +73,8 @@ function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="danger" stats icon>
-              <CardIcon color="danger">
+            <CardHeader color='danger' stats icon>
+              <CardIcon color='danger'>
                 <Icon>info_outline</Icon>
               </CardIcon>
               <p className={classes.cardCategory}>Fixed Issues</p>
@@ -94,8 +90,8 @@ function Dashboard() {
         </GridItem>
         <GridItem xs={12} sm={6} md={3}>
           <Card>
-            <CardHeader color="info" stats icon>
-              <CardIcon color="info">
+            <CardHeader color='info' stats icon>
+              <CardIcon color='info'>
                 <Accessibility />
               </CardIcon>
               <p className={classes.cardCategory}>Followers</p>
@@ -111,16 +107,17 @@ function Dashboard() {
         </GridItem>
       </GridContainer>
       <GridContainer spacing={3}>
-        
         <GridItem xs={12} sm={12} md={12}>
-            <HostsList />
+          <HostsList />
         </GridItem>
-        <GridItem xs={12} sm={12} md={12}>&nbsp;</GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          &nbsp;
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <UsersList />
-          </GridItem>
+        </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 }
 

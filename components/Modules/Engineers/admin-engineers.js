@@ -160,7 +160,7 @@ const Engineers = () => {
   console.log(fromData);
 
   return (
-    <div>
+    <React.Fragment>
       <Snackbar open={isSubmitted} type={reduxState?.workspace?.error ? 'error' : 'success'} message={message} />
       <Wrapper>
         <GridContainer spacing={2}>
@@ -224,7 +224,7 @@ const Engineers = () => {
           </GridItem>
         </GridContainer>
       </Wrapper>
-    </div>
+    </React.Fragment>
   );
 };
 

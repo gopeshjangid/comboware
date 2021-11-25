@@ -120,7 +120,7 @@ function Settings({ saveResource ,getResources  ,settings}) {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -264,7 +264,7 @@ function Settings({ saveResource ,getResources  ,settings}) {
           </GridContainer>
         </CardBody>
       </Card>
-    </div>
+    </React.Fragment>
   );
 }
 

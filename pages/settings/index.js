@@ -1,18 +1,17 @@
-import React from "react";
-import Admin from "layouts/Admin.js";
+import React from 'react';
+import Admin from 'layouts/Admin.js';
 
-import SettingsComponent from "components/Modules/Settings";
-import Head from "next/head";
+import SettingsComponent from 'components/Modules/Settings';
+import Head from 'next/head';
 
 function Settings() {
-
   return (
-    <div>
+    <React.Fragment>
       <Head>
         <title>Comboware- Settings</title>
       </Head>
       <SettingsComponent />
-   </div>
+    </React.Fragment>
   );
 }
 

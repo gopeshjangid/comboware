@@ -120,24 +120,22 @@ export const MessageLeft = (props) => {
   const displayName = props.displayName ? props.displayName : "Anonymous";
   const classes = useStyles();
   return (
-    <>
-      <div className={classes.messageRow}>
-        <Avatar
-          alt={displayName}
-          className={classes.orange}
-          src={photoURL}
-        ></Avatar>
-        <div>
-          <div className={classes.displayName}>{displayName}</div>
-          <div className={classes.messageBlue}>
-            <div>
-              <p className={classes.messageContent}>{message}</p>
-            </div>
-            <div className={classes.messageTimeStampRight}>{timestamp}</div>
-          </div>
+    <div className={classes.messageRow}>
+      <Avatar
+        alt={displayName}
+        className={classes.orange}
+        src={photoURL}
+      ></Avatar>
+      <React.Fragment>
+        <div className={classes.displayName}>{displayName}</div>
+        <div className={classes.messageBlue}>
+          <React.Fragment>
+            <p className={classes.messageContent}>{message}</p>
+          </React.Fragment>
+          <div className={classes.messageTimeStampRight}>{timestamp}</div>
         </div>
-      </div>
-    </>
+      </React.Fragment>
+    </div>
   );
 };
 export const MessageRight = (props) => {

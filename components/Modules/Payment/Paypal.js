@@ -85,25 +85,23 @@ function Paypal(props) {
 
   const onCancel = () => {};
   return (
-    <div>
-      <PayPalScriptProvider
-        options={{
-          "client-id": PAYPAL_CLIENT_ID,
-          components: "buttons",
-          intent: "capture",
-        }}
-      >
-        <PayPalButtons
-          onError={onError}
-          style={{ color: "blue", label: "checkout" }}
-          onInit={oninit}
-          onCancel={onCancel}
-          onError={onError}
-          onApprove={onApprove}
-          createOrder={createOrder}
-        />
-      </PayPalScriptProvider>
-    </div>
+    <PayPalScriptProvider
+      options={{
+        "client-id": PAYPAL_CLIENT_ID,
+        components: "buttons",
+        intent: "capture",
+      }}
+    >
+      <PayPalButtons
+        onError={onError}
+        style={{ color: "blue", label: "checkout" }}
+        onInit={oninit}
+        onCancel={onCancel}
+        onError={onError}
+        onApprove={onApprove}
+        createOrder={createOrder}
+      />
+    </PayPalScriptProvider>
   );
 }
 

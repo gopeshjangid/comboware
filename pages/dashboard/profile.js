@@ -1,13 +1,9 @@
-import React from "react";
-import Admin from "layouts/Admin.js";
-import ProfileComponent from "components/Modules/Profile";
+import React from 'react';
+import Admin from 'layouts/Admin.js';
+import ProfileComponent from 'components/Modules/Profile';
 
 function Profile() {
-  return (
-    <div>
-      <ProfileComponent />
-   </div>
-  );
+  return <ProfileComponent />;
 }
 
 Profile.layout = Admin;
