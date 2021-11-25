@@ -72,8 +72,15 @@ const dashboardRoutes = [
     accessors : ['USER' ,'ER' ,'ADMIN'],
     rtlName: "إخطارات",
     icon: PaymentOutlined,
-
     layout: "/payment",
+  },
+  {
+    path: "/#",
+    name: "Engineers",
+    accessors : ['USER' ,'ER' ,'ADMIN'],
+    rtlName: "المهندسين",
+    icon: PaymentOutlined,
+    layout: "/engineers",
   },
   {
     path: "/",
