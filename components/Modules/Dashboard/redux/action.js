@@ -14,6 +14,9 @@ export const saveResourceData = (data) =>{
   return {type : SAVE_RESOURCE , payload : data}
 }
 
+export const  selectHost = (data) =>{
+  return {type : SAVE_RESOURCE , payload : {selectedHost : data}} 
+}
 
 export const getAllHosts = (hideNotification) => (dispatch) =>{
   

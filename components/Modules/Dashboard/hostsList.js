@@ -10,12 +10,14 @@ import React, { useEffect, useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import Domains from './domainsList'
 import { SELECT_CLUSTER } from './redux/constants'
-import { getAllHosts } from './redux/action'
-
-const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
+import { getAllHosts ,selectHost } from './redux/action';
+import VirtualMachinesList from '../Settings/virtualMachineList'
+const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile ,selectHost }) => {
   const [error, setError] = useState(false)
   const [isLoading, setLoading] = useState(false)
   const [domainModal, setDomainModal] = useState(false)
+  const [vmModal, setVmModal] = useState(false);
+  const [selectedHost, setSelectHost] = useState(false);
   const [modalHotList, setHostsList] = useState([])
   const [domainClusterUrl, setDomainClusterUrl] = useState('')
   const dispatch = useDispatch()
@@ -38,6 +40,11 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
 
     return () => {}
   }, [])
+
+  const viewHostMachines  = (row) => {
+    dispatch(selectHost(row));
+    setVmModal(true)
+  }
 
   if (profile?.user_type !== 'ADMIN') {
     return null
@@ -177,14 +184,43 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
             />
           )
         }
+      },
+      {
+        header: 'Action',
+        width: 70,
+        renderCell: row => {
+          return (
+            <Button onClick={() => viewHostMachines(row)} type='action'>
+              View VMs
+            </Button>
+          )
+        }
       }
     ]
   }
 
   const handleClick = () => {}
-
+console.log("selectedHost hostsss" ,selectedHost)
   return (
     <div>
+        <Modal
+          title='Virtual Machines'
+          isOpen={vmModal}
+          onSubmit={() => {
+            setVmModal(false);
+             setSelectHost(null);
+          }}
+          onChange={flag => {
+            setVmModal(false);
+             setSelectHost(null);
+          }}
+          submitText='Ok'
+          SaveText='OK'
+          maxWidth='md'
+        >
+         <VirtualMachinesList selectedHost={selectedHost}  />
+
+        </Modal>
       {domainModal && (
         <Modal
           title='Host/Domain List'
@@ -220,7 +256,7 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
         </Modal>
       )}
       {isLoading ? (
-        <Box display="flex" justify="center">
+        <Box display='flex' justify='center'>
           <Loader />
         </Box>
       ) : error ? (
@@ -245,7 +281,7 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile }) => {
 
 export default connect(
   state => {
-    return { ...state?.dashboard, profile: state?.user?.profile }
+    return { ...state?.dashboard, profile: state?.user?.profile ,selectHost }
   },
   { getAllHosts }
 )(hostsListBox)

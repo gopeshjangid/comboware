@@ -38,5 +38,6 @@ export const MESSAGE = {
 export const API = {
   createDomain : API_BASE_URL+'/v1/workspace/createDomain',
   createServerRequest : API_BASE_URL+'/v1/workspace/createWorkspace',
-  getServerDetails:  API_BASE_URL+"/v1/workspace/getServerDetails"
+  getServerDetails:  API_BASE_URL+"/v1/workspace/getServerDetails",
+  getAllVirtualMachines: API_BASE_URL+'/v1/workspace/getAllvms',
 }

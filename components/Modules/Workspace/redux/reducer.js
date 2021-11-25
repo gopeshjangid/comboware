@@ -1,72 +1,79 @@
-import { SAVE_DOMAIN, REQUEST_START, REQUEST_FAILED ,SAVE_REQUEST } from "./constants";
+import {
+  SAVE_DOMAIN,
+  REQUEST_START,
+  REQUEST_FAILED,
+  SAVE_REQUEST
+} from './constants'
 const initialState = {
   domain: {
-    name: "",
-    description: "",
-    id: "",
-  },project: {
-    name: "",
-    description: "",
-    id: "",
+    name: '',
+    description: '',
+    id: ''
   },
+  project: {
+    name: '',
+    description: '',
+    id: ''
+  },
+  virtualMachines: [],
   network: null,
   image: null,
   server: null,
-  serverList : [],
+  serverList: [],
   loading: false,
-  message: "",
-  error : ''
-};
+  message: '',
+  error: ''
+}
 
-function reducer(state = initialState, action) {
+function reducer (state = initialState, action) {
   switch (action.type) {
     case SAVE_DOMAIN:
       return {
         ...state,
         ...action.payload?.data,
-        loading : false,
+        loading: false,
         error: '',
-        message : action.payload?.message
-      };
+        message: action.payload?.message
+      }
 
-      break;
+      break
 
-      case SAVE_REQUEST:
-        console.log("action?.payload?.data" ,action?.payload?.data)
-        return {
-          ...state,
-          loading : false,
-          error: '',
-          message : action.payload?.message,
-          ...action?.payload
-        };
-  
-        break;
+    case SAVE_REQUEST:
+      console.log('action?.payload?.data', action?.payload?.data)
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        message: action.payload?.message,
+        ...action?.payload
+      }
+
+      break
 
     case REQUEST_START:
       return {
         ...state,
         ...action.payload,
-        error : '',
-        loading: true,
-      };
+        error: '',
+        loading: true
+      }
 
-      break;
+      break
 
     case REQUEST_FAILED:
       return {
         ...state,
         ...action.payload,
-        message : '',
-        loading: false,
-      };
+        message: '',
+        loading: false
+      }
 
-      break;
+      break
 
     default:
-      return state;
-      break;
+      return state
+      break
   }
 }
 
-export default reducer;
+export default reducer

@@ -22,6 +22,8 @@ export const saveRequest = (data) =>{
   return {type : SAVE_REQUEST , payload : data}
 }
 
+
+
 export const requestStart = (data) =>{
   return {type : REQUEST_START , payload : data}
 }
@@ -65,4 +67,17 @@ export const getWorkSpaceDetails = (id) => (dispatch) =>{
   })
 
 }
+
+export const getAllVirtualMachines = (data, callback) => (dispatch) => {
+  Service.post(API.getAllVirtualMachines ,data)
+    .then((res) => {
+      callback(true);
+      dispatch(saveRequest({ virtualMachines: res?.data?.data}));
+    })
+    .catch((err) => {
+      console.log('err--', err);
+      callback(false);
+      dispatch(requestFailed({ error: err?.message }));
+    });
+};
 

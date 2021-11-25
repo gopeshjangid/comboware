@@ -1,6 +1,8 @@
 import { START, FAILED, SAVE_RESOURCE, API } from './constants';
 import Service from '../../../../service/index';
 import {getAllHosts} from "../../Dashboard/redux/action";
+
+
 export const requestInit = (data) => {
   return { type: START, payload: data };
 };
@@ -88,4 +90,7 @@ export const getResources = (query, callback) => (dispatch) => {
       dispatch(requestStop({ error: err?.message }));
     });
 };
+
+
+
 

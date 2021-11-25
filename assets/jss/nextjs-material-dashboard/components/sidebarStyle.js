@@ -23,7 +23,8 @@ const sidebarStyle = (theme) => ({
     bottom: "0",
     left: "0",
     zIndex: "1",
-    boxShadow : 'inset 7px 5px 15px -12px rgb(0 0 0 / 42%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%)',
+    borderRight : '1px solid #dce4e5',
+    //boxShadow : 'inset 7px 5px 15px -12px rgb(0 0 0 / 42%), 0 4px 25px 0px rgb(0 0 0 / 12%), 0 8px 10px -5px rgb(0 0 0 / 20%)',
     width: drawerWidth,
     background : '#fbfdfd',
     [theme.breakpoints.up("md")]: {
@@ -170,9 +171,9 @@ const sidebarStyle = (theme) => ({
   itemText: {
     ...defaultFont,
     margin: "0",
-    fontWeight :500,
+    fontWeight :400,
     lineHeight: "30px",
-    fontSize: "14px",
+    fontSize: "13px",
     color: theme?.palette?.text?.primary,
   },
   itemTextRTL: {
