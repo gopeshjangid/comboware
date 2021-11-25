@@ -37,13 +37,20 @@ export const signUp = (data ,router) => (dispatch) =>{
 
 }
 
-export const updateProfile = (data) => (dispatch) =>{
-  dispatch(requestInit({message : "Updating the profile... "}));
+export const updateProfile = (data ,callback) => (dispatch) =>{
+  if(callback){
+    callback(0, "Please wait...");
+  }
   Service.put(API.updateProfile ,data).then(res=>{
+    if(callback){
+      callback(1, "Profile updated successfully.");
+    }
     dispatch(saveProfile({profile :  res?.data?.data?.user, message : "Profile updated successfully."}));
   }).catch(err =>{
-    console.log("err--" ,err)
-    dispatch(requestStop({data  : null, error : err?.message}));
+    console.log("err--" ,err);
+    if(callback){
+      callback(2, "Something went wrong. Please try again");
+    }
   })
 
 }

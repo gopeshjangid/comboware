@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     background: '#F3F6F9',
     borderRadius: 6,
     overflow: 'auto',
-    overflowX: 'auto'
+    overflowX: 'auto',
+    'border-bottom': '3px solid #1976d2'
   },
   tableBodyRow: {
     overflow: 'auto',
@@ -278,7 +279,7 @@ export default function CustomTable (props) {
         style={{
           width: '100%',
           paddingLeft: 5,
-          borderTop: '.5px solid lightblue'
+          'border-top': '1.5px solid #1976d2'
         }}
       >
         <Typography variant='body2'>{footer_label || ''}</Typography>

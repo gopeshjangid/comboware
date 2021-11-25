@@ -18,8 +18,6 @@ import Collapse from "@material-ui/core/Collapse";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Loader from  "components/Loader/circular";
 // core components
-import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
-import RTLNavbarLinks from "components/Navbars/RTLNavbarLinks.js";
 import styles from "assets/jss/nextjs-material-dashboard/components/sidebarStyle.js";
 import {useSelector} from "react-redux";
 export default function Sidebar(props) {
@@ -63,7 +61,7 @@ export default function Sidebar(props) {
         return (
           <Link href={!subItems ?  prop.layout + prop.path : "#"} key={key}>
             <a className={activePro + classes.item}>
-              <ListItem button style={{background : activeRoute(prop.layout) &&'#caf9f1'}}  className={classes.itemLink } onClick={(e)=> subItems  ? handleClick(e) : ''}>
+              <ListItem button style={{background : activeRoute(prop.layout) &&'#ebf6f7'}}  className={classes.itemLink } onClick={(e)=> subItems  ? handleClick(e) : ''}>
                 {typeof prop.icon === "string" ? (
                   <Icon
                     className={classNames(classes.itemIcon, whiteFontClasses, {
@@ -80,7 +78,6 @@ export default function Sidebar(props) {
                   />
                 )}
                 <ListItemText
-                  style={{background : activeRoute(prop.layout ) &&'#caf9f1' || ''}}
                   className={classNames(classes.itemText, whiteFontClasses, {
                     [classes.itemTextRTL]: props.rtlActive,
                   })}

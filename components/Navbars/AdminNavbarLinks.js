@@ -14,8 +14,6 @@ import Divider from "@material-ui/core/Divider";
 // @material-ui/icons
 import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Button from "components/CustomButtons/Button.js";
-import useWindowSize from "components/Hooks/useWindowSize.js";
 import { useRouter } from "next/router";
 import styles from "assets/jss/nextjs-material-dashboard/components/headerLinksStyle.js";
 import { logoutUser } from "../Modules/Profile/redux/action";
@@ -29,7 +27,6 @@ function AdminNavbarLinks({
   isMobileMenuOpen,
   handleMobileMenuClose,
 }) {
-  const size = useWindowSize();
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   const [openNotification, setOpenNotification] = React.useState(null);
