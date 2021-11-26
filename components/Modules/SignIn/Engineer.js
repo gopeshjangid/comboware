@@ -121,6 +121,13 @@ function CustomerLogin(props) {
     return () => {};
   }, []);
 
+    useEffect(() => {
+      if(reduxState?.login?.action_type === 'SIGNUP'){
+        setLogin(true)
+      }
+      
+  }, [reduxState?.login?.action_type]);
+
   const hideMessage = () => {
     setTimeout(() => {
       setError(false);

@@ -21,22 +21,25 @@ export const signUp = (data,callBack ,router) => (dispatch) =>{
     localStorage.setItem('userType' ,res?.data?.data?.user_type);
     localStorage.setItem("token" , res?.data?.data?.token);
     localStorage.setItem("refreshToken" , res?.data?.data?.refreshToken);
-    dispatch(saveProfile({user  : res?.data?.data}));
-    if(callBack){
-      callBack(true ," Logged in success!");
-    }
-    dispatch(signUpSuccess({data  : res?.data, message : "Logged in successfully."}));
-    if(res?.data?.data?.is_profile_setup){
-      router.push("/dashboard")
+    if(data?.is_login){
+      dispatch(saveProfile({user  : res?.data?.data}));
+      if(res?.data?.data?.is_profile_setup){
+        router.push("/dashboard");
+      } else if(data?.is_login) {
+        router.push("/dashboard/profile")
+      }
     } else {
-      router.push("/dashboard/profile")
+      dispatch(signUpSuccess({action_type : "SIGNUP"}));
     }
+    
+    if(callBack ){
+      callBack(true , data?.is_login ? " Logged in success!" : "Sign up has been completed. Please login now.");
+    }
+ 
   }).catch(err =>{
-    console.log("err===9098--" ,err?.response);
     if(callBack){
-      callBack(false ,err?.response?.data?.message);
+      callBack(false ,err?.response?.data?.message || 'Something went wrong. Please try again.');
     }
-    dispatch(signUpFailed({data  : null, error : err?.response?.data?.message}));
   })
 
 }

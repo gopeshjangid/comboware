@@ -1,6 +1,7 @@
 import  {SIGNUP_FAILED ,SIGNUP_REQUEST , SIGNUP_SUCCESS} from "./constants";
 const initialState = {
   loading : false,
+  action_type : 'LOGIN',
   error : "",
   message : ""
 }

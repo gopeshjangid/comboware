@@ -64,7 +64,7 @@ export default function Sidebar(props) {
               <ListItem button style={{background : activeRoute(prop.layout) &&'#ebf6f7'}}  className={classes.itemLink } onClick={(e)=> subItems  ? handleClick(e) : ''}>
                 {typeof prop.icon === "string" ? (
                   <Icon
-                    className={classNames(classes.itemIcon, whiteFontClasses, {
+                    className={classNames(classes.itemIcon, {
                       [classes.itemIconRTL]: props.rtlActive,
                     })}
                   >
@@ -72,13 +72,13 @@ export default function Sidebar(props) {
                   </Icon>
                 ) : (
                   <prop.icon
-                    className={classNames(classes.itemIcon, whiteFontClasses, {
+                    className={classNames(classes.itemIcon, {
                       [classes.itemIconRTL]: props.rtlActive,
                     })}
                   />
                 )}
                 <ListItemText
-                  className={classNames(classes.itemText, whiteFontClasses, {
+                  className={classNames(classes.itemText, {
                     [classes.itemTextRTL]: props.rtlActive,
                   })}
                   disableTypography={true}
