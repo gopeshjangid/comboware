@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 // @material-ui/core components
-import { makeStyles, useTheme } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import Checkbox from '@mui/material/Checkbox'
-import classNames from 'classnames'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import Menu from '@mui/material/Menu'
-import MenuItem from '@mui/material/MenuItem'
-import { Button, Box } from '@mui/material'
-import { TablePagination, Typography } from '@material-ui/core'
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import Checkbox from '@mui/material/Checkbox';
+import classNames from 'classnames';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Button, Box } from '@mui/material';
+import { TablePagination, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   tableContainer: {
     width: '100%',
     background: 'white',
@@ -49,57 +49,52 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: 1
   },
   root: {
-    background: props => (props?.danger ? '#F64E60' : '#3699FF'),
+    background: (props) => (props?.danger ? '#F64E60' : '#3699FF'),
     borderRadius: '6px',
     minWidth: 60,
     '&:hover': {
-      background: props => (props?.danger ? '#e43447' : '#2885e4')
+      background: (props) => (props?.danger ? '#e43447' : '#2885e4')
     }
   }
-}))
+}));
 
-export default function CustomTable (props) {
-  const classes = useStyles(props)
-  const { columns, data, footer_label, selectedRows, actions } = props
-  const [selectAll, setSelectAll] = useState(false)
-  const [selectedItems, setSelectedRows] = useState([])
-  const theme = useTheme()
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const open = Boolean(anchorEl)
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
+export default function CustomTable(props) {
+  const classes = useStyles(props);
+  const { columns, data, footer_label, selectedRows, actions } = props;
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedItems, setSelectedRows] = useState([]);
+  const theme = useTheme();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
-    let selectedItems = !selectAll ? [] : data
-    setSelectedRows(selectedItems)
-    if (selectedRows) selectedRows(selectedItems)
-  }, [selectAll])
+    let selectedItems = !selectAll ? [] : data;
+    setSelectedRows(selectedItems);
+    if (selectedRows) selectedRows(selectedItems);
+  }, [selectAll]);
 
   const getSelectAllCheckBox = () => {
-    return (
-      <Checkbox
-        onChange={e => setSelectAll(e?.target?.checked)}
-        checked={selectAll}
-      />
-    )
-  }
+    return <Checkbox onChange={(e) => setSelectAll(e?.target?.checked)} checked={selectAll} />;
+  };
 
   const selectItem = (isChecked, clickedRow) => {
-    let _selectedItems = [...selectedItems]
+    let _selectedItems = [...selectedItems];
 
     if (isChecked) {
-      _selectedItems.push(clickedRow)
+      _selectedItems.push(clickedRow);
     } else {
-      _selectedItems = _selectedItems.filter(row => row?.id !== clickedRow?.id)
+      _selectedItems = _selectedItems.filter((row) => row?.id !== clickedRow?.id);
     }
 
-    setSelectedRows(_selectedItems)
-    if (selectedRows) selectedRows(_selectedItems)
-  }
+    setSelectedRows(_selectedItems);
+    if (selectedRows) selectedRows(_selectedItems);
+  };
 
   const getActionButton = () => {
     return (
@@ -139,25 +134,22 @@ export default function CustomTable (props) {
       >
         {actions &&
           actions.map((action, key) => (
-            <MenuItem
-              onClick={() => action?.handleClick && action?.handleClick()}
-              key={'action-' + key}
-            >
+            <MenuItem onClick={() => action?.handleClick && action?.handleClick()} key={'action-' + key}>
               {action?.label}
             </MenuItem>
           ))}
       </Menu>
-    )
-  }
+    );
+  };
 
-  const getCheckBox = row => {
+  const getCheckBox = (row) => {
     return (
       <Checkbox
-        onChange={e => selectItem(e?.target?.checked, row)}
-        checked={selectedItems?.some(item => item.id === row?.id)}
+        onChange={(e) => selectItem(e?.target?.checked, row)}
+        checked={selectedItems?.some((item) => item.id === row?.id)}
       />
-    )
-  }
+    );
+  };
 
   return (
     <div className={classes.tableContainer}>
@@ -179,7 +171,7 @@ export default function CustomTable (props) {
                         <MoreHorizIcon />
                       </Button>
                     </TableCell>
-                  )
+                  );
                 }
 
                 if (prop?.field === 'select') {
@@ -192,7 +184,7 @@ export default function CustomTable (props) {
                     >
                       {getSelectAllCheckBox()}
                     </TableCell>
-                  )
+                  );
                 }
                 return (
                   <TableCell
@@ -201,11 +193,9 @@ export default function CustomTable (props) {
                     className={classes.tableHeadCell}
                     key={key}
                   >
-                    {(prop?.renderHeader && prop?.renderHeader()) ||
-                      prop?.header ||
-                      ''}
+                    {(prop?.renderHeader && prop?.renderHeader()) || prop?.header || ''}
                   </TableCell>
-                )
+                );
               })}
             </TableRow>
           </TableHead>
@@ -233,7 +223,7 @@ export default function CustomTable (props) {
                         >
                           {getCheckBox(row)}
                         </TableCell>
-                      )
+                      );
                     }
                     return (
                       <TableCell
@@ -243,14 +233,13 @@ export default function CustomTable (props) {
                         align={col?.align || 'center'}
                         className={classNames({ [classes.tableCell]: true })}
                       >
-                        {(col?.renderCell &&
-                          col?.renderCell({ ...row, ...col })) ||
+                        {(col?.renderCell && col?.renderCell({ ...row, ...col })) ||
                           (col?.field in row ? row[col?.field] : '')}
                       </TableCell>
-                    )
+                    );
                   })}
                 </TableRow>
-              )
+              );
             })
           ) : (
             <TableRow
@@ -264,6 +253,8 @@ export default function CustomTable (props) {
                 key={'table-col-'}
                 variant='body'
                 className={classNames({ [classes.tableCell]: true })}
+                colSpan={columns?.length || 1}
+                align={'center'}
               >
                 No record found!
               </TableCell>
@@ -279,7 +270,7 @@ export default function CustomTable (props) {
         style={{
           width: '100%',
           paddingLeft: 5,
-          'border-top': '1.5px solid #1976d2'
+          borderTop: '1.5px solid #1976d2'
         }}
       >
         <Typography variant='body2'>{footer_label || ''}</Typography>
@@ -287,9 +278,7 @@ export default function CustomTable (props) {
           component='div'
           rowsPerPage='1'
           labelRowsPerPage='Rows per page'
-          labelDisplayedRows={({ from, to, count }) =>
-            `${from}-${to} of ${count} records`
-          }
+          labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count} records`}
           count={data?.length}
           page={1}
           color={theme?.palette?.primary?.main}
@@ -308,23 +297,15 @@ export default function CustomTable (props) {
         />
       </Box>
     </div>
-  )
+  );
 }
 
 CustomTable.defaultProps = {
   tableHeaderColor: 'gray'
-}
+};
 
 CustomTable.propTypes = {
-  tableHeaderColor: PropTypes.oneOf([
-    'warning',
-    'primary',
-    'danger',
-    'success',
-    'info',
-    'rose',
-    'gray'
-  ]),
+  tableHeaderColor: PropTypes.oneOf(['warning', 'primary', 'danger', 'success', 'info', 'rose', 'gray']),
   tableHead: PropTypes.arrayOf(PropTypes.string),
   tableData: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string))
-}
+};

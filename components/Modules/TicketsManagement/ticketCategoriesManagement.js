@@ -37,12 +37,17 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
   const [subCategoryList, setSubCategoryList] = useState([]);
   const userType = reduxState?.user?.profile?.user_type;
   const router = useRouter();
-  const [fromData, setFromData] = useState({
-    category: '',
-    subCategory: '',
-    point_price: '',
-    status: false,
-    subCategory: []
+  const [categoryFromData, setCategoryFromData] = useState({
+    id: 0,
+    name: '',
+    point_price: 'null',
+    status: false
+  });
+  const [subCategoryFromData, setSubCategoryFromData] = useState({
+    id: null,
+    category_id: null,
+    name: null,
+    status: null
   });
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCategoryText, setSelectedCategoryText] = useState(null);
@@ -57,7 +62,18 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
   useEffect(() => {
     setLoader(reduxState?.ticket?.loading);
     return () => {
-      setFromData({ category: '', subCategory: '', point_price: '' });
+      setCategoryFromData({
+        id: 0,
+        name: '',
+        point_price: 'null',
+        status: false
+      });
+      setSubCategoryFromData({
+        id: 0,
+        category_id: 0,
+        name: '',
+        status: false
+      });
       setCategoryList([]);
       setSubCategoryList([]);
       setSelectedCategoryText(null);
@@ -69,6 +85,18 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
       return { label: item.name, value: item.id };
     });
     setCategories(updateList);
+    setCategoryFromData({
+      id: 0,
+      name: '',
+      point_price: 'null',
+      status: false
+    });
+    setSubCategoryFromData({
+      id: 0,
+      category_id: 0,
+      name: '',
+      status: false
+    });
     return () => {};
   }, [categoryList]);
 
@@ -126,7 +154,7 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
           return (
             <React.Fragment>
               <Fab color='primary' aria-label='edit' size='small' className={classes.margin}>
-                <Edit onClick={() => deleteItem(row, 'category')} />
+                <Edit onClick={() => editItem(row, 'category')} />
               </Fab>
               <Fab color='secondary' aria-label='delete' size='small' className={classes.margin}>
                 <Delete onClick={() => deleteItem(row, 'category')} />
@@ -191,10 +219,10 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
           return (
             <React.Fragment>
               <Fab color='primary' aria-label='edit' size='small' className={classes.margin}>
-                <Edit onClick={() => deleteItem(row, 'category')} />
+                <Edit onClick={() => editItem(row, 'subCategory')} />
               </Fab>
               <Fab color='secondary' aria-label='delete' size='small' className={classes.margin}>
-                <Delete onClick={() => deleteItem(row, 'category')} />
+                <Delete onClick={() => deleteItem(row, 'subCategory')} />
               </Fab>
             </React.Fragment>
           );
@@ -203,79 +231,63 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
     ];
   };
 
-  const inputChangeHandler = (e) => {
+  const inputChangeHandler = (e, type) => {
     const { value, name } = e.target;
-    setFromData({
-      ...fromData,
-      [name]: value
-    });
+    if (type === 'category') {
+      setCategoryFromData({
+        ...categoryFromData,
+        [name]: value
+      });
+    } else {
+      setSubCategoryFromData({
+        ...subCategoryFromData,
+        [name]: value
+      });
+    }
   };
 
   const submitHandler = (e, type) => {
     if (type === 'category') {
-      if (fromData[type]) {
-        let updatedList = [...categoryList];
-        const userExists = updatedList.some((item) => {
-          return item.name === fromData[type];
-        });
-        if (!userExists) {
-          updatedList.push({
-            id: updatedList.length + 1,
-            name: fromData[type],
-            point_price: fromData.point_price,
-            status: true
-          });
-        }
-        setCategoryList(updatedList);
-        setFromData({ ...fromData, category: '', point_price: '' });
-      }
-    } else {
-      if (fromData[type]) {
-        let updatedList = [...categoryList];
-        updatedList = updatedList.map((item) => {
-          if (item.id === selectedCategory) {
-            if (item?.subCategory) {
-              const userExists = item?.subCategory.some((item) => {
-                return item.name === fromData[type];
-              });
-              if (!userExists) {
-                item?.subCategory.push({ id: item?.subCategory.length + 1, name: fromData[type], status: true });
-              }
-            } else {
-              item = {
-                ...item,
-                subCategory: [
-                  {
-                    id: 1,
-                    name: fromData[type],
-                    status: true
-                  }
-                ]
-              };
-            }
-            setSubCategoryList(item.subCategory);
-          }
-          return item;
-        });
-        setCategoryList(updatedList);
-        setFromData({ ...fromData, subCategory: '' });
-      }
-    }
-  };
-
-  const deleteItem = (row, type) => {
-    if (type === 'skill') {
       let updatedList = [...categoryList];
-      updatedList = updatedList.filter((item) => {
-        return item.id !== row.id;
+      const userExists = updatedList.some((item) => {
+        return item.name === categoryFromData.name;
       });
-      setSkillList(updatedList);
+      if (!userExists && categoryFromData.name && categoryFromData.point_price) {
+        updatedList.push({
+          ...categoryFromData,
+          id: updatedList.length + 1,
+          status: true
+        });
+      }
+      setCategoryList(updatedList);
     } else {
-      let updatedList = [...subCategoryList];
-      updatedList = updatedList.filter((item) => {
-        return item.id !== row.id;
+      let updatedList = [...categoryList];
+      updatedList = updatedList.map((item) => {
+        if (item.id === selectedCategory) {
+          if (item?.subCategory) {
+            const userExists = item?.subCategory.some((item) => {
+              return item.name === subCategoryFromData.name;
+            });
+            if (!userExists && subCategoryFromData.name) {
+              item?.subCategory.push({ ...subCategoryFromData, id: item?.subCategory.length + 1, status: true });
+            }
+          } else {
+            item = {
+              ...item,
+              subCategory: [
+                {
+                  ...subCategoryFromData,
+                  id: 1,
+                  status: true
+                }
+              ]
+            };
+          }
+          setSubCategoryList(item.subCategory);
+        }
+        return item;
       });
-      setLevelList(updatedList);
+      setCategoryList(updatedList);
     }
   };
 
@@ -295,6 +307,52 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
     setSubCategoryList(updatedSubCategory);
   };
 
+  const deleteItem = (row, type) => {
+    let updatedList = [...categoryList];
+    if (type === 'category') {
+      updatedList = updatedList.filter((item) => {
+        return item.id !== row.id;
+      });
+    } else {
+      let updatedSubCategory = [];
+      updatedList = updatedList.map((item) => {
+        if (item.id === selectedCategory) {
+          if (item?.subCategory) {
+            item.subCategory = item.subCategory.filter((subItem) => {
+              return subItem.id !== row.id;
+            });
+            updatedSubCategory = item.subCategory;
+          }
+        }
+        return item;
+      });
+      setSubCategoryList(updatedSubCategory);
+    }
+    setCategoryList(updatedList);
+  };
+
+  const editItem = (row, type) => {
+    if (type === 'category') {
+      setTimeout(() => {
+        setCategoryFromData({
+          id: row.id,
+          name: row.name,
+          point_price: row.point_price,
+          status: row.status
+        });
+      }, 500);
+    } else {
+      setTimeout(() => {
+        setSubCategoryFromData({
+          id: row.id,
+          name: row.name,
+          category_id: selectedCategory,
+          status: row.status
+        });
+      }, 500);
+    }
+  };
+
   return (
     <Wrapper>
       <Loader open={loader} />
@@ -308,11 +366,11 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
               </GridItem>
               <GridItem className={classes.gridRow} xs={6}>
                 <TextField
-                  name='category'
+                  name='name'
                   fullWidth
                   label='Name'
-                  value={fromData.category}
-                  onChange={inputChangeHandler}
+                  value={categoryFromData.name}
+                  onChange={(e) => inputChangeHandler(e, 'category')}
                   type='text'
                   inputProps={{ min: 0 }}
                   size='small'
@@ -323,9 +381,9 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
                   name='point_price'
                   fullWidth
                   label='Point Price'
-                  value={fromData.point_price}
-                  onChange={inputChangeHandler}
-                  type='text'
+                  value={categoryFromData.point_price}
+                  onChange={(e) => inputChangeHandler(e, 'category')}
+                  type='number'
                   inputProps={{ min: 0 }}
                   size='small'
                 />
@@ -359,11 +417,11 @@ const TicketCategoriesManagement = ({ getAllTickets, getProfile }) => {
               </GridItem>
               <GridItem className={classes.gridRow} xs={5}>
                 <TextField
-                  name='subCategory'
+                  name='name'
                   fullWidth
                   label='Name'
-                  value={fromData.subCategory}
-                  onChange={inputChangeHandler}
+                  value={subCategoryFromData.name}
+                  onChange={(e) => inputChangeHandler(e, 'subCategory')}
                   type='text'
                   inputProps={{ min: 0 }}
                   size='small'
