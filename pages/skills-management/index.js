@@ -5,12 +5,12 @@ import React from 'react';
 
 const Engineers = () => {
   return (
-    <div>
+    <React.Fragment>
       <Head>
         <title>Comboware- Skills Management</title>
       </Head>
       <EngineersComponent />
-    </div>
+    </React.Fragment>
   );
 };
 

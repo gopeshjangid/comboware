@@ -66,7 +66,7 @@ function hostsListBox({ getAllDomains, domainsList, profile, domainClusterUrl })
   const handleClick = () => {};
 console.log("loading" ,isLoading)
   return (
-    <div>
+    <React.Fragment>
       {isLoading ? (
         <Box display="flex" justify="center" ><Loader /></Box>
       ) : error ? (
@@ -85,7 +85,7 @@ console.log("loading" ,isLoading)
           ]}
         />
       )}
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -40,7 +40,7 @@ function UserProfile() {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   return (
-    <div>
+    <React.Fragment>
       <GridContainer>
         <GridItem xs={12} sm={12} md={8}>
           <Card>
@@ -174,7 +174,7 @@ function UserProfile() {
           </Card>
         </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 }
 

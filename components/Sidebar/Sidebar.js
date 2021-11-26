@@ -122,7 +122,7 @@ export default function Sidebar(props) {
   );
   
   return (
-    <div>
+    <React.Fragment>
        <Hidden smUp implementation="css">
         <Drawer
           variant="temporary"
@@ -162,7 +162,7 @@ export default function Sidebar(props) {
           ) : null}
         </Drawer>
       </Hidden>
-    </div>
+    </React.Fragment>
   );
 }
 

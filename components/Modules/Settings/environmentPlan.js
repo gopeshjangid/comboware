@@ -128,7 +128,7 @@ function EnvironmentPlan ({ getAllEnvironments, saveEnvironment, ...props }) {
 
   console.log('unlined', unlimitedEnvironment)
   return (
-    <div>
+    <React.Fragment>
       <Typography>Environment Criteria</Typography>
       <GridContainer spacing={3}>
         <GridItem className={classes.gridRow} xs={12}>
@@ -282,7 +282,7 @@ function EnvironmentPlan ({ getAllEnvironments, saveEnvironment, ...props }) {
           </Button>
         </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   )
 }
 

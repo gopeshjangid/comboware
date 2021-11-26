@@ -20,13 +20,13 @@ const Engineers = () => {
   }, []);
 
   return (
-    <div>
+    <React.Fragment>
       <GridContainer spacing={1}>
         <GridItem xs={12} sm={12} md={12}>
           {userType === 'ADMIN' ? <AdminSettings settings={settings} /> : <UserSettings settings={settings} />}
         </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 };
 

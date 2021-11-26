@@ -28,14 +28,12 @@ function Settings({getLogs}) {
 
 
   return (
-    <div>
       <GridContainer spacing={1}>
         <Typography>System Log information</Typography>
         <GridItem xs={12} sm={12} md={12}>
           <Table tableHead={["Details" ,"Date time"]} tableData={getData()}  />
         </GridItem>
       </GridContainer>
-    </div>
   );
 }
 

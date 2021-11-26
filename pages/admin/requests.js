@@ -25,9 +25,7 @@ import AdminComponent from "components/Modules/Admin";
 
 function Workspace() {
   return (
-    <div>
-      <AdminComponent />
-   </div>
+    <AdminComponent />
   );
 }
 

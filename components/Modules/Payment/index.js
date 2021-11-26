@@ -17,23 +17,20 @@ function Workspace() {
   const useStyles = makeStyles(styles);
   const classes = useStyles();
   return (
-    <div>
-      <GridContainer>
+    <GridContainer>
         <GridItem xs={12} sm={6} md={6}>
         <Card>
-            <CardHeader >
+            <CardHeader>
               dsadadasdasd
             </CardHeader>
             <CardBody>
               <TextInput labelText="Name" />
              
             </CardBody>
-          </Card>
+        </Card>
         </GridItem>
-        <GridItem xs={12} sm={6} md={6}>
-         </GridItem>
+        <GridItem xs={12} sm={6} md={6}></GridItem>
     </GridContainer>
-   </div>
   );
 }
 

@@ -33,10 +33,10 @@ export default function SnackbarContent(props) {
   return (
     <Snack
       message={
-        <div>
+        <React.Fragment>
           {icon !== undefined ? <props.icon className={classes.icon} /> : null}
           <span className={messageClasses}>{message}</span>
-        </div>
+        </React.Fragment>
       }
       classes={{
         root: classes.root + " " + classes[color],

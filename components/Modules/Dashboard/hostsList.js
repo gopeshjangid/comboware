@@ -202,7 +202,7 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile ,selectHost
   const handleClick = () => {}
 console.log("selectedHost hostsss" ,selectedHost)
   return (
-    <div>
+    <React.Fragment>
         <Modal
           title='Virtual Machines'
           isOpen={vmModal}
@@ -275,7 +275,7 @@ console.log("selectedHost hostsss" ,selectedHost)
           ]}
         />
       )}
-    </div>
+    </React.Fragment>
   )
 }
 

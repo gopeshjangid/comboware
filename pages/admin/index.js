@@ -25,9 +25,7 @@ import WorkspaceComponent from "components/Modules/Workspace";
 
 function Workspace() {
   return (
-    <div>
-      <WorkspaceComponent />
-   </div>
+    <WorkspaceComponent />
   );
 }
 

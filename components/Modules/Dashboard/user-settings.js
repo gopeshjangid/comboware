@@ -105,7 +105,7 @@ function Settings({  }) {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <Loader open={loader} />
       <Snackbar
         open={isSubmitted}
@@ -244,7 +244,7 @@ function Settings({  }) {
           </Button>
         </GridItem>
       </GridContainer>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -33,7 +33,7 @@ export default function FixedPlugin(props) {
           <li className="header-title">SIDEBAR FILTERS</li>
           <li className="adjustments-line">
             <a className="switch-trigger">
-              <div>
+              <React.Fragment>
                 <span
                   className={
                     props.bgColor === "white"
@@ -100,7 +100,7 @@ export default function FixedPlugin(props) {
                     props.handleColorClick("orange");
                   }}
                 />
-              </div>
+              </React.Fragment>
             </a>
           </li>
           <li className="header-title">Images</li>

@@ -128,15 +128,15 @@ export const MessageLeft = (props) => {
           className={classes.orange}
           src={photoURL}
         ></Avatar>
-        <div>
+        <React.Fragment>
           <div className={classes.displayName}>{displayName}</div>
           <div className={classes.messageBlue}>
-            <div>
+            <React.Fragment>
               <p className={classes.messageContent}>{message}</p>
-            </div>
+            </React.Fragment>
             <div className={classes.messageTimeStampRight}>{timestamp}</div>
           </div>
-        </div>
+        </React.Fragment>
       </div>
     </>
   );
