@@ -73,7 +73,7 @@ function newPayment({ createPayment, getBillingAmount }) {
 	};
 
 	useEffect(() => {
-		setLoaded(true);
+		//setLoaded(true);
 		let query = {
 			userId: Number(localStorage.getItem("userId")),
 			bill_duration: "current",
@@ -108,7 +108,7 @@ function newPayment({ createPayment, getBillingAmount }) {
 	console.log("billing", billing);
 	const showPaypalButton =
 		billing?.amount && !billing?.is_paid && billing?.is_payable;
-	console.log("showPaypalButton", showPaypalButton);
+
 	return (
 		<Wrapper>
 			<Loader open={loader} />
@@ -187,7 +187,7 @@ function newPayment({ createPayment, getBillingAmount }) {
 													</GridItem>
 
 													<GridItem xs={12}>
-														{isLoaded && showPaypalButton ? (
+														{showPaypalButton ? (
 															<PaypalPayment
 																onError={onError}
 																onSuccess={onSuccess}
