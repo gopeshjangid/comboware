@@ -105,7 +105,10 @@ function newPayment({ createPayment, getBillingAmount }) {
 			type: "error",
 		});
 	};
-
+	console.log("billing", billing);
+	const showPaypalButton =
+		billing?.amount && !billing?.is_paid && billing?.is_payable;
+	console.log("showPaypalButton", showPaypalButton);
 	return (
 		<Wrapper>
 			<Loader open={loader} />
@@ -184,10 +187,7 @@ function newPayment({ createPayment, getBillingAmount }) {
 													</GridItem>
 
 													<GridItem xs={12}>
-														{isLoaded &&
-														billing?.amount &&
-														!billing?.is_paid &&
-														billing?.is_payable ? (
+														{isLoaded && showPaypalButton ? (
 															<PaypalPayment
 																onError={onError}
 																onSuccess={onSuccess}
