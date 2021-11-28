@@ -116,16 +116,36 @@ function TicketsList({ getAllPayments }) {
 			{ field: "select", select: true },
 			{ field: "payment_id", header: "Payment ID" },
 			{ field: "reference_id", header: "Reference ID" },
-			{ field: "amount", header: "Amount" },
-			{ field: "payment_status", header: "Status" },
+			{
+				field: "amount",
+				header: "Amount",
+				renderCell: (row) => {
+					return (
+						<Chip
+							label={
+								row?.amount ? "$" + Number(row?.amount).toFixed(2) : "$0.00"
+							}
+							variant="outlined"
+							color={"secondary"}
+						/>
+					);
+				},
+			},
+			{
+				field: "payment_status",
+				header: "Status",
+				renderCell: (row) => {
+					return (
+						<Chip
+							label={row?.payment_status}
+							color={
+								row?.payment_status === "COMPLETED" ? "primary" : "warning"
+							}
+						/>
+					);
+				},
+			},
 			{ field: "payment_date", header: "Payment Date" },
-			// {
-			//   field: "action",
-			//   header: "Date",
-			//   renderCell: () => {
-			//     return <button >Edit</button>;
-			//   },
-			// },
 		];
 	};
 
