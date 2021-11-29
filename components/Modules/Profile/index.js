@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
 	AddCircleOutline,
 	AttachFileOutlined,
+	RemoveCircleOutline,
 	ContactMail,
 	NetworkCell,
 	Storage,
@@ -13,7 +14,13 @@ import {
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box, Hidden } from "@material-ui/core";
+import {
+	Typography,
+	IconButton,
+	Button as MButton,
+	Box,
+	Hidden,
+} from "@material-ui/core";
 import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
 import Select from "../../Select";
@@ -138,6 +145,14 @@ function Profile({
 		setSkills(_skills);
 	};
 
+	const removeSkill = (index) => {
+		let _skills = [...skills];
+		if (index) {
+			_skills.splice(index, 1);
+		}
+		setSkills(_skills);
+	};
+
 	const profileValidation = () => {
 		let _profile = { ...profile };
 		_profile.error = {
@@ -155,6 +170,8 @@ function Profile({
 			..._profile.error,
 			password: _profile?.form?.password
 				? _profile?.form?.password.length < 8
+				: reduxState?.user?.profile?.is_profile_setup
+				? false
 				: true,
 		};
 		setProfile(_profile);
@@ -716,6 +733,22 @@ function Profile({
 									<GridContainer spacing={1}>
 										<GridItem xs={12}>
 											<FieldSet title="Work Details">
+												<GridItem
+													item
+													sm={12}
+													xs={12}
+													style={{ textAlign: "right" }}
+												>
+													<MButton
+														variant="outlined"
+														color="primary"
+														size="large"
+														onClick={addSkill}
+													>
+														<AddCircleOutline />
+														&nbsp; Add New Skill
+													</MButton>
+												</GridItem>
 												<GridContainer spacing={2}>
 													<Hidden smUp>
 														<GridItem
@@ -737,7 +770,7 @@ function Profile({
 															{skills?.map((skill, index) => {
 																return (
 																	<React.Fragment key={"skillkey" + index}>
-																		<GridItem item sm={6} xs={8}>
+																		<GridItem item sm={5} xs={8}>
 																			<TextField
 																				variant="outlined"
 																				required
@@ -750,7 +783,7 @@ function Profile({
 																				onChange={(e) => skillHandler(e, index)}
 																			/>
 																		</GridItem>
-																		<GridItem item sm={6} xs={4}>
+																		<GridItem item sm={5} xs={4}>
 																			<Select
 																				style={{ width: "210px" }}
 																				label={"Skills Level"}
@@ -763,17 +796,19 @@ function Profile({
 																				}))}
 																			/>
 																		</GridItem>
+																		<GridItem item sm={2} xs={2}>
+																			<IconButton
+																				onClick={() => removeSkill(index)}
+																			>
+																				<RemoveCircleOutline />
+																			</IconButton>
+																		</GridItem>
 																	</React.Fragment>
 																);
 															})}
 														</GridContainer>
 													</GridItem>
 													<Hidden smDown>
-														<GridItem item sm={2} xs={2}>
-															<IconButton onClick={addSkill}>
-																<AddCircleOutline />
-															</IconButton>
-														</GridItem>
 														<GridItem xs={12} sm={12} md={12}>
 															<Box textAlign="right">
 																{skills.length && (
