@@ -145,20 +145,6 @@ function Profile({
 		setSkills(_skills);
 	};
 
-	const removeSkill = (index) => {
-		let _skills = [...skills];
-		if (index) {
-			_skills = _skills.map((skill, key) => {
-				if (key === index) {
-					skill.delete = true;
-				}
-
-				return skill;
-			});
-		}
-		setSkills(_skills);
-	};
-
 	const profileValidation = () => {
 		let _profile = { ...profile };
 		_profile.error = {
@@ -216,6 +202,29 @@ function Profile({
 		}
 	};
 
+	const removeSkill = (index) => {
+		let _skills = [...skills];
+
+		if (index > -1) {
+			setSubmitted(true);
+			setLoader(true);
+			let deleted = _skills.splice(index, 1);
+			deleted = deleted.map((skill) => {
+				skill.delete = true;
+				return skill;
+			});
+			updateProfile(
+				{
+					...profile?.form,
+					skills: deleted,
+					userId: reduxState?.user?.profile?.id || 1,
+				},
+				callback
+			);
+			setSkills(_skills);
+		}
+	};
+
 	const submitDomainHandler = (e) => {
 		e.preventDefault();
 		setSubmitted(true);
@@ -264,7 +273,7 @@ function Profile({
 	const skillHandler = (e, itemIndex) => {
 		let name = e.target.name;
 		let value = e.target.value;
-
+		console.log("itemIndex", itemIndex);
 		let _skills = [...skills];
 		_skills = _skills?.map((skill, index) => {
 			if (itemIndex === index) {
@@ -773,57 +782,51 @@ function Profile({
 															spacing={2}
 															style={{ marginRight: 10 }}
 														>
-															{skills
-																?.filter((skill) => !skill.delete)
-																.map((skill, index) => {
-																	return (
-																		<React.Fragment key={"skillkey" + index}>
-																			<GridItem item sm={5} xs={8}>
-																				<TextField
-																					variant="outlined"
-																					required
-																					fullWidth
-																					name="skill_name"
-																					label="Skills"
-																					type="text"
-																					id="skills"
-																					value={skill?.skill_name}
-																					onChange={(e) =>
-																						skillHandler(e, index)
-																					}
-																				/>
-																			</GridItem>
-																			<GridItem item sm={5} xs={4}>
-																				<Select
-																					style={{ width: "210px" }}
-																					label={"Skills Level"}
-																					name="skill_level"
-																					value={skill?.skill_level}
-																					onChange={(e) =>
-																						skillHandler(e, index)
-																					}
-																					options={SKILLS?.map((skill) => ({
-																						label: skill,
-																						value: skill,
-																					}))}
-																				/>
-																			</GridItem>
-																			<GridItem item sm={2} xs={2}>
-																				<IconButton
-																					onClick={() => removeSkill(index)}
-																				>
-																					<RemoveCircleOutline />
-																				</IconButton>
-																			</GridItem>
-																		</React.Fragment>
-																	);
-																})}
+															{skills?.map((skill, index) => {
+																return (
+																	<React.Fragment key={"skillkey" + index}>
+																		<GridItem item sm={5} xs={8}>
+																			<TextField
+																				variant="outlined"
+																				required
+																				fullWidth
+																				name="skill_name"
+																				label="Skills"
+																				type="text"
+																				id="skills"
+																				value={skill?.skill_name}
+																				onChange={(e) => skillHandler(e, index)}
+																			/>
+																		</GridItem>
+																		<GridItem item sm={5} xs={4}>
+																			<Select
+																				style={{ width: "210px" }}
+																				label={"Skills Level"}
+																				name="skill_level"
+																				value={skill?.skill_level}
+																				onChange={(e) => skillHandler(e, index)}
+																				options={SKILLS?.map((skill) => ({
+																					label: skill,
+																					value: skill,
+																				}))}
+																			/>
+																		</GridItem>
+																		<GridItem item sm={2} xs={2}>
+																			<IconButton
+																				onClick={() => removeSkill(index)}
+																			>
+																				<RemoveCircleOutline />
+																			</IconButton>
+																		</GridItem>
+																	</React.Fragment>
+																);
+															}) || ""}
 														</GridContainer>
 													</GridItem>
 													<Hidden smDown>
 														<GridItem xs={12} sm={12} md={12}>
 															<Box textAlign="right">
-																{skills.length && (
+																{skills.length ? (
 																	<Button
 																		variant="contained"
 																		color="primary"
@@ -832,6 +835,8 @@ function Profile({
 																	>
 																		{"Save"}
 																	</Button>
+																) : (
+																	""
 																)}
 															</Box>
 														</GridItem>
