@@ -299,7 +299,7 @@ export default React.memo(function CustomTable(props) {
 				style={{
 					width: "100%",
 					paddingLeft: 5,
-					"border-top": "1.5px solid #1976d2",
+					borderTop: "1.5px solid #1976d2",
 				}}
 			>
 				<Typography variant="body2">{footer_label || ""}</Typography>

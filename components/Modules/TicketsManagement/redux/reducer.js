@@ -1,14 +1,26 @@
-import {SAVE_CATEGORIES, SAVE_SUBCATEGORIES,SAVE_TICKET_DETAILS, SAVE_TICKET,UPDATE_TICKET,ADD_ACTIVITY,SAVE_ALL_TICKETS,TICKET_FAILED,TICKET_START,MESSAGE,API} from  "./constants";
+import {
+  SAVE_CATEGORIES,
+  SAVE_SUBCATEGORIES,
+  SAVE_TICKET_DETAILS,
+  SAVE_TICKET,
+  UPDATE_TICKET,
+  ADD_ACTIVITY,
+  SAVE_ALL_TICKETS,
+  TICKET_FAILED,
+  TICKET_START,
+  MESSAGE,
+  API
+} from './constants';
 
 const initialState = {
-  ticketDetails:null,
-  ticketList : [],
-  activities : [],
-  categories : [],
+  ticketDetails: null,
+  ticketList: [],
+  activities: [],
+  categories: [],
   subCategories: [],
   loading: false,
-  message: "",
-  error : ''
+  message: '',
+  error: ''
 };
 
 function reducer(state = initialState, action) {
@@ -17,58 +29,47 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.payload,
-        loading : false,
+        loading: false,
         error: '',
-        message : action.payload?.message
+        message: action.payload?.message
       };
-
-      break;
-
-      case SAVE_ALL_TICKETS:
-        return {
-          ...state,
-          loading : false,
-          error: '',
-          ...action?.payload
-        };
-  
-        break;
-
+    case SAVE_ALL_TICKETS:
+      return {
+        ...state,
+        loading: false,
+        error: '',
+        ...action?.payload
+      };
     case TICKET_START:
       return {
         ...state,
         ...action.payload,
-        error : '',
-        loading: true,
+        error: '',
+        loading: true
       };
-
-      break;
-
-      case SAVE_CATEGORIES:
+    case SAVE_CATEGORIES:
       return {
         ...state,
         ...action.payload,
-        error : '',
-        loading: false,
+        error: '',
+        loading: false
       };
-
-      break;
-
-      
-
+    case SAVE_SUBCATEGORIES:
+      return {
+        ...state,
+        ...action.payload,
+        error: '',
+        loading: false
+      };
     case TICKET_FAILED:
       return {
         ...state,
         ...action.payload,
-        message : '',
-        loading: false,
+        message: '',
+        loading: false
       };
-
-      break;
-
     default:
       return state;
-      break;
   }
 }
 

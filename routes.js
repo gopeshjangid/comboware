@@ -38,7 +38,7 @@ const dashboardRoutes = [
 	{
 		path: "/#",
 		name: "Skills Management",
-		accessors: ["ADMIN1"],
+		accessors: ["ADMIN"],
 		rtlName: "المهندسين",
 		icon: PaymentOutlined,
 		layout: "/skills-management",
@@ -69,7 +69,7 @@ const dashboardRoutes = [
 	{
 		path: "/#",
 		name: "Ticket Settings",
-		accessors: ["ADMIN1"],
+		accessors: ["ADMIN"],
 		rtlName: "المهندسين",
 		icon: PaymentOutlined,
 		layout: "/ticket-settings",

@@ -17,6 +17,7 @@ export const errorHandler = (code) =>{
 export const saveTicket = (data) =>{
   return {type : SAVE_ALL_TICKETS , payload : data}
 }
+
 export const saveCategories = (data) =>{
   return {type : SAVE_CATEGORIES , payload : data}
 }
@@ -156,7 +157,6 @@ export const getCategories = (qStr) => (dispatch) =>{
     console.log("err--" ,err)
     dispatch(failed({ error : errorHandler()}));
   })
-
 }
 
 export const getSubCategories = (id) => (dispatch) =>{
