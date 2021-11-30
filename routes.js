@@ -83,6 +83,14 @@ const dashboardRoutes = [
 		layout: "/admin",
 	},
 	{
+		path: "/#",
+		name: "Customer Management",
+		accessors: ["ADMIN"],
+		rtlName: "إخطارات",
+		icon: Notifications,
+		layout: "/customer-management",
+	},
+	{
 		path: "/servers",
 		name: "Workspace",
 		icon: LocationOn,
