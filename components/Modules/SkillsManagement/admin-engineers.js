@@ -8,11 +8,12 @@ import Snackbar from 'components/Snackbar';
 import CustomTable from 'components/Table/CustomTable';
 import Wrapper from 'components/Wrapper';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import TextField from '../../CustomInput/TextField';
 import useStyles from './styles';
+import { useSelector, connect, useDispatch } from 'react-redux';
+import { getSkillLevels, saveSkills } from './redux/action';
 
-const Engineers = () => {
+const Engineers = ({ getSkillLevels, saveSkills }) => {
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
   const [message, setMessage] = useState('');
@@ -21,7 +22,20 @@ const Engineers = () => {
   const [levelList, setLevelList] = useState([]);
   const [fromData, setFromData] = useState({ skill: '', level: '' });
 
-  useEffect(() => {
+  const hideNotification = (status, message) => {
+    setLoading(false);
+    if (!status) {
+      setError(message);
+    } else {
+      setError('');
+    }
+  };
+
+  useEffect(async () => {
+    await getSkillLevels('SKILL', hideNotification);
+    await getSkillLevels('LEVEL', hideNotification);
+    setSkillList(reduxState.skills_management.skill);
+    setLevelList(reduxState.skills_management.level);
     return () => {
       setFromData({ skill: '', level: '' });
       setSkillList([]);
@@ -111,30 +125,36 @@ const Engineers = () => {
     ];
   };
 
-  const submitHandler = (e, type) => {
+  const submitHandler = async (e, type) => {
     if (type === 'skill') {
       if (fromData[type]) {
-        let updatedSkillList = [...skillList];
-        const userExists = updatedSkillList.some((item) => {
-          return item.name === fromData[type];
-        });
-        if (!userExists) {
-          updatedSkillList.push({ id: updatedSkillList.length + 1, name: fromData[type] });
-        }
-        setSkillList(updatedSkillList);
+        // let updatedSkillList = [...skillList];
+        // const userExists = updatedSkillList.some((item) => {
+        //   return item.name === fromData[type];
+        // });
+        // if (!userExists) {
+        //   updatedSkillList.push({ id: updatedSkillList.length + 1, name: fromData[type] });
+        // }
+        saveSkills({ type, name: fromData[type] }, hideNotification);
+        // setSkillList(updatedSkillList);
         setFromData({ ...fromData, skill: '' });
+        await getSkillLevels('SKILL', hideNotification);
+        setSkillList(reduxState.skills_management.skill);
       }
     } else {
       if (fromData[type]) {
-        let updatedSkillList = [...levelList];
-        const userExists = updatedSkillList.some((item) => {
-          return item.name === fromData[type];
-        });
-        if (!userExists) {
-          updatedSkillList.push({ id: updatedSkillList.length + 1, name: fromData[type] });
-        }
-        setLevelList(updatedSkillList);
+        // let updatedSkillList = [...levelList];
+        // const userExists = updatedSkillList.some((item) => {
+        //   return item.name === fromData[type];
+        // });
+        // if (!userExists) {
+        //   updatedSkillList.push({ id: updatedSkillList.length + 1, name: fromData[type] });
+        // }
+        saveSkills({ type, name: fromData[type] }, hideNotification);
+        // setLevelList(updatedSkillList);
         setFromData({ ...fromData, level: '' });
+        await getSkillLevels('LEVEL', hideNotification);
+        setLevelList(reduxState.skills_management.level);
       }
     }
   };
@@ -167,7 +187,6 @@ const Engineers = () => {
           <GridItem xs={12} sm={6}>
             <FieldSet padding={30} title='SKILLS'>
               <GridContainer spacing={2} mb={3} style={{ marginBottom: 30 }}>
-               
                 <GridItem className={classes.gridRow} xs={10}>
                   <TextField
                     name='skill'
@@ -194,7 +213,6 @@ const Engineers = () => {
           <GridItem xs={12} sm={6}>
             <FieldSet padding={30} title='LEVEL'>
               <GridContainer spacing={2} mb={3} style={{ marginBottom: 30 }}>
-               
                 <GridItem className={classes.gridRow} xs={10}>
                   <TextField
                     name='level'
@@ -224,4 +242,9 @@ const Engineers = () => {
   );
 };
 
-export default Engineers;
+export default connect(
+  (state) => {
+    return { ...state?.skills_management };
+  },
+  { getSkillLevels, saveSkills }
+)(Engineers);

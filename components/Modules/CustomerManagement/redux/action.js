@@ -10,7 +10,6 @@ export const saveResourceData = (type, data) => {
 };
 
 export const getAllUserList = (user_type) => (dispatch) => {
-  console.log(user_type);
   Service.get(`${API.getAllUserList}?userType=${user_type}`)
     .then((res) => {
       if (user_type === 'ER') {

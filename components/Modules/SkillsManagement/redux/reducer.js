@@ -1,11 +1,13 @@
-import { START, FAILED, SAVE_RESOURCE } from "./constants";
+import { START, FAILED, SAVE_RESOURCE, SKILL_LIST, LEVEL_LIST } from './constants';
 const initialState = {
-  resources : [],
-  clusters : [],
-  envPlans  :[],
-  loading : false,
-  message : '',
-  error : ''
+  resources: [],
+  clusters: [],
+  envPlans: [],
+  skill: [],
+  level: [],
+  loading: false,
+  message: '',
+  error: ''
 };
 
 function reducer(state = initialState, action) {
@@ -14,33 +16,39 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         loading: true,
-        ... action?.payload?.data
+        ...action?.payload?.data
       };
-      break;
-
     case FAILED:
       return {
         ...state,
         loading: false,
-        message : '',
-        error : action.payload?.error,
+        message: '',
+        error: action.payload?.error,
         ...action.payload
       };
-      break;
-
     case SAVE_RESOURCE:
-
       return {
         ...state,
         loading: false,
-        message : '',
+        message: '',
         ...action.payload
       };
-      break;
-
+    case SKILL_LIST:
+      return {
+        ...state,
+        loading: false,
+        message: '',
+        ...action.payload
+      };
+    case LEVEL_LIST:
+      return {
+        ...state,
+        loading: false,
+        message: '',
+        ...action.payload
+      };
     default:
       return state;
-      break;
   }
 }
 

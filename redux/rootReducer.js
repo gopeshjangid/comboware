@@ -9,6 +9,7 @@ import support from '../components/Modules/Support/redux/reducer';
 import dashboard from '../components/Modules/Dashboard/redux/reducer';
 import monitoring from '../components/Modules/Monitoring/redux/reducer';
 import customer_management from '../components/Modules/CustomerManagement/redux/reducer';
+import skills_management from '../components/Modules/SkillsManagement/redux/reducer';
 export default combineReducers({
   user,
   workspace,
@@ -19,5 +20,6 @@ export default combineReducers({
   support,
   dashboard,
   monitoring,
-  customer_management
+  customer_management,
+  skills_management
 });
