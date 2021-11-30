@@ -3,21 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
-import {
-	Typography,
-	IconButton,
-	Box,
-	TextareaAutosize,
-	Chip,
-} from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
+import { Typography, Box, Chip } from "@material-ui/core";
 import CardBody from "components/Card/CardBody.js";
-import TextField from "../../CustomInput/TextField";
 import styles from "./styles";
-import Select from "../../Select";
 import Button from "components/CustomButtons";
-import Modal from "components/Modal";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
 import { useRouter } from "next/dist/client/router";
@@ -69,21 +58,27 @@ function newPayment({ createPayment, getBillingAmount }) {
 	useEffect(() => {
 		setLoader(false);
 		setBilling(reduxState?.payment?.billing);
+		setPaymentDetails({ ...paymentDetails, ...reduxState?.payment?.billing });
 		return () => {};
 	}, [reduxState?.payment?.billing]);
 
 	useEffect(() => {
-		setLoader(false);
-		return () => {};
+		setPaymentDetails(reduxState?.payment?.paymentDetails);
 	}, [reduxState?.payment?.paymentDetails]);
 
+	const setPaymentNotification = (status, message) => {
+		if (!status) {
+			setPaymentError(message);
+		}
+	};
+
 	useEffect(() => {
-		setLoaded(true);
+		//setLoaded(true);
 		let query = {
 			userId: Number(localStorage.getItem("userId")),
 			bill_duration: "current",
 		};
-		getBillingAmount(query);
+		getBillingAmount(query, setPaymentNotification);
 	}, []);
 
 	const onSuccess = (data) => {
@@ -110,6 +105,9 @@ function newPayment({ createPayment, getBillingAmount }) {
 			type: "error",
 		});
 	};
+	console.log("billing", billing);
+	const showPaypalButton =
+		billing?.amount && !billing?.is_paid && billing?.is_payable;
 
 	return (
 		<Wrapper>
@@ -132,7 +130,7 @@ function newPayment({ createPayment, getBillingAmount }) {
 							variant="outlined"
 							onClick={() => router.push("/payment")}
 						>
-							Cancel
+							Payments list
 						</Button>
 					</GridItem>
 				</GridContainer>
@@ -147,63 +145,77 @@ function newPayment({ createPayment, getBillingAmount }) {
 								>
 									<legend>Payment Information</legend>
 									<GridContainer spacing={2}>
-										<GridItem xs={12}>
-											<GridContainer spacing={4}>
-												<GridItem xs={3}>
-													<Typography>Billing Cycle</Typography>
-												</GridItem>
-												<GridItem xs={4}>
-													<Typography>Start Date</Typography>
-													<Typography variant="subtitle2">
-														{billing?.start_date || "NA"}
-													</Typography>
-												</GridItem>
-												<GridItem xs={4}>
-													<Typography>End Date</Typography>
-													<Typography variant="subtitle2">
-														{billing?.end_date || "NA"}
-													</Typography>
-												</GridItem>
-												<GridItem xs={3}>
-													<Typography>Payment Amount</Typography>
-												</GridItem>
-												<GridItem xs={8}>
-													<Chip
-														color="primary"
-														variant="outlined"
-														label={"$" + (billing?.amount || "0.00")}
-													/>
-												</GridItem>
-
-												<GridItem xs={12}>
-													{isLoaded && billing?.amount && !billing?.is_paid ? (
-														<PaypalPayment
-															onError={onError}
-															onSuccess={onSuccess}
-															amount={billing?.amount || amount}
-														/>
-													) : (
-														""
-													)}
-												</GridItem>
-												<GridItem xs={12} style={{ textAlign: "center" }}>
-													{billing?.is_paid ? (
+										{paymentError ? (
+											<GridItem xs={12}>
+												<Chip color="primary" label={paymentError} />
+											</GridItem>
+										) : (
+											<GridItem xs={12}>
+												<GridContainer spacing={4}>
+													<GridItem xs={3}>
+														<Typography>Billing Period</Typography>
+													</GridItem>
+													<GridItem xs={3}>
+														<Typography>Start Date</Typography>
+														<Typography variant="subtitle2">
+															{billing?.start_date || "NA"}
+														</Typography>
+													</GridItem>
+													<GridItem xs={3}>
+														<Typography>End Date</Typography>
+														<Typography variant="subtitle2">
+															{billing?.end_date || "NA"}
+														</Typography>
+													</GridItem>
+													<GridItem xs={3}>
+														<Typography>Updated on</Typography>
+														<Typography variant="subtitle2">
+															{billing?.modified_on || "NA"}
+														</Typography>
+													</GridItem>
+													<GridItem xs={3}>
+														<Typography>Payment Amount</Typography>
+													</GridItem>
+													<GridItem xs={8}>
 														<Chip
-															color="success"
-															style={{
-																color: "#5cc45c",
-																border: "2px solid #5cd961",
-																fontWeight: "bold",
-															}}
+															color="primary"
 															variant="outlined"
-															label={"PAID"}
+															label={
+																"$" + (billing?.amount?.toFixed(2) || "0.00")
+															}
 														/>
-													) : (
-														""
-													)}
-												</GridItem>
-											</GridContainer>
-										</GridItem>
+													</GridItem>
+
+													<GridItem xs={12}>
+														{showPaypalButton ? (
+															<PaypalPayment
+																onError={onError}
+																onSuccess={onSuccess}
+																amount={billing?.amount || amount}
+															/>
+														) : (
+															""
+														)}
+													</GridItem>
+													<GridItem xs={12} style={{ textAlign: "center" }}>
+														{billing?.is_paid ? (
+															<Chip
+																color="success"
+																style={{
+																	color: "#5cc45c",
+																	border: "2px solid #5cd961",
+																	fontWeight: "bold",
+																}}
+																variant="outlined"
+																label={"PAID"}
+															/>
+														) : (
+															""
+														)}
+													</GridItem>
+												</GridContainer>
+											</GridItem>
+										)}
 									</GridContainer>
 								</fieldset>
 							) : (
@@ -224,7 +236,7 @@ function newPayment({ createPayment, getBillingAmount }) {
 														variant="filled"
 														color={
 															paymentDetails?.payment_status === "COMPLETED"
-																? "success"
+																? "primary"
 																: "success"
 														}
 														variant="outlined"
@@ -244,9 +256,16 @@ function newPayment({ createPayment, getBillingAmount }) {
 													<Typography>Payment Amount</Typography>
 												</GridItem>
 												<GridItem xs={8}>
-													<Typography color="primary">
-														${paymentDetails?.amount}
-													</Typography>
+													<Chip
+														variant="filled"
+														color={"primary"}
+														label={
+															paymentDetails?.amount
+																? "$" +
+																  Number(paymentDetails?.amount)?.toFixed(2)
+																: "$0.00"
+														}
+													/>
 												</GridItem>
 
 												<GridItem xs={4}>

@@ -75,7 +75,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 				? "?userId=" +
 				  Number(localStorage.getItem("userId")) +
 				  "&ticket_status=ALL&repair_status=ALL"
-				: "?ticket_status=ALL&repair_status=ALL";
+				: "?ticket_status=ALL&repair_status=ALL&user_type=ADMIN";
 		getAllTickets(query, manageMessage);
 		return () => {};
 	}, []);
@@ -107,32 +107,6 @@ function TicketsList({ getAllTickets, getProfile }) {
 		if (!open) {
 			setTicketDetails(null);
 		}
-	};
-
-	const getColumnsDetails = () => {
-		return [
-			// { field: "select", select: true },
-			{ field: "ticket_number", header: "Ticket Number" },
-			{ field: "ticket_subject", header: "Title" },
-			{ field: "category_name", header: "Category" },
-			{ field: "subcategory_name", header: "SubCategory" },
-			{ field: "ticket_status", header: "Ticket Status" },
-			{ field: "repair_status", header: "Repair Status" },
-			{ field: "first_name", header: "Customer Name" },
-			{ field: "email", header: "Customer Email" },
-			{ field: "company_name", header: "Company Name" },
-			{ field: "company_email", header: "Company Email" },
-			{ field: "company_phone", header: "Company Phone" },
-			{ field: "company_address", header: "Company Address" },
-			{ field: "system_image", header: "System Image" },
-			{
-				field: "action",
-				header: "Date",
-				renderCell: () => {
-					return <button>View</button>;
-				},
-			},
-		];
 	};
 
 	const getColumnsFields = () => {
