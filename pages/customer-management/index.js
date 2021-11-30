@@ -14,6 +14,6 @@ const Customer = () => {
   );
 };
 
-CustomerManagement.layout = Admin;
+Customer.layout = Admin;
 
 export default Customer;

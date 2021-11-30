@@ -1,16 +1,18 @@
+import { Box } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
-import { Typography } from 'components/Custom';
-import GridContainer from 'components/Grid/GridContainer';
-import Snackbar from 'components/Snackbar';
-import CustomTab from '../../CustomTabs';
-import CustomTable from 'components/Table/CustomTable';
-import Wrapper from 'components/Wrapper';
+import Button from 'components/CustomButtons';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import useStyles from './styles';
+import { connect, useSelector } from 'react-redux';
+import { Chip, Typography } from '../../Custom';
+import CustomTab from '../../CustomTabs';
+import GridContainer from '../../Grid/GridContainer';
+import Snackbar from '../../Snackbar';
+import CustomTable from '../../Table/CustomTable';
+import Wrapper from '../../Wrapper';
 import { getAllUserList } from './redux/action';
+import useStyles from './styles';
 
-const CustomerManagement = () => {
+const CustomerManagement = ({ getAllUserList }) => {
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
   const [message, setMessage] = useState('');
@@ -18,62 +20,67 @@ const CustomerManagement = () => {
   const [userList, setUserList] = useState([]);
   const [engineerList, setEngineerList] = useState([]);
   const [fromData, setFromData] = useState({ skill: '', level: '' });
-  const [isLoading, setLoading] = useState(false)
+  const [isLoading, setLoading] = useState(false);
 
-  const hideNotification = (status, message) => {
-    setLoading(false)
-    if (!status) {
-      setError(message)
-    } else {
-      setError('')
-    }
-  }
-  useEffect(() => {
-    getAllUserList(hideNotification, 'ER');
-    getAllUserList(hideNotification, 'USER');
+  console.log(reduxState.customer_management);
+  useEffect(async () => {
+    await getAllUserList('ER');
+    await getAllUserList('USER');
     return () => {};
-  }, [reduxState?.CustomerManagement?.engineerList, reduxState?.CustomerManagement?.userList]);
-
-  const inputChangeHandler = (e) => {
-    const { value, name } = e.target;
-    setFromData({
-      ...fromData,
-      [name]: value
-    });
-  };
+  }, []);
 
   const getColumns = () => {
     return [
       {
-        field: 'id',
-        header: '#',
-        align: 'center',
-        width: 80,
+        field: 'first_name',
+        header: 'Name',
         renderCell: (row) => {
           return (
-            <Typography variant='body2' color='primary'>
-              {row.id}
+            <Typography variant='body1' color='primary'>
+              {row?.first_name + ' ' + row?.last_name}
             </Typography>
           );
         }
       },
+
+      { field: 'email', header: 'Email' },
       {
-        field: 'name',
-        header: 'Skill Set',
+        field: 'trial_expire_date',
+        header: 'Trial Expiration Date',
+        renderCell: (row) => {
+          if (!row?.trial_expire_date) {
+            return '';
+          }
+          return <Chip style='info' label={row?.trial_expire_date} color='primary' />;
+        }
+      },
+      {
+        field: 'trial_extend_date',
+        header: 'Trial Extend Date',
+        renderCell: (row) => {
+          if (!row?.trial_extend_date) {
+            return '';
+          }
+          return <Chip style='info' label={row?.trial_extend_date} color='primary' />;
+        }
+      },
+      {
+        field: 'status',
+        header: 'STATUS',
+        renderCell: (row) => {
+          return <Chip label={row?.status ? 'ACTIVE' : 'INACTIVE'} type={row?.status ? 'filled' : 'outlined'} />;
+        }
+      },
+      {
+        field: 'action',
+        header: 'STATUS',
         width: 100,
         renderCell: (row) => {
           return (
-            <Typography variant='body2' color='primary'>
-              {row.name}
-            </Typography>
+            <Box display='flex' justifyContent='space-between'>
+              <Button type='action'>View detail</Button>
+            </Box>
           );
-        }
-      },
-      {
-        header: 'Action',
-        width: 70,
-        renderCell: (row) => {
-          return <Delete onClick={() => deleteSkillItem(row, 'skill')} color='secondary' />;
         }
       }
     ];
@@ -116,8 +123,6 @@ const CustomerManagement = () => {
     ];
   };
 
-  const handleClick = () => {};
-
   console.log(fromData);
 
   return (
@@ -127,8 +132,14 @@ const CustomerManagement = () => {
         <GridContainer spacing={2}>
           <CustomTab
             tabs={[
-              { label: 'engineers', panel: <CustomTable columns={getColumns()} data={userList} /> },
-              { label: 'customer', panel: <CustomTable columns={getColumns()} data={userList} /> }
+              {
+                label: 'engineers',
+                panel: <CustomTable columns={getColumns()} data={reduxState.customer_management.engineers_list} />
+              },
+              {
+                label: 'customer',
+                panel: <CustomTable columns={getColumns()} data={reduxState.customer_management.userList} />
+              }
             ]}
           />
         </GridContainer>
@@ -137,4 +148,9 @@ const CustomerManagement = () => {
   );
 };
 
-export default CustomerManagement;
+export default connect(
+  (state) => {
+    return { ...state?.customer_management };
+  },
+  { getAllUserList }
+)(CustomerManagement);

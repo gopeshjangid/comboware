@@ -102,6 +102,5 @@ export const usersList = (qStr) => (dispatch) =>{
     console.log("err--" ,err)
     dispatch(requestStop({data  : null, error : "Something went wrong. please try again"}));
   })
-
 }
 
