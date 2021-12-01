@@ -200,7 +200,6 @@ const hostsListBox = ({ getAllHosts, domainsList, hostsList, profile ,selectHost
   }
 
   const handleClick = () => {}
-console.log("selectedHost hostsss" ,selectedHost)
   return (
     <React.Fragment>
         <Modal

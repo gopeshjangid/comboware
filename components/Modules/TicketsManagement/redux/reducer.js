@@ -1,15 +1,11 @@
 import {
+  GET_ALL_CATEGORIES,
+  SAVE_ALL_TICKETS,
   SAVE_CATEGORIES,
   SAVE_SUBCATEGORIES,
   SAVE_TICKET_DETAILS,
-  SAVE_TICKET,
-  UPDATE_TICKET,
-  ADD_ACTIVITY,
-  SAVE_ALL_TICKETS,
   TICKET_FAILED,
-  TICKET_START,
-  MESSAGE,
-  API
+  TICKET_START
 } from './constants';
 
 const initialState = {
@@ -65,6 +61,13 @@ function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.payload,
+        message: '',
+        loading: false
+      };
+    case GET_ALL_CATEGORIES:
+      return {
+        ...state,
+        categories: action.payload,
         message: '',
         loading: false
       };

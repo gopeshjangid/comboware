@@ -1,5 +1,5 @@
 import { START, FAILED, SAVE_RESOURCE, API } from './constants';
-import Service from '../../../../service/index';
+import Service from '../../../../service';
 import {getAllHosts} from "../../Dashboard/redux/action";
 
 
