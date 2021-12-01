@@ -122,7 +122,7 @@ const Engineers = ({}) => {
                   <TextField fullWidth name='last_name' label='Last Name' />
                 </GridItem>
                 <GridItem xs={4}>
-                  <TextField fullWidth name='email' type='email' label='Email' isDisabled disabled={true} />
+                  <TextField fullWidth name='email' type='email' label='Email' disabled={true} />
                 </GridItem>
                 <GridItem xs={4}>
                   <TextField fullWidth name='phone' type='number' label='Phone' inputProps={{ maxLength: 10 }} />
@@ -159,7 +159,7 @@ const Engineers = ({}) => {
                   <TextField fullWidth name='company_id' label='Company Id' />
                 </GridItem>
                 <GridItem xs={4}>
-                  <TextField fullWidth name='company_address' type='text' label='Company Address' isDisabled />
+                  <TextField fullWidth name='company_address' type='text' label='Company Address' />
                 </GridItem>
                 <GridItem xs={4}>
                   <TextField

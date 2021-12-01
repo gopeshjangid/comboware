@@ -497,7 +497,6 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
 							sm={12}
 							md={12}
 							align="right"
-							alignContent="flex-end"
 						>
 							{reduxState?.user?.profile?.is_profile_setup ? (
 								<Button

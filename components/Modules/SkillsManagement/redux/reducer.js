@@ -3,8 +3,8 @@ const initialState = {
   resources: [],
   clusters: [],
   envPlans: [],
-  skill: [],
-  level: [],
+  skills: [],
+  levels: [],
   loading: false,
   message: '',
   error: ''
@@ -38,14 +38,14 @@ function reducer(state = initialState, action) {
         ...state,
         loading: false,
         message: '',
-        ...action.payload
+        skills: action.payload.skills
       };
     case LEVEL_LIST:
       return {
         ...state,
         loading: false,
         message: '',
-        ...action.payload
+        levels: action.payload.levels
       };
     default:
       return state;

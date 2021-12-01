@@ -60,7 +60,6 @@ export const updateProfile = (data ,callback) => (dispatch) =>{
 export const getProfile = (id) => (dispatch) =>{
   dispatch(requestInit({message : "Fetching the profile..."}));
   Service.get(API.getProfile+"?userId="+id).then(({data})=>{
-    console.log("getProfile res" ,data)
     dispatch(saveRequest({domain :data?.data?.domain ,project :data?.data?.project }))
     dispatch(saveProfile( {profile : data?.data?.user , skills : data?.data?.skills}));
   }).catch(err =>{

@@ -13,13 +13,11 @@ import useStyles from './styles';
 import { useSelector, connect, useDispatch } from 'react-redux';
 import { getSkillLevels, saveSkills } from './redux/action';
 
-const Engineers = ({ getSkillLevels, saveSkills }) => {
+const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList }) => {
   const classes = useStyles();
   const reduxState = useSelector((state) => state);
   const [message, setMessage] = useState('');
   const [isSubmitted, setSubmitted] = useState(false);
-  const [skillList, setSkillList] = useState([]);
-  const [levelList, setLevelList] = useState([]);
   const [fromData, setFromData] = useState({ skill: '', level: '' });
 
   const hideNotification = (status, message) => {
@@ -32,10 +30,8 @@ const Engineers = ({ getSkillLevels, saveSkills }) => {
   };
 
   useEffect(async () => {
-    await getSkillLevels('SKILL', hideNotification);
-    await getSkillLevels('LEVEL', hideNotification);
-    setSkillList(reduxState.skills_management.skill);
-    setLevelList(reduxState.skills_management.level);
+    await getSkillLevels('SKILL');
+    await getSkillLevels('LEVEL');
     return () => {
       setFromData({ skill: '', level: '' });
       setSkillList([]);
@@ -67,13 +63,13 @@ const Engineers = ({ getSkillLevels, saveSkills }) => {
         }
       },
       {
-        field: 'name',
+        field: 'skills_name',
         header: 'Skill Set',
         width: 100,
         renderCell: (row) => {
           return (
             <Typography variant='body2' color='primary'>
-              {row.name}
+              {row.skills_name}
             </Typography>
           );
         }
@@ -104,13 +100,13 @@ const Engineers = ({ getSkillLevels, saveSkills }) => {
         }
       },
       {
-        field: 'name',
+        field: 'levels_name',
         header: 'Level',
         width: 100,
         renderCell: (row) => {
           return (
             <Typography variant='body2' color='primary'>
-              {row.name}
+              {row.skills_level}
             </Typography>
           );
         }
@@ -128,33 +124,15 @@ const Engineers = ({ getSkillLevels, saveSkills }) => {
   const submitHandler = async (e, type) => {
     if (type === 'skill') {
       if (fromData[type]) {
-        // let updatedSkillList = [...skillList];
-        // const userExists = updatedSkillList.some((item) => {
-        //   return item.name === fromData[type];
-        // });
-        // if (!userExists) {
-        //   updatedSkillList.push({ id: updatedSkillList.length + 1, name: fromData[type] });
-        // }
-        saveSkills({ type, name: fromData[type] }, hideNotification);
-        // setSkillList(updatedSkillList);
+        saveSkills({ type: 'SKILL', name: fromData[type] }, hideNotification);
         setFromData({ ...fromData, skill: '' });
-        await getSkillLevels('SKILL', hideNotification);
-        setSkillList(reduxState.skills_management.skill);
+        await getSkillLevels('SKILL');
       }
     } else {
       if (fromData[type]) {
-        // let updatedSkillList = [...levelList];
-        // const userExists = updatedSkillList.some((item) => {
-        //   return item.name === fromData[type];
-        // });
-        // if (!userExists) {
-        //   updatedSkillList.push({ id: updatedSkillList.length + 1, name: fromData[type] });
-        // }
-        saveSkills({ type, name: fromData[type] }, hideNotification);
-        // setLevelList(updatedSkillList);
+        saveSkills({ type: 'LEVEL', name: fromData[type] }, hideNotification);
         setFromData({ ...fromData, level: '' });
-        await getSkillLevels('LEVEL', hideNotification);
-        setLevelList(reduxState.skills_management.level);
+        await getSkillLevels('LEVEL');
       }
     }
   };
@@ -165,19 +143,15 @@ const Engineers = ({ getSkillLevels, saveSkills }) => {
       updatedSkillList = updatedSkillList.filter((item) => {
         return item.id !== row.id;
       });
-      setSkillList(updatedSkillList);
     } else {
       let updatedSkillList = [...levelList];
       updatedSkillList = updatedSkillList.filter((item) => {
         return item.id !== row.id;
       });
-      setLevelList(updatedSkillList);
     }
   };
 
   const handleClick = () => {};
-
-  console.log(fromData);
 
   return (
     <React.Fragment>
@@ -244,7 +218,11 @@ const Engineers = ({ getSkillLevels, saveSkills }) => {
 
 export default connect(
   (state) => {
-    return { ...state?.skills_management };
+    return {
+      ...state?.skills_management,
+      skillList: state?.skills_management.skills,
+      levelList: state?.skills_management.levels
+    };
   },
   { getSkillLevels, saveSkills }
 )(Engineers);

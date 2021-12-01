@@ -324,31 +324,6 @@ function Profile({
 				submitText="Save Domain and Project"
 			>
 				<GridContainer spacing={2}>
-					{/* <GridItem
-            container
-            xs={12}
-            spacing={2}
-            alignContent="center"
-            justify="space-around"
-          >
-            <Typography variant="subtitle1">Choose Environment Type</Typography>
-            <Button
-              onClick={() => setEnvironmentType("FIXED")}
-              color="primary"
-              variant={environmentType === "FIXED" ? "contained" : "outlined"}
-            >
-              Fixed
-            </Button>
-            <Button
-              onClick={() => setEnvironmentType("UNLIMITED")}
-              color="primary"
-              variant={
-                environmentType === "UNLIMITED" ? "contained" : "outlined"
-              }
-            >
-              Unlimited
-            </Button>
-          </GridItem> */}
 					<GridItem xs={12}>&nbsp;</GridItem>
 					<GridItem xs={6}>
 						<TextField
@@ -372,7 +347,6 @@ function Profile({
 							fullWidth
 							label="Project Name"
 							value="Service"
-							isDisabled
 						/>
 					</GridItem>
 					<GridItem xs={6}>
@@ -428,7 +402,6 @@ function Profile({
 															name="email"
 															type="email"
 															label="Email"
-															isDisabled
 															value={profile?.form?.email}
 															disabled={true}
 														/>
@@ -675,7 +648,6 @@ function Profile({
 															name="company_address"
 															type="text"
 															label="Company Address"
-															isDisabled
 															value={profile?.form?.company_address}
 														/>
 													</GridItem>

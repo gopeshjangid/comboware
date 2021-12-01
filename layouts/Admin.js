@@ -94,7 +94,6 @@ function Admin({ children, getProfile, ...rest }) {
     }
   }, []);
 
-  console.log("mobileOpen", mobileOpen);
   return (
     <div className={classes.wrapper}>
       <Sidebar

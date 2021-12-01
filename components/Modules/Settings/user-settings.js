@@ -148,7 +148,6 @@ function Settings({  }) {
                     name="email"
                     type="email"
                     label="Email"
-                    isDisabled
                     disabled={true}
                   />
                 </GridItem>
@@ -215,8 +214,6 @@ function Settings({  }) {
                     name="company_address"
                     type="text"
                     label="Company Address"
-                    isDisabled
-                    
                   />
                 </GridItem>
                 <GridItem xs={4}>

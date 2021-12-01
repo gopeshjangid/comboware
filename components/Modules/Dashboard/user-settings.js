@@ -146,8 +146,7 @@ function Settings({  }) {
                     name="email"
                     type="email"
                     label="Email"
-                    isDisabled
-                    disabled={true}
+                    disabled
                   />
                 </GridItem>
                 <GridItem xs={4}>
@@ -162,8 +161,7 @@ function Settings({  }) {
                 <GridItem xs={4}>
                   <TextField
                     fullWidth
-                    disabled={true}
-                   
+                    disabled
                     name="user_name"
                     type="text"
                     label="UserName"
@@ -175,7 +173,6 @@ function Settings({  }) {
                     type="password"
                     autoComplete="new-password"
                     label="Password"
-                    
                     name="password"
                     id="password"
                   />
@@ -213,8 +210,6 @@ function Settings({  }) {
                     name="company_address"
                     type="text"
                     label="Company Address"
-                    isDisabled
-                    
                   />
                 </GridItem>
                 <GridItem xs={4}>
@@ -232,7 +227,7 @@ function Settings({  }) {
         </GridItem>
       
      
-        <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
+        <GridItem xs={12} sm={12} md={12} align="right">
           <Button
             type="button"
             variant="contained"
