@@ -1,6 +1,10 @@
-import { Box } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { Switch } from '@material-ui/core';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 import Button from 'components/CustomButtons';
+import Loader from 'components/Loader';
+import Modal from 'components/Modal';
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import { Chip, Typography } from '../../Custom';
@@ -9,24 +13,32 @@ import GridContainer from '../../Grid/GridContainer';
 import Snackbar from '../../Snackbar';
 import CustomTable from '../../Table/CustomTable';
 import Wrapper from '../../Wrapper';
-import { getAllUserList } from './redux/action';
-import useStyles from './styles';
+import { getAllUserList, getProfile } from './redux/action';
 
-const CustomerManagement = ({ getAllUserList }) => {
-  const classes = useStyles();
-  const reduxState = useSelector((state) => state);
-  const [message, setMessage] = useState('');
+const CustomerManagement = ({ getAllUserList, getProfile }) => {
+  const reduxState = useSelector((state) => state.customer_management);
+  const [message, setMessage] = useState({ text: '', type: 'success' });
+  const [loader, setLoader] = useState(false);
   const [isSubmitted, setSubmitted] = useState(false);
-  const [userList, setUserList] = useState([]);
-  const [engineerList, setEngineerList] = useState([]);
-  const [fromData, setFromData] = useState({ skill: '', level: '' });
-  const [isLoading, setLoading] = useState(false);
+  const [userModal, setUserModal] = useState(false);
+  const [userDetail, setUserDetail] = useState({});
 
-  console.log(reduxState.customer_management);
+  const callback = (status, message) => {
+    setLoader(false);
+    if (message) {
+      setSubmitted(true);
+      setMessage({ type: status ? 'success' : 'error', message: message });
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 4000);
+    }
+  };
+
   useEffect(async () => {
-    await getAllUserList('ER');
-    await getAllUserList('USER');
-    return () => {};
+    setLoader(true);
+    setUserModal(false);
+    await getAllUserList('ER', callback);
+    await getAllUserList('USER', callback);
   }, []);
 
   const getColumns = () => {
@@ -68,7 +80,15 @@ const CustomerManagement = ({ getAllUserList }) => {
         field: 'status',
         header: 'STATUS',
         renderCell: (row) => {
-          return <Chip label={row?.status ? 'ACTIVE' : 'INACTIVE'} type={row?.status ? 'filled' : 'outlined'} />;
+          return (
+            <Switch
+              checked={row?.status}
+              onChange={(event) => updateStatus(event, row.id)}
+              color='primary'
+              name='USER'
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+          );
         }
       },
       {
@@ -77,73 +97,154 @@ const CustomerManagement = ({ getAllUserList }) => {
         width: 100,
         renderCell: (row) => {
           return (
-            <Box display='flex' justifyContent='space-between'>
-              <Button type='action'>View detail</Button>
-            </Box>
+            <Button type='action' onClick={(e) => viewDetail(e, row.id)}>
+              View detail
+            </Button>
           );
         }
       }
     ];
   };
 
-  const getSkillLevelColumns = () => {
+  const getUsersColumns = () => {
     return [
       {
-        field: 'id',
-        header: '#',
-        align: 'center',
-        width: 80,
+        field: 'first_name',
+        header: 'Name',
         renderCell: (row) => {
           return (
-            <Typography variant='body2' color='primary'>
-              {row.id}
+            <Typography variant='body1' color='primary'>
+              {row?.first_name + ' ' + row?.last_name}
             </Typography>
           );
         }
       },
+      { field: 'email', header: 'Email' },
       {
-        field: 'name',
-        header: 'Level',
+        field: 'trial_expire_date',
+        header: 'Trial Expiration Date',
+        renderCell: (row) => {
+          if (!row?.trial_expire_date) {
+            return '';
+          }
+          return <Chip style='info' label={row?.trial_expire_date} color='primary' />;
+        }
+      },
+      {
+        field: 'trial_extend_date',
+        header: 'Trial Extend Date',
+        renderCell: (row) => {
+          if (!row?.trial_extend_date) {
+            return '';
+          }
+          return <Chip style='info' label={row?.trial_extend_date} color='primary' />;
+        }
+      },
+      {
+        field: 'status',
+        header: 'STATUS',
+        renderCell: (row) => {
+          return (
+            <Switch
+              checked={row?.status}
+              onChange={(event) => updateStatus(event, row.id)}
+              color='primary'
+              name='ER'
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+          );
+        }
+      },
+      {
+        field: 'action',
+        header: 'STATUS',
         width: 100,
         renderCell: (row) => {
           return (
-            <Typography variant='body2' color='primary'>
-              {row.name}
-            </Typography>
+            <Button type='action' onClick={(e) => viewDetail(e, row.id)}>
+              View detail
+            </Button>
           );
-        }
-      },
-      {
-        header: 'Action',
-        width: 70,
-        renderCell: (row) => {
-          return <Delete onClick={() => deleteSkillItem(row, 'level')} color='secondary' />;
         }
       }
     ];
   };
 
-  console.log(fromData);
+  const updateStatus = async (event, id) => {
+    const { name, checked } = event.target;
+    setLoader(true);
+    const status = Number(checked);
+    await getAllUserList(name, callback);
+  };
+
+  const viewDetail = async (event, id) => {
+    setLoader(true);
+    setUserModal(true);
+    await getProfile(id, callback);
+    setUserDetail(reduxState.user_detail);
+  };
 
   return (
     <React.Fragment>
-      <Snackbar open={isSubmitted} type={reduxState?.workspace?.error ? 'error' : 'success'} message={message} />
+      <Loader open={loader} />
+      <Snackbar open={isSubmitted} type={message?.type || 'success'} message={message?.message} />
       <Wrapper>
         <GridContainer spacing={2}>
           <CustomTab
             tabs={[
               {
                 label: 'engineers',
-                panel: <CustomTable columns={getColumns()} data={reduxState.customer_management.engineers_list} />
+                panel: <CustomTable columns={getColumns()} data={reduxState.engineers_list} />
               },
               {
                 label: 'customer',
-                panel: <CustomTable columns={getColumns()} data={reduxState.customer_management.userList} />
+                panel: <CustomTable columns={getUsersColumns()} data={reduxState.usersList} />
               }
             ]}
           />
         </GridContainer>
       </Wrapper>
+      {userModal && (
+        <Modal
+          title='Detail'
+          isOpen={userModal}
+          onSubmit={() => {
+            setUserModal(false), setUserDetail({});
+          }}
+          onChange={(flag) => {
+            setUserModal(flag), setUserDetail({});
+          }}
+          submitText='Ok'
+          SaveText='OK'
+          maxWidth='md'
+        >
+          {userDetail && (
+            <List component='nav' aria-label='main mailbox folders'>
+              <ListItem button>
+                <ListItemText
+                  primary={'Name:'}
+                  secondary={`${userDetail.first_name || ''} ${userDetail.last_name || ''}`}
+                />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary={'UserName:'} secondary={userDetail.user_name || ''} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary={`Company Name:`} secondary={userDetail.company_name || ''} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary={`Company Position:`} secondary={userDetail.company_position || ''} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary={`Company Phone:`} secondary={userDetail.company_phone || ''} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary={`Created at:`} secondary={userDetail.created_at || ''} />
+              </ListItem>
+            </List>
+          )}
+        </Modal>
+      )}
     </React.Fragment>
   );
 };
@@ -152,5 +253,5 @@ export default connect(
   (state) => {
     return { ...state?.customer_management };
   },
-  { getAllUserList }
+  { getAllUserList, getProfile }
 )(CustomerManagement);

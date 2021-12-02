@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
-import { connect, useSelector } from "react-redux";
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import TextField from "../../CustomInput/TextField";
-import styles from "./styles";
 import Button from "@material-ui/core/Button";
-import Modal from "components/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import FieldSet from "components/Form/fieldset";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
-import { getProfile } from "../Profile/redux/action";
-import { createDomain } from "../Workspace/redux/action";
-import Table from "../../Table/CustomTable";
-import { COLUMNS } from "./redux/constants";
-import { getAllWorkspace, updateRequest } from "./redux/action";
 import Wrapper from "components/Wrapper";
-import FieldSet from "components/Form/fieldset";
+import React, { useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
+import Table from "../../Table/CustomTable";
+import { getProfile } from "../Profile/redux/action";
+import { getAllWorkspace, updateRequest } from "./redux/action";
+import { COLUMNS } from "./redux/constants";
+import styles from "./styles";
+
 function Admin({ getAllWorkspace, updateRequest, getProfile }) {
   const useStyles = makeStyles(styles);
   const classes = useStyles();

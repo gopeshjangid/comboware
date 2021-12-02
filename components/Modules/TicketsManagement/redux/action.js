@@ -256,6 +256,7 @@ export const getAllCategories = (callback) => (dispatch) => {
 		})
 		.catch((err) => {
 			console.log("err--", err);
+			callback(true, "Something went wrong. please try again");
 			dispatch(
 				requestStop({
 					data: null,

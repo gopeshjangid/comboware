@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Edit } from '@material-ui/icons';
-import { Chip, Typography } from 'components/Custom';
+import { Typography } from 'components/Custom';
 import Button from 'components/CustomButtons';
 import FieldSet from 'components/Form/fieldset';
 import GridContainer from 'components/Grid/GridContainer.js';
