@@ -219,9 +219,6 @@ export const getSubCategories = (id) => (dispatch) => {
 		})
 		.catch((err) => {
 			console.log("err--", err);
-			if (callBack) {
-				callBack(false, errorHandler());
-			}
 			dispatch(failed({ error: errorHandler() }));
 		});
 };
@@ -287,8 +284,8 @@ export const saveSubcategory = (data, callBack) => (dispatch) => {
 			callBack(
 				true,
 				data?.id
-					? "Category updated successfully."
-					: "Category added successfully."
+					? "Sub Category updated successfully."
+					: "Sub Category added successfully."
 			);
 			dispatch(getSubCategories(data?.category_id || 0));
 		})
@@ -301,7 +298,10 @@ export const enableDisableCatSubCat = (data, callBack) => (dispatch) => {
 	dispatch(start({ message: "Please wait..." }));
 	Service.put(ticketConstants.API.enableDisableCatSubCat, data)
 		.then((res) => {
-			callBack(true, "Enabled successfully.");
+			callBack(
+				true,
+				data?.status ? "Enabled successfully." : "Disabled successfully."
+			);
 		})
 		.catch((err) => {
 			callBack(false, "Something went wrong. Please try again");
