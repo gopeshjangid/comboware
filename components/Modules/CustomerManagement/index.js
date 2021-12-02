@@ -184,6 +184,11 @@ const CustomerManagement = ({ getAllUserList, getProfile }) => {
     setUserDetail(reduxState.user_detail);
   };
 
+  const hideDetail = (flag) => {
+    setUserDetail({});
+    setUserModal(flag);
+  };
+
   return (
     <React.Fragment>
       <Loader open={loader} />

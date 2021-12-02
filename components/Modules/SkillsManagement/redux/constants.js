@@ -18,5 +18,6 @@ export const API = {
   saveSkillLevels: API_BASE_URL + '/v1/user/saveSkillLevels',
   getSkillLevels: API_BASE_URL + '/v1/user/getSkillLevels',
   saveSkills: API_BASE_URL + '/v1/user/saveSkills',
+  changeSkillLevelStatus: API_BASE_URL + '/v1/user/changeSkillLevelStatus',
   signUp: API_BASE_URL + '/v1/user/register'
 };
