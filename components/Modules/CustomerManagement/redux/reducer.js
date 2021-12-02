@@ -1,4 +1,4 @@
-import { START, FAILED, USERS_LIST, ENGINEERS_LIST } from './constants';
+import { START, FAILED, USERS_LIST, ENGINEERS_LIST, USER_DETAIL } from './constants';
 const initialState = {
   profile: {},
   usersList: [],
@@ -6,7 +6,8 @@ const initialState = {
   system_image: '',
   loading: false,
   message: '',
-  error: ''
+  error: '',
+  user_detail: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -17,7 +18,6 @@ const reducer = (state = initialState, action) => {
         loading: true,
         ...action?.payload?.data
       };
-
     case FAILED:
       return {
         ...state,
@@ -40,7 +40,13 @@ const reducer = (state = initialState, action) => {
         message: '',
         ...action.payload
       };
-
+    case USER_DETAIL:
+      return {
+        ...state,
+        loading: false,
+        message: '',
+        user_detail: action.payload
+      };
     default:
       return state;
   }
