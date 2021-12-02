@@ -13,10 +13,11 @@ export const saveResourceData = (type, data) => {
   return { type: type, payload: data };
 };
 
-export const getSkillLevels = (type) => (dispatch) => {
+export const getSkillLevels = (type, callback) => (dispatch) => {
   dispatch(requestInit({ message: 'Please wait... ' }));
   Service.get(`${API.getSkillLevels}?type=${type}`)
     .then((res) => {
+      callback(true, '');
       dispatch(saveResourceData(`${type}_LIST`, res?.data?.data));
     })
     .catch((err) => {
@@ -25,10 +26,24 @@ export const getSkillLevels = (type) => (dispatch) => {
     });
 };
 
-export const saveSkills = (data) => (dispatch) => {
+export const saveSkills = (data, callback) => (dispatch) => {
   dispatch(requestInit({ message: 'Please wait... ' }));
   Service.post(API.saveSkills, data)
     .then((res) => {
+      callback(true, '');
+      dispatch(saveResourceData({ message: 'Resource info updated successfully.' }));
+    })
+    .catch((err) => {
+      console.log('err--', err);
+      dispatch(requestStop({ error: err?.message }));
+    });
+};
+
+export const changeSkillLevelStatus = (data, callback) => (dispatch) => {
+  dispatch(requestInit({ message: 'Please wait... ' }));
+  Service.put(API.changeSkillLevelStatus, data)
+    .then((res) => {
+      callback(true, '');
       dispatch(saveResourceData({ message: 'Resource info updated successfully.' }));
     })
     .catch((err) => {

@@ -1,37 +1,41 @@
-import { Delete } from '@material-ui/icons';
+import { Switch } from '@material-ui/core';
 import { Typography } from 'components/Custom';
 import Button from 'components/CustomButtons';
 import FieldSet from 'components/Form/fieldset';
 import GridContainer from 'components/Grid/GridContainer';
 import GridItem from 'components/Grid/GridItem';
+import Loader from 'components/Loader';
 import Snackbar from 'components/Snackbar';
 import CustomTable from 'components/Table/CustomTable';
 import Wrapper from 'components/Wrapper';
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import TextField from '../../CustomInput/TextField';
+import { changeSkillLevelStatus, getSkillLevels, saveSkills } from './redux/action';
 import useStyles from './styles';
-import { useSelector, connect, useDispatch } from 'react-redux';
-import { getSkillLevels, saveSkills } from './redux/action';
 
-const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList }) => {
+const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList, changeSkillLevelStatus }) => {
   const classes = useStyles();
-  const reduxState = useSelector((state) => state);
   const [message, setMessage] = useState('');
   const [isSubmitted, setSubmitted] = useState(false);
   const [fromData, setFromData] = useState({ skill: '', level: '' });
+  const [loader, setLoader] = useState(false);
 
-  const hideNotification = (status, message) => {
-    setLoading(false);
-    if (!status) {
-      setError(message);
-    } else {
-      setError('');
+  const callback = (status, message) => {
+    setLoader(false);
+    if (message) {
+      setSubmitted(true);
+      setMessage({ type: status ? 'success' : 'error', message: message });
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 4000);
     }
   };
 
   useEffect(async () => {
-    await getSkillLevels('SKILL');
-    await getSkillLevels('LEVEL');
+    setLoader(true);
+    await getSkillLevels('SKILL', callback);
+    await getSkillLevels('LEVEL', callback);
     return () => {
       setFromData({ skill: '', level: '' });
       setSkillList([]);
@@ -78,7 +82,15 @@ const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList }) => {
         header: 'Action',
         width: 70,
         renderCell: (row) => {
-          return <Delete onClick={() => deleteSkillItem(row, 'skill')} color='secondary' />;
+          return (
+            <Switch
+              checked={row?.status}
+              onChange={(event) => updateStatus(event, row.id)}
+              color='primary'
+              name='skill'
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+          );
         }
       }
     ];
@@ -115,47 +127,38 @@ const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList }) => {
         header: 'Action',
         width: 70,
         renderCell: (row) => {
-          return <Delete onClick={() => deleteSkillItem(row, 'level')} color='secondary' />;
+          return (
+            <Switch
+              checked={row?.status}
+              onChange={(event) => updateStatus(event, row.id)}
+              color='primary'
+              name='level'
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+          );
         }
       }
     ];
   };
 
   const submitHandler = async (e, type) => {
-    if (type === 'skill') {
-      if (fromData[type]) {
-        saveSkills({ type: 'SKILL', name: fromData[type] }, hideNotification);
-        setFromData({ ...fromData, skill: '' });
-        await getSkillLevels('SKILL');
-      }
-    } else {
-      if (fromData[type]) {
-        saveSkills({ type: 'LEVEL', name: fromData[type] }, hideNotification);
-        setFromData({ ...fromData, level: '' });
-        await getSkillLevels('LEVEL');
-      }
-    }
+    setLoader(true);
+    await saveSkills({ type: type.toUpperCase(), name: fromData[type] }, callback);
+    await getSkillLevels(type.toUpperCase(), callback);
+    setFromData({ ...fromData, [type]: '' });
   };
 
-  const deleteSkillItem = (row, type) => {
-    if (type === 'skill') {
-      let updatedSkillList = [...skillList];
-      updatedSkillList = updatedSkillList.filter((item) => {
-        return item.id !== row.id;
-      });
-    } else {
-      let updatedSkillList = [...levelList];
-      updatedSkillList = updatedSkillList.filter((item) => {
-        return item.id !== row.id;
-      });
-    }
+  const updateStatus = async (event, id) => {
+    const { name, checked } = event.target;
+    setLoader(true);
+    await changeSkillLevelStatus({ type: name.toUpperCase(), id, status: Number(checked) }, callback);
+    await getSkillLevels(name.toUpperCase(), callback);
   };
-
-  const handleClick = () => {};
 
   return (
     <React.Fragment>
-      <Snackbar open={isSubmitted} type={reduxState?.workspace?.error ? 'error' : 'success'} message={message} />
+      <Loader open={loader} />
+      <Snackbar open={isSubmitted} type={message?.type || 'success'} message={message?.message} />
       <Wrapper>
         <GridContainer spacing={2}>
           <GridItem xs={12} sm={6}>
@@ -224,5 +227,5 @@ export default connect(
       levelList: state?.skills_management.levels
     };
   },
-  { getSkillLevels, saveSkills }
+  { getSkillLevels, saveSkills, changeSkillLevelStatus }
 )(Engineers);
