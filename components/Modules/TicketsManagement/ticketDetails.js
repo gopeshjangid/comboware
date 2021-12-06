@@ -242,7 +242,7 @@ function TicketDetails({
 	const changeHandler = (e) => {
 		let name = e.target.name;
 		let value = e.target.value;
-		if (name === "category_id") {
+		if (name === "ticket_category") {
 			getSubCategories(value);
 		}
 		setTicketDetails({
