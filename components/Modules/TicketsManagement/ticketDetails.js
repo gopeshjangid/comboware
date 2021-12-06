@@ -1,54 +1,40 @@
-import React, { useState, useEffect, useRef } from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
 import {
-  AddCircleOutline,
-  Delete as DeleteIcon,
-  FolderOpenOutlined,
-  CameraAltOutlined,
-  MessageOutlined,
-  AttachFileOutlined
-} from "@material-ui/icons";
-import { connect, useSelector } from "react-redux";
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import {
-  Typography,
-  IconButton,
-  Box,
-  TextareaAutosize,
-  List,
+  Box, Divider, IconButton, List,
   ListItem,
   ListItemIcon,
-  ListItemText,
-  Divider,
-  Link,
+  ListItemText, TextareaAutosize, Typography
 } from "@material-ui/core";
-
-import TextField from "../../CustomInput/TextField";
-import styles from "./styles";
-import Select from "../../Select";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  AttachFileOutlined, CameraAltOutlined, Delete as DeleteIcon,
+  FolderOpenOutlined, MessageOutlined
+} from "@material-ui/icons";
 import Button from "components/CustomButtons";
-import Modal from "components/Modal";
+import FieldSet from "components/Form/fieldset";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
 import Loader from "components/Loader";
+import Modal from "components/Modal";
 import Snackbar from "components/Snackbar";
 import Wrapper from "components/Wrapper";
-import FieldSet from "components/Form/fieldset";
-
-import {
-  getTicketDetails,
-  addNewActivity,
-  updateTicketDetails,
-  getCategories,
-  getSubCategories,
-  AssignTicket
-} from "./redux/action";
-import {
- updateSystemInfo,
- usersList
-} from "../Profile/redux/action";
 import { useRouter } from "next/dist/client/router";
-import { TICKET_STATUS_LIST, REPAIR_STATUS_LIST } from "./redux/constants";
+import React, { useEffect, useRef, useState } from "react";
+import { connect, useSelector } from "react-redux";
+import TextField from "../../CustomInput/TextField";
+import Select from "../../Select";
+import {
+  updateSystemInfo,
+  usersList
+} from "../Profile/redux/action";
+import {
+  addNewActivity, AssignTicket, getCategories,
+  getSubCategories, getTicketDetails, updateTicketDetails
+} from "./redux/action";
+import { REPAIR_STATUS_LIST, TICKET_STATUS_LIST } from "./redux/constants";
+import styles from "./styles";
+
+
+
 
 function TicketDetails({
   getTicketDetails,

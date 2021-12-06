@@ -28,7 +28,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 	const [ticketDetails, setTicketDetails] = useState(null);
 	const [filters, setFilter] = useState({
 		ticket_status: "ALL",
-		repair_status: "ALL",
+		repair_status: "ALL"
 	});
 	const userType = reduxState?.user?.profile?.user_type;
 	const router = useRouter();
@@ -59,7 +59,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 	useEffect(() => {
 		setMessage({
 			text: reduxState?.ticket?.message || reduxState?.ticket?.error,
-			type: reduxState?.ticket?.error ? "error" : "success",
+			type: reduxState?.ticket?.error ? "error" : "success"
 		});
 
 		setLoader(false);
@@ -72,9 +72,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 		//  getProfile(reduxState?.user?.profile?.id || localStorage.getItem("userId"));
 		let query =
 			localStorage.getItem("userType") !== "ADMIN"
-				? "?userId=" +
-				  Number(localStorage.getItem("userId")) +
-				  "&ticket_status=ALL&repair_status=ALL"
+				? "?userId=" + Number(localStorage.getItem("userId")) + "&ticket_status=ALL&repair_status=ALL"
 				: "?ticket_status=ALL&repair_status=ALL&user_type=ADMIN";
 		getAllTickets(query, manageMessage);
 		return () => {};
@@ -84,7 +82,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 		manageMessage();
 		setMessage({
 			text: reduxState?.user?.message || reduxState?.user?.error,
-			type: reduxState?.user?.error ? "error" : "success",
+			type: reduxState?.user?.error ? "error" : "success"
 		});
 		return () => {};
 	}, [reduxState?.user?.message]);
@@ -117,7 +115,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 				header: "Ticket Number",
 				renderCell: (row) => {
 					return <Chip type="filled" label={row?.ticket_number} />;
-				},
+				}
 			},
 			{ field: "ticket_subject", header: "Title", renderCell: () => {} },
 			{ field: "first_name", header: "Customer Name" },
@@ -131,10 +129,8 @@ function TicketsList({ getAllTickets, getProfile }) {
 							: row?.ticket_status === "CLOSED"
 							? "success"
 							: "warning";
-					return (
-						<Chip type="filled" label={row?.ticket_status} style={color} />
-					);
-				},
+					return <Chip type="filled" label={row?.ticket_status} style={color} />;
+				}
 			},
 			{
 				field: "repair_status",
@@ -146,10 +142,8 @@ function TicketsList({ getAllTickets, getProfile }) {
 							: row?.repair_status === "CLOSED"
 							? "success"
 							: "warning";
-					return (
-						<Chip type="filled" label={row?.repair_status} style={color} />
-					);
-				},
+					return <Chip type="filled" label={row?.repair_status} style={color} />;
+				}
 			},
 			{ field: "ticket_date", header: "Created At" },
 			{
@@ -167,8 +161,8 @@ function TicketsList({ getAllTickets, getProfile }) {
 							View Detail
 						</Button>
 					);
-				},
-			},
+				}
+			}
 		];
 	};
 
@@ -176,9 +170,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 		let name = e.target.name;
 		let value = e.target.value;
 		let query =
-			localStorage.getItem("userType") !== "ADMIN"
-				? "?userId=" + Number(localStorage.getItem("userId"))
-				: "";
+			localStorage.getItem("userType") !== "ADMIN" ? "?userId=" + Number(localStorage.getItem("userId")) : "";
 		let sign = query === "" ? "?" : "&";
 		let _filters = { ...filters, [name]: value };
 		if (!filters) {
@@ -195,11 +187,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 	};
 	return (
 		<Wrapper mt="20px">
-			<Snackbar
-				open={isSubmitted}
-				type={message?.type || "success"}
-				message={message?.text}
-			/>
+			<Snackbar open={isSubmitted} type={message?.type || "success"} message={message?.text} />
 
 			<Drawer open={!!ticketDetails} onClose={closeTicketDrawer}>
 				<Box className={classes.drawerBox}>
@@ -208,55 +196,41 @@ function TicketsList({ getAllTickets, getProfile }) {
 							<Typography color="primaryText">Title:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.ticket_subject}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.ticket_subject}</Typography>
 						</GridItem>
 						<GridItem xs={6}>
 							<Typography color="primaryText">Category:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.category_name}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.category_name}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
 							<Typography color="primaryText">SubCategory:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.subcategory_name}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.subcategory_name}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
 							<Typography color="primaryText">Ticket Status:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.ticket_status}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.ticket_status}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
-							<Typography color="primaryText">
-								Repair Processing Date:
-							</Typography>
+							<Typography color="primaryText">Repair Processing Date:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.repair_status}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.repair_status}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
 							<Typography color="primaryText">Customer Name:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.first_name}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.first_name}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
@@ -269,36 +243,28 @@ function TicketsList({ getAllTickets, getProfile }) {
 							<Typography color="primaryText">Company Name:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.company_name}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.company_name}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
 							<Typography color="primaryText">Company Email:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.company_email}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.company_email}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
 							<Typography color="primaryText">Company Phone:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.company_phone}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.company_phone}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
 							<Typography color="primaryText">Company Address:</Typography>
 						</GridItem>
 						<GridItem xs={6}>
-							<Typography color="secondary">
-								{ticketDetails?.company_address}
-							</Typography>
+							<Typography color="secondary">{ticketDetails?.company_address}</Typography>
 						</GridItem>
 
 						<GridItem xs={6}>
@@ -323,48 +289,16 @@ function TicketsList({ getAllTickets, getProfile }) {
 							</GridItem>
 							<GridItem xs={12} sm={6} align="right">
 								{userType !== "ADMIN" && (
-									<Button
-										onClick={() => router.push("/ticket/new")}
-										variant="contained"
-									>
+									<Button onClick={() => router.push("/ticket/new")} variant="contained">
 										Create New
 									</Button>
 								)}
 							</GridItem>
 							<GridItem xs={12}>&nbsp;</GridItem>
-							{/* <GridItem xs={6}>
-                  <Select
-                    name="ticket_status"
-                    options={TICKET_STATUS_LIST.map((status) => ({
-                      label: status,
-                      value: status,
-                    }))}
-                    label="Status"
-                    value={filters?.ticket_status}
-                    onChange={onFilterChange}
-                  />
-                </GridItem>
-
-                <GridItem xs={6}>
-                  <Select
-                    name="repair_status"
-                    options={REPAIR_STATUS_LIST.map((status) => ({
-                      label: status,
-                      value: status,
-                    }))}
-                    label="Repair Status"
-                    value={filters?.repair_status}
-                    onChange={onFilterChange}
-                  />
-                </GridItem> */}
 						</GridContainer>
 
 						<GridItem xs={12} sm={12}>
-							<CustomTable
-								columns={getColumnsFields()}
-								data={ticketList}
-								loading={loader}
-							/>
+							<CustomTable columns={getColumnsFields()} data={ticketList} loading={loader} />
 						</GridItem>
 					</GridItem>
 				</GridContainer>

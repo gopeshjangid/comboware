@@ -37,9 +37,6 @@ const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList, changeSki
     await getSkillLevels('SKILL', callback);
     await getSkillLevels('LEVEL', callback);
     return () => {
-      setFromData({ skill: '', level: '' });
-      setSkillList([]);
-      setLevelList([]);
     };
   }, []);
 
@@ -176,7 +173,7 @@ const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList, changeSki
                     size='small'
                   />
                 </GridItem>
-                <GridItem justify='flex-end' xs={2}>
+                <GridItem xs={2}>
                   <Button variant='outlined' color='primary' size='large' onClick={(e) => submitHandler(e, 'skill')}>
                     Save
                   </Button>
@@ -202,7 +199,7 @@ const Engineers = ({ getSkillLevels, saveSkills, skillList, levelList, changeSki
                     size='small'
                   />
                 </GridItem>
-                <GridItem justify='flex-end' xs={2}>
+                <GridItem xs={2}>
                   <Button variant='outlined' color='primary' size='large' onClick={(e) => submitHandler(e, 'level')}>
                     Save
                   </Button>

@@ -1,24 +1,18 @@
-import React, { useState, useEffect ,useRef } from "react";
-
-import { makeStyles } from "@material-ui/core/styles";
-import { AddCircleOutline } from "@material-ui/icons";
-import { connect, useSelector } from "react-redux";
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import { Typography, IconButton, Box } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import TextField from "../../CustomInput/TextField";
-import styles from "./styles";
-import Select from "../../Select";
+import { Typography } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
-import Modal from "components/Modal";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import CardHeader from "components/Card/CardHeader.js";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
 import Loader from "components/Loader";
 import Snackbar from "components/Snackbar";
-//import {  } from "./redux/action";
-import { createDomain } from "../Workspace/redux/action";
-import {SKILLS} from  "./redux/constants";
+import React, { useEffect, useRef, useState } from "react";
+import { connect, useSelector } from "react-redux";
+import TextField from "../../CustomInput/TextField";
+import styles from "./styles";
+
 
 function Settings({  }) {
   const useStyles = makeStyles(styles);
@@ -231,7 +225,7 @@ function Settings({  }) {
         </GridItem>
       
      
-        <GridItem xs={12} sm={12} md={12} align="right" alignContent="flex-end">
+        <GridItem xs={12} sm={12} md={12} align="right">
           <Button
             type="button"
             variant="contained"

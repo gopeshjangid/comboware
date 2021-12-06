@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { GoogleLogin } from "react-google-login";
-import { connect, useSelector } from "react-redux";
-import Link from "next/link";
+import { Box, Button, Checkbox, FormControlLabel } from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { useRouter } from "next/router";
-import Grid from "@material-ui/core/Grid";
-import {Box ,FormControlLabel ,Checkbox} from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { signUp } from "./redux/action";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import logo from "assets/img/logo.svg";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
+import LinearProgress from "components/Loader/linear";
 import Snackbar from "components/Snackbar";
 import getConfig from "next/config";
-import { Button } from "@material-ui/core";
-const { publicRuntimeConfig } = getConfig();
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
 import TextField from "../../CustomInput/TextField";
-import logo from "assets/img/logo.svg";
-import LinearProgress from  "components/Loader/linear";
-import { LoadingButton } from '@mui/lab';
+import { signUp } from "./redux/action";
+const { publicRuntimeConfig } = getConfig();
 function Copyright({className}) {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -198,17 +195,6 @@ function CustomerLogin(props) {
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        {/* <Box mt={5}>
-          {loaded && !reduxState?.loading && (
-            <GoogleLogin
-              clientId={clientId}
-              buttonText={ isLogin ? "Login with google" : "Sign up with google"}
-              onSuccess={responseGoogle}
-              onFailure={responseGoogleFailed}
-              cookiePolicy={"single_host_origin"}
-            />
-          )}
-        </Box> */}
         <Box mt={2}>
           {reduxState?.loading && <CircularProgress color="primary" />}
         </Box>

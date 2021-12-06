@@ -1,40 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
-
+import {
+	Box, Button as MButton, Hidden, IconButton, Typography
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
-	AddCircleOutline,
-	AttachFileOutlined,
-	RemoveCircleOutline,
-	ContactMail,
-	NetworkCell,
-	Storage,
-	Work,
-	CloudUpload,
+	AddCircleOutline, CloudUpload, ContactMail,
+	NetworkCell, RemoveCircleOutline, Storage,
+	Work
 } from "@material-ui/icons";
-import { connect, useSelector } from "react-redux";
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import {
-	Typography,
-	IconButton,
-	Button as MButton,
-	Box,
-	Hidden,
-} from "@material-ui/core";
-import TextField from "../../CustomInput/TextField";
-import styles from "./styles";
-import Select from "../../Select";
 import Button from "components/CustomButtons";
-import Modal from "components/Modal";
-import Loader from "components/Loader";
-import Snackbar from "components/Snackbar";
-import { updateProfile, getProfile, updateSystemInfo } from "./redux/action";
-import { createDomain } from "../Workspace/redux/action";
-import { SKILLS } from "./redux/constants";
-import FieldSet from "components/Form/fieldset";
-import PhoneField from "components/PhoneFormat";
-import Wrapper from "components/Wrapper";
 import Tabs from "components/CustomTabs";
+import FieldSet from "components/Form/fieldset";
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
+import Loader from "components/Loader";
+import Modal from "components/Modal";
+import PhoneField from "components/PhoneFormat";
+import Snackbar from "components/Snackbar";
+import Wrapper from "components/Wrapper";
+import React, { useEffect, useRef, useState } from "react";
+import { connect, useSelector } from "react-redux";
+import TextField from "../../CustomInput/TextField";
+import Select from "../../Select";
+import { createDomain } from "../Workspace/redux/action";
+import { getProfile, updateProfile, updateSystemInfo } from "./redux/action";
+import { SKILLS } from "./redux/constants";
+import styles from "./styles";
+
 function Profile({
 	updateProfile,
 	createDomain,

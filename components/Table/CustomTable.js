@@ -1,89 +1,75 @@
-import React, { useState, useEffect } from "react";
-// @material-ui/core components
+import { Table, TableBody, TableCell, TableHead, TablePagination, TableRow, Typography } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableFooter from "@material-ui/core/TableFooter";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Box, Button, Menu, MenuItem } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import classNames from "classnames";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { Button, Box } from "@mui/material";
-import { TablePagination, Typography } from "@material-ui/core";
 import Loader from "components/Loader/circular";
 import Search from "components/Search";
+import React, { useEffect, useState } from "react";
+
 const useStyles = makeStyles((theme) => ({
 	tableContainer: {
 		width: "100%",
 		background: "white",
-		overflow: "auto",
+		overflow: "auto"
 	},
 	headerContainer: {
 		background: "#F3F6F9",
 		borderRadius: 6,
-		height: 43,
+		height: 43
 	},
 	tableHeadRow: {
 		background: "#F3F6F9",
 		borderRadius: 6,
 		overflow: "auto",
 		overflowX: "auto",
-		"border-bottom": "3px solid #1976d2",
+		"border-bottom": "3px solid #1976d2"
 	},
 	tableBodyRow: {
 		overflow: "auto",
-		overflowX: "auto",
+		overflowX: "auto"
 	},
 	tableHeadCell: {
 		color: "#464E5F !important",
 		padding: 1,
 		border: 0,
-		paddingLeft: 0,
+		paddingLeft: 0
 	},
 	tableCell: {
 		color: "#464E5F !important",
 		border: "none",
-		paddingLeft: 1,
+		paddingLeft: 1
 	},
 	root: {
 		background: (props) => (props?.danger ? "#F64E60" : "#3699FF"),
 		borderRadius: "6px",
 		minWidth: 60,
 		"&:hover": {
-			background: (props) => (props?.danger ? "#e43447" : "#2885e4"),
-		},
+			background: (props) => (props?.danger ? "#e43447" : "#2885e4")
+		}
 	},
 	tableLoader: {
 		paddingTop: "30px",
 		paddingBottom: "65px",
-		textAlign: "center",
-	},
+		textAlign: "center"
+	}
 }));
 
 export default React.memo(function CustomTable(props) {
 	const classes = useStyles(props);
-	const {
-		columns,
-		data,
-		footer_label,
-		selectedRows,
-		actions,
-		loading,
-		isSearch,
-	} = props;
+	const { columns, data, footer_label, selectedRows, actions, loading, isSearch } = props;
 	const [selectAll, setSelectAll] = useState(false);
 	const [selectedItems, setSelectedRows] = useState([]);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [rows, setRows] = useState(data);
+	const [page, setPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const theme = useTheme();
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const [rows, setRows] = useState([data]);
+
 	useEffect(() => {
 		if (data?.length) {
-			setRows;
-			data;
+			setRows(data);
 		}
 	}, [data]);
 
@@ -102,12 +88,7 @@ export default React.memo(function CustomTable(props) {
 	}, [selectAll]);
 
 	const getSelectAllCheckBox = () => {
-		return (
-			<Checkbox
-				onChange={(e) => setSelectAll(e?.target?.checked)}
-				checked={selectAll}
-			/>
-		);
+		return <Checkbox onChange={(e) => setSelectAll(e?.target?.checked)} checked={selectAll} />;
 	};
 
 	const selectItem = (isChecked, clickedRow) => {
@@ -116,9 +97,7 @@ export default React.memo(function CustomTable(props) {
 		if (isChecked) {
 			_selectedItems.push(clickedRow);
 		} else {
-			_selectedItems = _selectedItems.filter(
-				(row) => row?.id !== clickedRow?.id
-			);
+			_selectedItems = _selectedItems.filter((row) => row?.id !== clickedRow?.id);
 		}
 
 		setSelectedRows(_selectedItems);
@@ -144,7 +123,7 @@ export default React.memo(function CustomTable(props) {
 							width: 32,
 							height: 32,
 							ml: -0.5,
-							mr: 1,
+							mr: 1
 						},
 						"&:before": {
 							content: '""',
@@ -156,19 +135,16 @@ export default React.memo(function CustomTable(props) {
 							height: 10,
 							bgcolor: "background.paper",
 							transform: "translateY(-50%) rotate(45deg)",
-							zIndex: 0,
-						},
-					},
+							zIndex: 0
+						}
+					}
 				}}
 				transformOrigin={{ horizontal: "right", vertical: "top" }}
 				anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
 			>
 				{actions &&
 					actions.map((action, key) => (
-						<MenuItem
-							onClick={() => action?.handleClick && action?.handleClick()}
-							key={"action-" + key}
-						>
+						<MenuItem onClick={() => action?.handleClick && action?.handleClick()} key={"action-" + key}>
 							{action?.label}
 						</MenuItem>
 					))}
@@ -185,6 +161,14 @@ export default React.memo(function CustomTable(props) {
 		);
 	};
 
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
+
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(parseInt(event.target.value, 10));
+		setPage(0);
+	};
 	return (
 		<div className={classes.tableContainer}>
 			{isSearch && <Search onSearch={onSearch} />}
@@ -228,9 +212,7 @@ export default React.memo(function CustomTable(props) {
 										className={classes.tableHeadCell}
 										key={key}
 									>
-										{(prop?.renderHeader && prop?.renderHeader()) ||
-											prop?.header ||
-											""}
+										{(prop?.renderHeader && prop?.renderHeader()) || prop?.header || ""}
 									</TableCell>
 								);
 							})}
@@ -239,13 +221,13 @@ export default React.memo(function CustomTable(props) {
 				) : null}
 
 				<TableBody>
-					{data?.map((row, key) => {
+					{rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map((row, key) => {
 						return (
 							<TableRow
 								hover
 								key={"table-row" + key}
 								className={classNames({
-									[classes.tableBodyRow]: true,
+									[classes.tableBodyRow]: true
 								})}
 							>
 								{columns.map((col, key) => {
@@ -270,8 +252,7 @@ export default React.memo(function CustomTable(props) {
 											align={col?.align || "center"}
 											className={classNames({ [classes.tableCell]: true })}
 										>
-											{(col?.renderCell &&
-												col?.renderCell({ ...row, ...col })) ||
+											{(col?.renderCell && col?.renderCell({ ...row, ...col })) ||
 												(col?.field in row ? row[col?.field] : "")}
 										</TableCell>
 									);
@@ -285,9 +266,7 @@ export default React.memo(function CustomTable(props) {
 				{loading ? (
 					<Loader open={true} label="fetching..." />
 				) : (
-					!data?.length && (
-						<Typography variant="body2">{"No row found!"}</Typography>
-					)
+					!data?.length && <Typography variant="body2">{"No row found!"}</Typography>
 				)}
 			</Box>
 			<Box
@@ -298,33 +277,29 @@ export default React.memo(function CustomTable(props) {
 				style={{
 					width: "100%",
 					paddingLeft: 5,
-					borderTop: "1.5px solid #1976d2",
+					borderTop: "1.5px solid #1976d2"
 				}}
 			>
 				<Typography variant="body2">{footer_label || ""}</Typography>
-
 				<TablePagination
 					component="div"
-					rowsPerPage="1"
-					labelRowsPerPage="Rows per page"
-					labelDisplayedRows={({ from, to, count }) =>
-						`${from}-${to} of ${count} records`
-					}
-					count={data?.length}
-					page={1}
-					color={theme?.palette?.primary?.main}
-					showFirstButton
-					showLastButton
-					//onChange={void}
-
-					//onChangePage = {}
+					rowsPerPage={rowsPerPage}
+					page={page}
+					onChangePage={handleChangePage}
+					onChangeRowsPerPage={handleChangeRowsPerPage}
 					rowsPerPageOptions={[5, 10, 25]}
+					count={rows?.length}
+					labelRowsPerPage="Rows per page"
+					labelDisplayedRows={({ from, to, count }) => `${from}-${to} of ${count} records`}
+					color={theme?.palette?.primary?.main}
 					backIconButtonProps={{
-						"aria-label": "forrige side",
+						"aria-label": "forrige side"
 					}}
 					nextIconButtonProps={{
-						"aria-label": "neste side",
+						"aria-label": "neste side"
 					}}
+					// showFirstButton
+					// showLastButton
 				/>
 			</Box>
 		</div>

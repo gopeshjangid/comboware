@@ -256,7 +256,6 @@ export const getAllCategories = (callback) => (dispatch) => {
 		})
 		.catch((err) => {
 			console.log("err--", err);
-			callback(true, "Something went wrong. please try again");
 			dispatch(
 				requestStop({
 					data: null,
@@ -275,7 +274,7 @@ export const saveCategory = (data, callBack) => (dispatch) => {
 					? "Category updated successfully."
 					: "Category added successfully."
 			);
-			dispatch(getAllCategories());
+			dispatch(getAllCategories(callBack));
 		})
 		.catch((err) => {
 			dispatch(requestStop({ error: err?.message }));
@@ -303,6 +302,7 @@ export const enableDisableCatSubCat = (data, callBack) => (dispatch) => {
 	Service.put(ticketConstants.API.enableDisableCatSubCat, data)
 		.then((res) => {
 			callBack(true, "Enabled successfully.");
+			dispatch(getAllCategories(callBack));
 		})
 		.catch((err) => {
 			callBack(false, "Something went wrong. Please try again");
