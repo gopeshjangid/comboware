@@ -58,13 +58,13 @@ const dashboardRoutes = [
 		icon: Support,
 		layout: "/support",
 	},
-	{
-		path: "/",
-		name: "System Monitoring",
-		accessors: ["ADMIN"],
-		icon: Monitor,
-		layout: "/monitoring",
-	},
+	// {
+	// 	path: "/",
+	// 	name: "System Monitoring",
+	// 	accessors: ["ADMIN"],
+	// 	icon: Monitor,
+	// 	layout: "/monitoring",
+	// },
 
 	{
 		path: "/#",
@@ -82,14 +82,14 @@ const dashboardRoutes = [
 		icon: Notifications,
 		layout: "/admin",
 	},
-	{
-		path: "/#",
-		name: "Customer Management",
-		accessors: ["ADMIN"],
-		rtlName: "إخطارات",
-		icon: Notifications,
-		layout: "/customer-management",
-	},
+	// {
+	// 	path: "/#",
+	// 	name: "Customer Management",
+	// 	accessors: ["ADMIN"],
+	// 	rtlName: "إخطارات",
+	// 	icon: Notifications,
+	// 	layout: "/customer-management",
+	// },
 	{
 		path: "/servers",
 		name: "Workspace",

@@ -59,13 +59,19 @@ function SignUp({ login }) {
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
 	const reduxState = useSelector((state) => state?.user);
-
+	const [isAlreadyLogin, setAlreadyLogin] = useState(false);
 	React.useEffect(() => {
 		setMessage({
 			text: reduxState?.message || reduxState?.error,
 			type: reduxState?.error ? "error" : "success",
 		});
 	}, [reduxState?.message]);
+
+	React.useEffect(() => {
+		const isLogin =
+			localStorage.getItem("token") && localStorage.getItem("userId");
+		setAlreadyLogin(isLogin);
+	}, []);
 
 	const callBack = (status, message) => {
 		if (status) {
@@ -100,71 +106,92 @@ function SignUp({ login }) {
 				<Avatar className={classes.avatar}>
 					<LockOutlinedIcon />
 				</Avatar>
-				<Typography className={classes.title} component="h1" variant="h5">
-					Admin Login
-				</Typography>
-				<form className={classes.form} noValidate>
-					<Grid container spacing={2} align="center" justify="center">
-						<Grid item xs={8}>
-							<TextField
-								autoComplete="fname"
-								name="email"
-								variant="outlined"
-								required
-								fullWidth
-								id="user_name"
-								label="Email"
-								autoFocus
-								onChange={(e) => setForm({ ...form, email: e.target.value })}
-							/>
-						</Grid>
-						<Grid item xs={8}>
-							<TextField
-								variant="outlined"
-								required
-								fullWidth
-								name="password"
-								label="Password"
-								type="password"
-								id="password"
-								autoComplete="current-password"
-								onChange={(e) => setForm({ ...form, password: e.target.value })}
-							/>
-						</Grid>
-
-						<Grid item xs={10}>
-							<Button
-								type="button"
-								fullWidth
-								variant="contained"
-								color="secondary"
-								disabled={loading}
-								className={classes.submit}
-								onClick={submitHandler}
-							>
-								Login
-							</Button>
-						</Grid>
-						<Grid
-							item
-							xs={12}
-							style={{
-								display: "flex",
-								width: "100%",
-								"justify-content": "center",
-							}}
+				{isAlreadyLogin ? (
+					<Typography>
+						You are already logged in. Click{" "}
+						<Link
+							className={classes.normalLink}
+							href="/dashboard"
+							underline="none"
+							variant="body2"
 						>
-							<Link
-								className={classes.normalLink}
-								href="/"
-								underline="none"
-								variant="body2"
-							>
-								{"Back to home"}
-							</Link>
-						</Grid>
-					</Grid>
-				</form>
+							{"here"}
+						</Link>{" "}
+						to go to dashboard.
+					</Typography>
+				) : (
+					<>
+						<Typography className={classes.title} component="h1" variant="h5">
+							Admin Login
+						</Typography>
+						<form className={classes.form} noValidate>
+							<Grid container spacing={2} align="center" justify="center">
+								<Grid item xs={8}>
+									<TextField
+										autoComplete="fname"
+										name="email"
+										variant="outlined"
+										required
+										fullWidth
+										id="user_name"
+										label="Email"
+										autoFocus
+										onChange={(e) =>
+											setForm({ ...form, email: e.target.value })
+										}
+									/>
+								</Grid>
+								<Grid item xs={8}>
+									<TextField
+										variant="outlined"
+										required
+										fullWidth
+										name="password"
+										label="Password"
+										type="password"
+										id="password"
+										autoComplete="current-password"
+										onChange={(e) =>
+											setForm({ ...form, password: e.target.value })
+										}
+									/>
+								</Grid>
+
+								<Grid item xs={10}>
+									<Button
+										type="button"
+										fullWidth
+										variant="contained"
+										color="secondary"
+										disabled={loading}
+										className={classes.submit}
+										onClick={submitHandler}
+									>
+										Login
+									</Button>
+								</Grid>
+								<Grid
+									item
+									xs={12}
+									style={{
+										display: "flex",
+										width: "100%",
+										"justify-content": "center",
+									}}
+								>
+									<Link
+										className={classes.normalLink}
+										href="/"
+										underline="none"
+										variant="body2"
+									>
+										{"Back to home"}
+									</Link>
+								</Grid>
+							</Grid>
+						</form>
+					</>
+				)}
 			</div>
 		</Container>
 	);

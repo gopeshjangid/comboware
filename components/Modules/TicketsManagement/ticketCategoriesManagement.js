@@ -451,11 +451,17 @@ const TicketCategoriesManagement = ({
 								</Button>
 							</GridItem>
 						</GridContainer>
-						<GridContainer>
-							<CustomTable
-								columns={getCategoryColumns()}
-								data={reduxState.categories}
-							/>
+						<GridContainer spacing={2}>
+							<GridItem xs={12}>
+								<Typography variant="h6">Categories List</Typography>
+							</GridItem>
+
+							<GridItem xs={12}>
+								<CustomTable
+									columns={getCategoryColumns()}
+									data={reduxState.categories}
+								/>
+							</GridItem>
 						</GridContainer>
 					</FieldSet>
 				</GridItem>
@@ -509,11 +515,17 @@ const TicketCategoriesManagement = ({
 								</Button>
 							</GridItem>
 						</GridContainer>
-						<GridContainer>
-							<CustomTable
-								columns={getSubCategoryColumns()}
-								data={subCategoryList}
-							/>
+						<GridContainer spacing={2}>
+							<GridItem xs={12}>
+								<Typography variant="h6">Sub Categories List</Typography>
+							</GridItem>
+
+							<GridItem xs={12}>
+								<CustomTable
+									columns={getSubCategoryColumns()}
+									data={subCategoryList}
+								/>
+							</GridItem>
 						</GridContainer>
 					</FieldSet>
 				</GridItem>

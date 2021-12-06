@@ -244,11 +244,11 @@ function Settings({ saveResource, getResources, settings }) {
 						</FieldSet>
 					</GridItem>
 
-					<GridItem xs={12}>
+					{/* <GridItem xs={12}>
 						<FieldSet title="Environment Configuration">
 							<Environment />
 						</FieldSet>
-					</GridItem>
+					</GridItem> */}
 				</GridContainer>
 			</Wrapper>
 		</React.Fragment>
