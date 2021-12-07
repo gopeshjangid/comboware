@@ -333,7 +333,7 @@ const TicketCategoriesManagement = ({
 					return false;
 				})
 			) {
-				callback(false, "Please all the fields");
+				callback(false, "Invalid category");
 				return true;
 			}
 			setLoader(true);
@@ -371,7 +371,7 @@ const TicketCategoriesManagement = ({
 						return false;
 					})
 				) {
-					callback(false, "Please all the fields");
+					callback(false, "Please fill all the fields");
 					return true;
 				}
 				setLoader(true);
@@ -410,7 +410,7 @@ const TicketCategoriesManagement = ({
 			/>
 			<GridContainer spacing={2}>
 				<GridItem xs={12} sm={6}>
-					<FieldSet padding={30} title="Ticket Categories">
+					<FieldSet padding={30} title="Add Categories">
 						<GridContainer spacing={2} mb={3} style={{ marginBottom: 30 }}>
 							<GridItem className={classes.gridRow} xs={5}>
 								<TextField
@@ -453,7 +453,7 @@ const TicketCategoriesManagement = ({
 						</GridContainer>
 						<GridContainer spacing={2}>
 							<GridItem xs={12}>
-								<Typography variant="h6">Categories List</Typography>
+								<Typography variant="h6">Ticket Categories</Typography>
 							</GridItem>
 
 							<GridItem xs={12}>
@@ -466,7 +466,7 @@ const TicketCategoriesManagement = ({
 					</FieldSet>
 				</GridItem>
 				<GridItem xs={12} sm={6}>
-					<FieldSet padding={30} title="Sub Categories">
+					<FieldSet padding={30} title="Add Sub Categories">
 						<GridContainer spacing={2} mb={3} style={{ marginBottom: 30 }}>
 							<GridItem xs={5}>
 								<Select
@@ -517,7 +517,7 @@ const TicketCategoriesManagement = ({
 						</GridContainer>
 						<GridContainer spacing={2}>
 							<GridItem xs={12}>
-								<Typography variant="h6">Sub Categories List</Typography>
+								<Typography variant="h6">Ticket Sub Categories</Typography>
 							</GridItem>
 
 							<GridItem xs={12}>
