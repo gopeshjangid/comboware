@@ -238,11 +238,11 @@ function Settings({ saveResource, getResources, settings }) {
 						<HostManageMent />
 					</GridItem>
 
-					<GridItem xs={12}>
+					{/* <GridItem xs={12}>
 						<FieldSet title="Customers">
 							<UsersList />
 						</FieldSet>
-					</GridItem>
+					</GridItem> */}
 
 					{/* <GridItem xs={12}>
 						<FieldSet title="Environment Configuration">

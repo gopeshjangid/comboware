@@ -35,14 +35,14 @@ const dashboardRoutes = [
 		icon: PaymentOutlined,
 		layout: "/payment",
 	},
-	{
-		path: "/#",
-		name: "Skills Management",
-		accessors: ["ADMIN"],
-		rtlName: "المهندسين",
-		icon: PaymentOutlined,
-		layout: "/skills-management",
-	},
+	// {
+	// 	path: "/#",
+	// 	name: "Skills Management",
+	// 	accessors: ["ADMIN"],
+	// 	rtlName: "المهندسين",
+	// 	icon: PaymentOutlined,
+	// 	layout: "/skills-management",
+	// },
 
 	{
 		path: "/",
