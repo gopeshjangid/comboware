@@ -11,6 +11,7 @@ import {
 } from "@material-ui/icons";
 import { connect, useSelector } from "react-redux";
 import GridItem from "components/Grid/GridItem.js";
+import Avatar from "@mui/material/Avatar";
 import GridContainer from "components/Grid/GridContainer.js";
 import {
 	Typography,
@@ -416,6 +417,10 @@ function TicketDetails({
 													name="ticket_subject"
 													value={ticketDetails?.form?.ticket?.ticket_subject}
 													variant="filled"
+													disabled={
+														ticketDetails?.form?.ticket?.user_id !==
+														reduxState?.user?.profile?.id
+													}
 												/>
 											</GridItem>
 											<GridItem xs={6}>
@@ -425,6 +430,11 @@ function TicketDetails({
 													label="Category"
 													onChange={changeHandler}
 													value={ticketDetails?.form?.ticket?.ticket_category}
+													disabled={
+														userType !== "ADMIN" &&
+														ticketDetails?.form?.ticket?.user_id !==
+															reduxState?.user?.profile?.id
+													}
 												/>
 											</GridItem>
 											<GridItem xs={6}>
@@ -435,6 +445,11 @@ function TicketDetails({
 													onChange={changeHandler}
 													value={
 														ticketDetails?.form?.ticket?.ticket_subcategory
+													}
+													disabled={
+														userType !== "ADMIN" &&
+														ticketDetails?.form?.ticket?.user_id !==
+															reduxState?.user?.profile?.id
 													}
 												/>
 											</GridItem>
@@ -594,28 +609,70 @@ function TicketDetails({
 												key={"activity" + key}
 											>
 												<ListItemIcon>
-													{validURL(activity?.content) ? (
+													<Avatar sx={{ backgroundColor: "grey" }}></Avatar>
+													{/* {validURL(activity?.content) ? (
 														<FolderOpenOutlined />
 													) : activity?.type === "IMAGE" ? (
 														<CameraAltOutlined />
 													) : (
 														<MessageOutlined />
-													)}
+													)} */}
 												</ListItemIcon>
 												<ListItemText
+													primary={activity?.first_name}
+													primaryTypographyProps={{
+														variant: "subtitle1",
+														component: "h6",
+													}}
 													secondary={
 														activity?.type === "IMAGE" ||
 														validURL(activity?.content) ? (
-															<a
-																target="__blank"
-																component="button"
-																variant="body2"
-																href={activity?.content}
+															<div
+																style={{
+																	display: "flex",
+																	justifyContent: "space-between",
+																}}
 															>
-																{activity?.content}
-															</a>
+																<div
+																	style={{
+																		maxWidth: 400,
+																		textOverflow: "ellipsis",
+																		overflow: "hidden",
+																	}}
+																>
+																	<a
+																		target="__blank"
+																		component="button"
+																		variant="body2"
+																		href={activity?.content}
+																	>
+																		{activity?.content}
+																	</a>
+																</div>
+																<div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+																<Typography
+																	style={{ fontWeight: 400 }}
+																	variant="caption"
+																>
+																	{activity?.created_at}
+																</Typography>{" "}
+															</div>
 														) : (
-															activity?.content
+															<div
+																style={{
+																	display: "flex",
+																	justifyContent: "space-between",
+																}}
+															>
+																<span>{activity?.content}</span>{" "}
+																<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+																<Typography
+																	style={{ fontWeight: 400 }}
+																	variant="caption"
+																>
+																	{activity?.created_at}
+																</Typography>
+															</div>
 														)
 													}
 												/>
@@ -658,12 +715,13 @@ function TicketDetails({
 								value={ticketDetails?.form?.ticket?.repair_status}
 								style={{ width: "200px" }}
 								disabled={
+									userType !== "ADMIN" &&
 									ticketDetails?.form?.ticket?.user_id ===
-									reduxState?.user?.profile?.id
+										reduxState?.user?.profile?.id
 								}
 							></Select>
 							&nbsp;
-							{userType === "ADMIN" && (
+							{userType !== "USER" && (
 								<Select
 									name="assignee"
 									options={reduxState?.user?.usersList

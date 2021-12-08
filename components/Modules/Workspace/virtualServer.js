@@ -80,7 +80,6 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
 	}, [reduxState?.workspace?.loading]);
 
 	useEffect(() => {
-		console.log("reduxState?.workspace?.server", reduxState?.workspace?.server);
 		if (!reduxState?.workspace?.server?.id && isSubmitted) {
 			getWorkSpaceDetails(Number(localStorage.getItem("userId")));
 		} else {
@@ -492,12 +491,7 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
 							</Box>
 						</GridItem>
 					) : (
-						<GridItem
-							xs={12}
-							sm={12}
-							md={12}
-							align="right"
-						>
+						<GridItem xs={12} sm={12} md={12} align="right">
 							{reduxState?.user?.profile?.is_profile_setup ? (
 								<Button
 									type="button"

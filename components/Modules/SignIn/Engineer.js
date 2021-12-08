@@ -97,6 +97,9 @@ function CustomerLogin(props) {
 
 	const [form, setForm] = useState({
 		email: "",
+		phone: "",
+		user_name: "",
+		confirm_password: "",
 		password: "",
 		first_name: "",
 		last_name: "",
@@ -131,6 +134,12 @@ function CustomerLogin(props) {
 			setLogin(true);
 		}
 	}, [reduxState?.login?.action_type]);
+
+	useEffect(() => {
+		if (props?.isSignUp) {
+			setLogin(false);
+		}
+	}, [props?.isSignUp]);
 
 	const hideMessage = () => {
 		setTimeout(() => {
@@ -171,18 +180,50 @@ function CustomerLogin(props) {
 		doLogin(postData);
 	};
 
+	const pwdRegx = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
 	const validateForm = () => {
-		if (form?.email === "") {
-			return false;
-		} else if (form?.password === "") {
-			return false;
-		} else if (!validateEmail(form?.email)) {
-			setEmailError(true);
-			return false;
-		} else {
-			setEmailError(false);
+		let _error = { ...emailError };
+
+		_error.email = form?.email === "" && "Email is required";
+		_error.password = form?.password === "" && "Password is required";
+		if (isLogin) {
+			if (Object.values(_error).some((p) => p)) {
+				return false;
+			}
 			return true;
 		}
+		_error.first_name = form?.first_name === "" && "First name is required.";
+
+		if (form?.email) {
+			_error.email = !validateEmail(form?.email) && "please enter valid email.";
+		}
+
+		_error.phone =
+			form?.phone === ""
+				? "Phone number is required"
+				: form?.phone.length < 10
+				? "Please enter valid phone"
+				: false;
+
+		_error.user_name = form?.user_name === "" && "User name is required";
+
+		if (form?.password) {
+			_error.password =
+				!pwdRegx.test(form?.password) &&
+				"Password must be at least a capital letter, a number, a special character, minimum 8 characters.";
+		}
+
+		_error.confirm_password =
+			form?.password !== form?.confirm_password &&
+			"Confirm Password must be matched with password";
+
+		setEmailError(_error);
+
+		if (Object.values(_error).some((p) => p)) {
+			return false;
+		}
+		return true;
 	};
 
 	const loginHandler = async (e) => {
@@ -191,15 +232,17 @@ function CustomerLogin(props) {
 			setLoading(true);
 			let postData = {
 				email: form?.email,
+				phone: form?.phone,
 				password: btoa(form?.password),
 				first_name: form?.first_name,
+				user_name: form?.user_name,
 				last_name: form?.last_name,
 				user_type: props?.loginType || "",
 				is_login: isLogin,
 			};
 			doLogin(postData);
 		} else {
-			setError("Please enter email and password.");
+			setError("Please fill all the valid details.");
 		}
 	};
 
@@ -304,11 +347,12 @@ function CustomerLogin(props) {
 													label="First Name"
 													autoFocus
 													onChange={changeHandler}
+													error={!!emailError?.first_name}
+													helperText={emailError?.first_name || ""}
 												/>
 											</Grid>
 											<Grid item xs={12} sm={6}>
 												<TextField
-													required
 													fullWidth
 													id="lastName"
 													label="Last Name"
@@ -317,6 +361,34 @@ function CustomerLogin(props) {
 													onChange={changeHandler}
 												/>
 											</Grid>
+										</>
+									)}
+									{!isLogin && (
+										<>
+											<GridItem xs={12}>
+												<TextField
+													fullWidth
+													onChange={changeHandler}
+													name="phone"
+													type="number"
+													label="Phone"
+													required
+													error={!!emailError?.phone}
+													helperText={emailError?.phone || ""}
+												/>
+											</GridItem>
+											<GridItem xs={12}>
+												<TextField
+													fullWidth
+													onChange={changeHandler}
+													name="user_name"
+													type="text"
+													label="User Name"
+													required
+													error={!!emailError?.user_name}
+													helperText={emailError?.user_name || ""}
+												/>
+											</GridItem>
 										</>
 									)}
 									<GridItem xs={12}>
@@ -328,21 +400,41 @@ function CustomerLogin(props) {
 											autocomplete="off"
 											label="Email"
 											required
-											error={emailError}
-											helperText={emailError && "Invalid email."}
+											error={!!emailError?.email}
+											helperText={emailError?.email || ""}
 										/>
 									</GridItem>
+
 									<GridItem xs={12}>
 										<TextField
 											fullWidth
 											onChange={changeHandler}
 											name="password"
 											type="password"
-											inputProps={{ maxLength: 10 }}
+											inputProps={{ maxLength: 20 }}
 											label="Password"
 											required
+											error={!!emailError?.password}
+											helperText={emailError?.password || ""}
 										/>
 									</GridItem>
+
+									{!isLogin && (
+										<GridItem xs={12}>
+											<TextField
+												fullWidth
+												onChange={changeHandler}
+												name="confirm_password"
+												type="password"
+												autocomplete="off"
+												label="Confirm Password"
+												required
+												error={!!emailError?.confirm_password}
+												helperText={emailError?.confirm_password || ""}
+											/>
+										</GridItem>
+									)}
+
 									{!isLogin && (
 										<Grid item xs={12}>
 											<FormControlLabel
@@ -435,7 +527,12 @@ function CustomerLogin(props) {
 										<Button
 											className={classes.link}
 											variant="subtitle2"
-											onClick={() => setLogin((login) => !login)}
+											onClick={() => {
+												setLogin((login) => !login);
+												if (!isLogin) {
+													setEmailError({});
+												}
+											}}
 										>
 											{!isLogin
 												? "Already have an account? Sign in"

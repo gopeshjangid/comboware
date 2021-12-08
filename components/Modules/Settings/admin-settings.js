@@ -16,6 +16,7 @@ import Wrapper from "components/Wrapper";
 import { Chip } from "components/Custom";
 import UsersList from "components/Modules/Dashboard/usersList";
 import HostManageMent from "./hostsManagement";
+import CreateAdmin from "../SignIn/Customer";
 function Settings({ saveResource, getResources, settings }) {
 	const classes = useStyles();
 	const reduxState = useSelector((state) => state);
@@ -236,6 +237,10 @@ function Settings({ saveResource, getResources, settings }) {
 					</GridItem>
 					<GridItem xs={12}>
 						<HostManageMent />
+					</GridItem>
+
+					<GridItem xs={12}>
+						<CreateAdmin isSignUp={true} loginType="ADMIN" />
 					</GridItem>
 
 					{/* <GridItem xs={12}>

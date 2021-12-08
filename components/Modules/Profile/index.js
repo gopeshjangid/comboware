@@ -35,6 +35,7 @@ import FieldSet from "components/Form/fieldset";
 import PhoneField from "components/PhoneFormat";
 import Wrapper from "components/Wrapper";
 import Tabs from "components/CustomTabs";
+import Confirm from "components/ConfirmBox";
 function Profile({
 	updateProfile,
 	createDomain,
@@ -78,6 +79,11 @@ function Profile({
 	const [domain, setDomain] = useState({ name: "", description: "" });
 	const [isSubmitted, setSubmitted] = useState(false);
 	const [formData, setForm] = useState("");
+	const [confirm, setConfirm] = useState({
+		open: false,
+		title: "Domain creation confirmation",
+		content: "Are you sure want to save ? Data can not be edited after saved.",
+	});
 	const [project, setProject] = useState({
 		name: "Service",
 		description: "xx",
@@ -227,17 +233,13 @@ function Profile({
 
 	const submitDomainHandler = (e) => {
 		e.preventDefault();
-		setSubmitted(true);
-		const domainData = domain;
-		if (domainData?.id) {
-			delete domainData["id"];
+		if (domain?.name) {
+			setConfirm({ ...confirm, open: true });
+		} else {
+			setSubmitted(true);
+			setError("Please fill domain name.");
+			manageMessage();
 		}
-		createDomain({
-			domain: domainData,
-			plan_type: "FIXED",
-			project: { ...project, name: "Service" },
-			userId: reduxState?.user?.profile?.id || 1,
-		});
 	};
 
 	const domainChangeHandler = (e) => {
@@ -308,9 +310,29 @@ function Profile({
 		);
 	};
 	const { is_profile_setup } = reduxState?.user?.profile;
+
+	const onAction = () => {
+		setSubmitted(true);
+		const domainData = domain;
+		if (domainData?.id) {
+			delete domainData["id"];
+		}
+		createDomain({
+			domain: domainData,
+			plan_type: "FIXED",
+			project: { ...project, name: "Service" },
+			userId: reduxState?.user?.profile?.id || 1,
+		});
+	};
 	return (
 		<Wrapper>
 			<Loader open={loader} />
+			<Confirm
+				open={confirm?.open}
+				title={confirm?.title}
+				content={confirm?.content}
+				onAction={onAction}
+			/>
 			<Snackbar
 				open={isSubmitted}
 				type={message ? "success" : "error"}
