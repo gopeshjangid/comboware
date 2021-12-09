@@ -16,7 +16,7 @@ import { getWorkSpaceDetails } from "../Workspace/redux/action";
 import {
 	addNewActivity,
 	createTicket,
-	getCategories,
+	getAllCategories,
 	getSubCategories,
 } from "./redux/action";
 import styles from "./styles";
@@ -24,7 +24,7 @@ import styles from "./styles";
 function newTicket({
 	createTicket,
 	addNewActivity,
-	getCategories,
+	getAllCategories,
 	getSubCategories,
 }) {
 	const useStyles = makeStyles(styles);
@@ -36,6 +36,7 @@ function newTicket({
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
 	const [image, setImage] = useState(null);
+	const [categoriesList, setCategoriesList] = useState([]);
 	const [ticketDetails, setTicketDetails] = useState({
 		form: {
 			userId: reduxState?.user?.profile?.id,
@@ -92,29 +93,32 @@ function newTicket({
 
 	useEffect(() => {
 		setCategories(
-			reduxState?.ticket?.categories?.map((cat) => {
-				return {
-					...cat,
-					label: cat?.category_name,
-					value: cat?.id,
-				};
-			})
+			reduxState?.ticket?.categories
+				?.filter((sub) => sub?.category_status)
+				?.map((cat) => {
+					return {
+						...cat,
+						label: cat?.category_name,
+						value: cat?.id,
+					};
+				})
 		);
+		setCategoriesList(reduxState?.ticket?.categories);
 		return () => {};
 	}, [reduxState?.ticket?.categories]);
 
-	useEffect(() => {
-		setSubCategories([
-			...reduxState?.ticket?.subCategories?.map((cat) => {
-				return {
-					...cat,
-					label: cat?.subcategory_name,
-					value: cat?.id,
-				};
-			}),
-		]);
-		return () => {};
-	}, [reduxState?.ticket?.subCategories]);
+	// useEffect(() => {
+	// 	setSubCategories([
+	// 		...reduxState?.ticket?.subCategories?.map((cat) => {
+	// 			return {
+	// 				...cat,
+	// 				label: cat?.subcategory_name,
+	// 				value: cat?.id,
+	// 			};
+	// 		}),
+	// 	]);
+	// 	return () => {};
+	// }, [reduxState?.ticket?.subCategories]);
 
 	useEffect(() => {
 		if (!reduxState?.ticket?.server && isSubmitted) {
@@ -127,7 +131,7 @@ function newTicket({
 	}, [reduxState?.ticket?.server]);
 
 	useEffect(() => {
-		getCategories();
+		getAllCategories(() => {});
 	}, []);
 
 	const validateServerDetails = () => {
@@ -149,7 +153,6 @@ function newTicket({
 	const hideNotification = () => {
 		setSubmitted(false);
 		setLoader(false);
-		setMess;
 	};
 
 	const activitySubmit = (ticketNumber) => {
@@ -194,21 +197,41 @@ function newTicket({
 		}
 	};
 
+	const formate = (list) => {
+		return list?.map((cat) => {
+			return {
+				label: cat?.category_name || cat?.subcategory_name,
+				value: cat?.id,
+			};
+		});
+	};
+
 	const subCategoriesHandler = (id) => {
-		if (id) getSubCategories(id);
+		///if (id) getSubCategories(id);
+	};
+
+	const getSubCategoriesByCategory = (id) => {
+		const filtered = categoriesList.filter((cat) => cat?.id === id);
+		if (filtered?.length) {
+			return formate(
+				filtered[0]?.subcategories?.filter((sub) => sub?.subcategory_status)
+			);
+		}
+		return [];
 	};
 
 	const changeHandler = (e) => {
 		let name = e.target.name;
 		let value = e.target.value;
-		if (name === "category_id") {
-			subCategoriesHandler(value);
+		let ticketData = { ...ticketDetails?.form?.ticket, [name]: value };
+		if (name === "ticket_category") {
+			ticketData.subcategory_id = 0;
 		}
 		setTicketDetails({
 			...ticketDetails,
 			form: {
 				...ticketDetails?.form,
-				[name]: value,
+				...ticketData,
 			},
 		});
 	};
@@ -266,8 +289,8 @@ function newTicket({
 										<GridItem xs={6}>
 											<Select
 												name="subcategory_id"
-												options={subCategories?.filter(
-													(cat) => cat?.subcategory_status === 1
+												options={getSubCategoriesByCategory(
+													ticketDetails?.form?.category_id
 												)}
 												label="Sub Category"
 												onChange={changeHandler}
@@ -355,5 +378,5 @@ export default connect(
 	(state) => {
 		return { ...state };
 	},
-	{ getCategories, getSubCategories, createTicket, addNewActivity }
+	{ getAllCategories, getSubCategories, createTicket, addNewActivity }
 )(newTicket);

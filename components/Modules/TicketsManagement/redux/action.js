@@ -108,7 +108,6 @@ export const addNewActivity = (data, callBack) => (dispatch, getState) => {
 	)
 		.then((res) => {
 			let state = getState();
-			console.log("add activity reponse", res?.response);
 			callBack();
 			dispatch(
 				saveTicket({
@@ -124,16 +123,16 @@ export const addNewActivity = (data, callBack) => (dispatch, getState) => {
 			);
 		})
 		.catch((err) => {
-			console.log("ticketConstants.API  err-- =>>>>>>>", err);
-			dispatch(
-				failed({
-					data: null,
-					error:
-						data?.type === "image"
-							? "Error in image uploading..."
-							: errorHandler(),
-				})
-			);
+			// console.log("ticketConstants.API  err-- =>>>>>>>", err);
+			// dispatch(
+			// 	failed({
+			// 		data: null,
+			// 		error:
+			// 			data?.type === "image"
+			// 				? "Error in image uploading..."
+			// 				: errorHandler(),
+			// 	})
+			// );
 		});
 };
 
