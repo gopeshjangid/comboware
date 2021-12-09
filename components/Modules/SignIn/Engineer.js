@@ -267,7 +267,7 @@ function CustomerLogin(props) {
 		localStorage.setItem("keepLogin", e.target.checked);
 	};
 	const { loginType } = props;
-
+	const loginLabel = isLogin ? "Login" : "Sign Up";
 	return (
 		<Container component="main" maxWidth="xs">
 			{loading && <LinearProgress align="top" />}
@@ -309,7 +309,9 @@ function CustomerLogin(props) {
 				<Box className={classes.loginBox}>
 					<Box textAlign="center">
 						<Typography variant="h6" component="h6">
-							{loginType === "ER" ? "Engineer Login" : "Customer Login"}
+							{loginType === "ER"
+								? "Engineer " + loginLabel
+								: "Customer " + loginLabel}
 						</Typography>
 					</Box>
 

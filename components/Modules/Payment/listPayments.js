@@ -65,8 +65,8 @@ function TicketsList({ getAllPayments }) {
 			localStorage.getItem("userType") !== "ADMIN"
 				? "?userId=" +
 				  Number(localStorage.getItem("userId")) +
-				  "&payment_status=COMPLETED&payment_id="
-				: "?payment_id=''&payment_status=COMPLETED";
+				  "&payment_status=COMPLETED"
+				: "?payment_status=COMPLETED";
 		getAllPayments(query);
 		return () => {};
 	}, []);
@@ -113,7 +113,6 @@ function TicketsList({ getAllPayments }) {
 
 	const getColumnsFields = () => {
 		return [
-			{ field: "select", select: true },
 			{ field: "payment_id", header: "Payment ID" },
 			{ field: "reference_id", header: "Reference ID" },
 			{

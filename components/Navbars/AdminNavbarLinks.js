@@ -259,12 +259,12 @@ function AdminNavbarLinks({
 							>
 								Profile
 							</MenuItem>
-							<MenuItem
+							{/* <MenuItem
 								onClick={settingsClick}
 								className={classes.dropdownItem}
 							>
 								Settings
-							</MenuItem>
+							</MenuItem> */}
 							<Divider light />
 							<MenuItem onClick={Logout} className={classes.dropdownItem}>
 								Logout

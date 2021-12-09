@@ -40,7 +40,7 @@ import {
 	getTicketDetails,
 	addNewActivity,
 	updateTicketDetails,
-	getCategories,
+	getAllCategories,
 	getSubCategories,
 	AssignTicket,
 } from "./redux/action";
@@ -52,7 +52,7 @@ function TicketDetails({
 	getTicketDetails,
 	updateTicketDetails,
 	addNewActivity,
-	getCategories,
+	getAllCategories,
 	getSubCategories,
 	updateSystemInfo,
 	usersList,
@@ -66,6 +66,7 @@ function TicketDetails({
 	const [loader, setLoader] = useState(false);
 	const [categories, setCategories] = useState([]);
 	const [subCategories, setSubCategories] = useState([]);
+	const [categoriesList, setCategoriesList] = useState([]);
 	const [selectedSubCat, setSelectedSubCat] = useState(null);
 	const [selectedCat, setSelectedCat] = useState(null);
 	const [openModal, setModal] = useState(false);
@@ -112,6 +113,15 @@ function TicketDetails({
 		}
 	};
 
+	const formate = (list) => {
+		return list?.map((cat) => {
+			return {
+				label: cat?.category_name || cat?.subcategory_name,
+				value: cat?.id,
+			};
+		});
+	};
+
 	useEffect(() => {
 		setCategories(
 			reduxState?.ticket?.categories
@@ -123,34 +133,34 @@ function TicketDetails({
 					};
 				})
 		);
-
+		setCategoriesList(reduxState?.ticket?.categories);
 		setSelectedCat(reduxState?.ticket?.ticketDetails?.ticket?.ticket_category);
 		return () => {};
 	}, [reduxState?.ticket?.categories]);
 
-	useEffect(() => {
-		setSubCategories(
-			reduxState?.ticket?.subCategories
-				?.filter(
-					(sub) => sub?.subcategory_status || sub?.subcategory_status === "1"
-				)
-				.map((cat) => {
-					return {
-						label: cat?.subcategory_name,
-						value: cat?.id,
-					};
-				})
-		);
+	// useEffect(() => {
+	// 	setSubCategories(
+	// 		reduxState?.ticket?.subCategories
+	// 			?.filter(
+	// 				(sub) => sub?.subcategory_status || sub?.subcategory_status === "1"
+	// 			)
+	// 			.map((cat) => {
+	// 				return {
+	// 					label: cat?.subcategory_name,
+	// 					value: cat?.id,
+	// 				};
+	// 			})
+	// 	);
 
-		return () => {};
-	}, [reduxState?.ticket?.subCategories]);
+	// 	return () => {};
+	// }, [reduxState?.ticket?.subCategories]);
 
-	useEffect(() => {
-		setTicketDetails({
-			...ticketDetails,
-			form: { ...reduxState?.ticket?.ticketDetails },
-		});
-	}, [subCategories]);
+	// useEffect(() => {
+	// 	setTicketDetails({
+	// 		...ticketDetails,
+	// 		form: { ...reduxState?.ticket?.ticketDetails },
+	// 	});
+	// }, [subCategories]);
 
 	useEffect(() => {
 		if (reduxState?.ticket?.message || reduxState?.ticket?.error) {
@@ -174,14 +184,14 @@ function TicketDetails({
 			...ticketDetails,
 			form: { ...reduxState?.ticket?.ticketDetails },
 		});
-		if (
-			reduxState?.ticket?.ticketDetails?.ticket?.ticket_category &&
-			subCategories.length === 0
-		) {
-			getSubCategories(
-				reduxState?.ticket?.ticketDetails?.ticket?.ticket_category
-			);
-		}
+		// if (
+		// 	reduxState?.ticket?.ticketDetails?.ticket?.ticket_category &&
+		// 	subCategories.length === 0
+		// ) {
+		// 	getSubCategories(
+		// 		reduxState?.ticket?.ticketDetails?.ticket?.ticket_category
+		// 	);
+		// }
 
 		setNote(null);
 
@@ -194,7 +204,7 @@ function TicketDetails({
 		if (ticketId) {
 			setSubmitted(true);
 			getTicketDetails(ticketId, Number(localStorage.getItem("userId")));
-			getCategories();
+			getAllCategories(() => {});
 		}
 
 		if (userType === "ADMIN" || localStorage.getItem("userType") === "ADMIN") {
@@ -243,19 +253,27 @@ function TicketDetails({
 	const changeHandler = (e) => {
 		let name = e.target.name;
 		let value = e.target.value;
+		let ticketData = { ...ticketDetails?.form?.ticket, [name]: value };
 		if (name === "ticket_category") {
-			getSubCategories(value);
+			ticketData.ticket_subcategory = 0;
 		}
 		setTicketDetails({
 			...ticketDetails,
 			form: {
 				...ticketDetails?.form,
-				ticket: {
-					...ticketDetails?.form?.ticket,
-					[name]: value,
-				},
+				ticket: ticketData,
 			},
 		});
+	};
+
+	const getSubCategoriesByCategory = (id) => {
+		const filtered = categoriesList.filter((cat) => cat?.id === id);
+		if (filtered?.length) {
+			return formate(
+				filtered[0]?.subcategories?.filter((sub) => sub?.subcategory_status)
+			);
+		}
+		return [];
 	};
 
 	const hideNotification = () => {
@@ -431,25 +449,25 @@ function TicketDetails({
 													onChange={changeHandler}
 													value={ticketDetails?.form?.ticket?.ticket_category}
 													disabled={
-														userType !== "ADMIN" &&
 														ticketDetails?.form?.ticket?.user_id !==
-															reduxState?.user?.profile?.id
+														reduxState?.user?.profile?.id
 													}
 												/>
 											</GridItem>
 											<GridItem xs={6}>
 												<Select
 													name="ticket_subcategory"
-													options={subCategories}
+													options={getSubCategoriesByCategory(
+														ticketDetails?.form?.ticket?.ticket_category
+													)}
 													label="Sub Category"
 													onChange={changeHandler}
 													value={
 														ticketDetails?.form?.ticket?.ticket_subcategory
 													}
 													disabled={
-														userType !== "ADMIN" &&
 														ticketDetails?.form?.ticket?.user_id !==
-															reduxState?.user?.profile?.id
+														reduxState?.user?.profile?.id
 													}
 												/>
 											</GridItem>
@@ -715,8 +733,8 @@ function TicketDetails({
 								value={ticketDetails?.form?.ticket?.repair_status}
 								style={{ width: "200px" }}
 								disabled={
-									userType !== "ADMIN" &&
-									ticketDetails?.form?.ticket?.user_id ===
+									userType === "ADMIN" ||
+									ticketDetails?.form?.ticket?.assignee_id ===
 										reduxState?.user?.profile?.id
 								}
 							></Select>
@@ -738,6 +756,10 @@ function TicketDetails({
 									onChange={assigneeHandler}
 									value={assignee || ticketDetails?.form?.ticket?.assignee_id}
 									style={{ width: "200px" }}
+									disabled={
+										ticketDetails?.form?.ticket?.user_id ===
+										reduxState?.user?.profile?.id
+									}
 								/>
 							)}
 							&nbsp;
@@ -790,7 +812,7 @@ export default connect(
 	},
 	{
 		getTicketDetails,
-		getCategories,
+		getAllCategories,
 		getSubCategories,
 		addNewActivity,
 		updateTicketDetails,
