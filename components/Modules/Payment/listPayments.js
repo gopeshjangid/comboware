@@ -254,7 +254,7 @@ function TicketsList({ getAllPayments }) {
 			<FieldSet title="Payment list">
 				<GridContainer spacing={2}>
 					<GridItem xs={6}>
-						<Search onSubmit={onSearch} placeHolder="Search payments" />
+						{/* <Search onSubmit={onSearch} placeHolder="Search payments" /> */}
 					</GridItem>
 					<GridItem xs={6} align="right">
 						{userType !== "ADMIN" && (

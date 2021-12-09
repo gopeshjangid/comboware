@@ -319,7 +319,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 					<GridItem xs={12} sm={12} md={12}>
 						<GridContainer spacing={1} justify="space-between">
 							<GridItem xs={12} sm={6} align="left">
-								<Search onSubmit={onSearch} />
+								{/* <Search onSubmit={onSearch} /> */}
 							</GridItem>
 							<GridItem xs={12} sm={6} align="right">
 								{userType !== "ADMIN" && (
