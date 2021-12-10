@@ -126,13 +126,21 @@ const Engineers = ({
 	};
 
 	const submitHandler = async (e, type) => {
-		setLoader(true);
-		await saveSkills(
-			{ type: type.toUpperCase(), name: fromData[type] },
-			callback
-		);
-		await getSkillLevels(type.toUpperCase(), callback);
-		setFromData({ ...fromData, [type]: "" });
+		if (fromData[type] !== "") {
+			setLoader(true);
+			await saveSkills(
+				{ type: type.toUpperCase(), name: fromData[type] },
+				callback
+			);
+			//await getSkillLevels(type.toUpperCase(), callback);
+			setFromData({ ...fromData, [type]: "" });
+		} else {
+			setSubmitted(true);
+			setMessage({ type: "error", message: "Please fill valid detail." });
+			setTimeout(() => {
+				setSubmitted(false);
+			}, 4000);
+		}
 	};
 
 	const updateStatus = async (event, id) => {
@@ -162,7 +170,7 @@ const Engineers = ({
 									<TextField
 										name="skill"
 										fullWidth
-										label="New Skill"
+										label="Add New Skill"
 										value={fromData.skill}
 										onChange={inputChangeHandler}
 										type="text"
@@ -177,7 +185,7 @@ const Engineers = ({
 										size="large"
 										onClick={(e) => submitHandler(e, "skill")}
 									>
-										Save
+										Add
 									</Button>
 								</GridItem>
 							</GridContainer>
@@ -195,7 +203,7 @@ const Engineers = ({
 									<TextField
 										name="level"
 										fullWidth
-										label="New Skill Level"
+										label="Add New Skill Level"
 										value={fromData.level}
 										onChange={inputChangeHandler}
 										type="text"
@@ -210,7 +218,7 @@ const Engineers = ({
 										size="large"
 										onClick={(e) => submitHandler(e, "level")}
 									>
-										Save
+										Add
 									</Button>
 								</GridItem>
 							</GridContainer>

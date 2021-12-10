@@ -36,17 +36,22 @@ import PhoneField from "components/PhoneFormat";
 import Wrapper from "components/Wrapper";
 import Tabs from "components/CustomTabs";
 import Confirm from "components/ConfirmBox";
+import { getSkillLevels } from "../SkillsManagement/redux/action";
+
 function Profile({
 	updateProfile,
 	createDomain,
 	updateSystemInfo,
 	getProfile,
+	getSkillLevels,
 }) {
 	const useStyles = makeStyles(styles);
 	const classes = useStyles();
 	const reduxState = useSelector((state) => state);
 	const defaultSkill = { skill_name: "", skill_level: "" };
 	const [skills, setSkills] = useState([defaultSkill]);
+	const [skillNames, setSkillName] = useState([]);
+	const [levels, setLevels] = useState([]);
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
 	const imageRef = useRef();
@@ -86,7 +91,7 @@ function Profile({
 	});
 	const [project, setProject] = useState({
 		name: "Service",
-		description: "xx",
+		description: "",
 	});
 	const [loader, setLoader] = useState(false);
 	const [system_image, setImage] = useState("");
@@ -113,6 +118,24 @@ function Profile({
 		}
 		return () => {};
 	}, [reduxState?.workspace?.project]);
+
+	useEffect(() => {
+		getSkillLevels("SKILL", () => {});
+		getSkillLevels("LEVEL", () => {});
+		return () => {};
+	}, []);
+
+	console.log("redux", reduxState?.user);
+
+	useEffect(() => {
+		setSkillName(reduxState?.skills_management.skills);
+		return () => {};
+	}, [reduxState?.skills_management.skills]);
+
+	useEffect(() => {
+		setLevels(reduxState?.skills_management.levels);
+		return () => {};
+	}, [reduxState?.skills_management.levels]);
 
 	useEffect(() => {
 		setMessage(reduxState?.workspace?.message || reduxState?.workspace?.error);
@@ -164,35 +187,36 @@ function Profile({
 				: true,
 		};
 
-		_profile.error = {
-			..._profile.error,
-			password: _profile?.form?.password
-				? _profile?.form?.password.length < 8
-				: reduxState?.user?.profile?.is_profile_setup
-				? false
-				: true,
-		};
+		// _profile.error = {
+		// 	..._profile.error,
+		// 	password: _profile?.form?.password
+		// 		? _profile?.form?.password.length < 8
+		// 		: reduxState?.user?.profile?.is_profile_setup
+		// 		? false
+		// 		: true,
+		// };
 		setProfile(_profile);
 
 		return !Object.values(_profile?.error).some((field) => field);
 	};
 
 	const callback = (status, message) => {
-		if (status !== 0) {
-			setSubmitted(false);
-			setLoader(false);
-		}
-		if (status !== 2) {
+		setSubmitted(true);
+		setLoader(false);
+		if (status === 1) {
 			setMessage(message);
 		} else {
 			setError(message);
 		}
+
+		setTimeout(() => {
+			setSubmitted(false);
+		}, 5000);
 	};
 
 	const submitHandler = (e) => {
 		e.preventDefault();
 		if (profileValidation()) {
-			setSubmitted(true);
 			setLoader(true);
 			updateProfile(
 				{
@@ -460,7 +484,7 @@ function Profile({
 															}
 														/>
 													</GridItem>
-													<GridItem xs={12} sm={4}>
+													{/* <GridItem xs={12} sm={4}>
 														{!is_profile_setup && (
 															<TextField
 																fullWidth
@@ -477,7 +501,7 @@ function Profile({
 																id="password"
 															/>
 														)}
-													</GridItem>
+													</GridItem> */}
 													<GridItem xs={12} sm={12} md={12}>
 														<Box textAlign="right">
 															<Button
@@ -660,7 +684,7 @@ function Profile({
 															onChange={profileChangeHandler}
 															name="company_position"
 															label="Company Position"
-															value={profile?.form?.company_position}
+															value={profile?.form?.company_position || ""}
 														/>
 													</GridItem>
 													<GridItem xs={12} sm={4}>
@@ -684,36 +708,47 @@ function Profile({
 															value={profile?.form?.company_phone}
 														/>
 													</GridItem>
-													<GridItem sm={4} xs={12}>
-														<Typography>
-															{system_image ? "System image" : ""}
-														</Typography>
-														{system_image && (
-															<img
-																src={system_image}
-																width={300}
-																height={250}
-																alt="system image"
-															/>
-														)}
-														<div>&nbsp;</div>
-														<div style={{ display: "flex" }}>
-															<TextField
-																accept="image/png, image/gif, image/jpeg, image/jpg"
-																onChange={onFileUpload}
-																name="system_image"
-																type="file"
-																ref={imageRef}
-																label="Upload new system image"
-																inputProps={{
-																	accept:
-																		"image/png, image/gif, image/jpeg, image/jpg",
+													<GridItem sm={6} xs={12}>
+														<div
+															style={{
+																display: "flex",
+																"justify-content": "flex-start",
+															}}
+														>
+															{system_image && (
+																<img
+																	src={system_image}
+																	width={300}
+																	height={250}
+																	alt="system image"
+																/>
+															)}
+															<div>&nbsp;</div>
+															<div
+																style={{
+																	display: "flex",
+																	"align-items": "center",
+																	"align-content": "center",
+																	"justify-content": "center",
 																}}
-															/>
-
-															<IconButton onClick={onUpload}>
-																<CloudUpload /> Upload
-															</IconButton>
+															>
+																<input
+																	accept="image/png, image/gif, image/jpeg, image/jpg"
+																	onChange={onFileUpload}
+																	name="system_image"
+																	type="file"
+																	ref={imageRef}
+																	inputProps={{
+																		accept:
+																			"image/png, image/gif, image/jpeg, image/jpg",
+																	}}
+																/>
+																<div style={{ textAlign: "left" }}>
+																	<IconButton onClick={onUpload}>
+																		<CloudUpload /> Upload
+																	</IconButton>
+																</div>
+															</div>
 														</div>
 													</GridItem>
 													<GridItem xs={12} sm={12} md={12}>
@@ -780,7 +815,7 @@ function Profile({
 																return (
 																	<React.Fragment key={"skillkey" + index}>
 																		<GridItem item sm={5} xs={8}>
-																			<TextField
+																			{/* <TextField
 																				variant="outlined"
 																				required
 																				fullWidth
@@ -790,6 +825,20 @@ function Profile({
 																				id="skills"
 																				value={skill?.skill_name}
 																				onChange={(e) => skillHandler(e, index)}
+																			/> */}
+
+																			<Select
+																				style={{ width: "240px" }}
+																				label={"Skills"}
+																				name="skill_name"
+																				value={skill?.skill_name}
+																				onChange={(e) => skillHandler(e, index)}
+																				options={skillNames
+																					?.filter((skill) => skill?.status)
+																					?.map((skill) => ({
+																						label: skill?.skills_name,
+																						value: skill?.id,
+																					}))}
 																			/>
 																		</GridItem>
 																		<GridItem item sm={5} xs={4}>
@@ -799,10 +848,12 @@ function Profile({
 																				name="skill_level"
 																				value={skill?.skill_level}
 																				onChange={(e) => skillHandler(e, index)}
-																				options={SKILLS?.map((skill) => ({
-																					label: skill,
-																					value: skill,
-																				}))}
+																				options={levels
+																					?.filter((skill) => skill?.status)
+																					?.map((skill) => ({
+																						label: skill?.skills_level,
+																						value: skill?.id,
+																					}))}
 																			/>
 																		</GridItem>
 																		<GridItem item sm={2} xs={2}>
@@ -853,5 +904,5 @@ export default connect(
 	(state) => {
 		return { ...state };
 	},
-	{ createDomain, updateProfile, getProfile, updateSystemInfo }
+	{ createDomain, updateProfile, getProfile, updateSystemInfo, getSkillLevels }
 )(Profile);

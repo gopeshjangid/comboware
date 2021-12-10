@@ -33,6 +33,7 @@ import logo from "assets/img/logo.svg";
 import LinearProgress from "components/Loader/linear";
 import BasicPopover from "components/Popover";
 import { route } from "next/dist/next-server/server/router";
+import PhoneField from "components/PhoneFormat";
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
@@ -262,6 +263,10 @@ function CustomerLogin(props) {
 		setForm({ ...form, [name]: value });
 	};
 
+	const userpPoneHandler = (value) => {
+		setForm({ ...form, phone: value });
+	};
+
 	const KeepSignedLogin = (e) => {
 		setKeepLogin(e.target.checked);
 		localStorage.setItem("keepLogin", e.target.checked);
@@ -368,13 +373,14 @@ function CustomerLogin(props) {
 									{!isLogin && (
 										<>
 											<GridItem xs={12}>
-												<TextField
+												<PhoneField
 													fullWidth
-													onChange={changeHandler}
+													onChange={(v) => userpPoneHandler(v)}
 													name="phone"
 													type="number"
 													label="Phone"
 													required
+													defaultCountry={"tw"}
 													error={!!emailError?.phone}
 													helperText={emailError?.phone || ""}
 												/>

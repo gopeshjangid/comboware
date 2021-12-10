@@ -56,28 +56,37 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
 		},
 	});
 
-	const manageMessage = () => {
+	const manageMessage = (status, message) => {
+		if (status !== -1) {
+			setLoader(false);
+		}
+		if (message) {
+			setMessage({
+				text: message,
+				type: status === 0 ? "error" : "success",
+			});
+		}
 		setTimeout(() => {
 			setSubmitted(false);
 		}, 4000);
 	};
 
-	useEffect(() => {
-		if (reduxState?.workspace?.message || reduxState?.workspace?.error) {
-			setMessage({
-				text: reduxState?.workspace?.message || reduxState?.workspace?.error,
-				type: reduxState?.workspace?.error ? "error" : "success",
-			});
-			setSubmitted(true);
-			manageMessage();
-		}
-		return () => {};
-	}, [reduxState?.workspace?.message]);
+	// useEffect(() => {
+	// 	if (reduxState?.workspace?.message || reduxState?.workspace?.error) {
+	// 		setMessage({
+	// 			text: reduxState?.workspace?.message || reduxState?.workspace?.error,
+	// 			type: reduxState?.workspace?.error ? "error" : "success",
+	// 		});
+	// 		setSubmitted(true);
+	// 		manageMessage();
+	// 	}
+	// 	return () => {};
+	// }, [reduxState?.workspace?.message]);
 
-	useEffect(() => {
-		setLoader(reduxState?.workspace?.loading);
-		return () => {};
-	}, [reduxState?.workspace?.loading]);
+	// useEffect(() => {
+	// 	setLoader(reduxState?.workspace?.loading);
+	// 	return () => {};
+	// }, [reduxState?.workspace?.loading]);
 
 	useEffect(() => {
 		if (!reduxState?.workspace?.server?.id && isSubmitted) {
@@ -101,7 +110,7 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
 	}, [reduxState?.workspace?.server]);
 
 	useEffect(() => {
-		getWorkSpaceDetails(Number(localStorage.getItem("userId")));
+		getWorkSpaceDetails(Number(localStorage.getItem("userId")), manageMessage);
 	}, []);
 
 	const validateServerDetails = () => {
@@ -132,10 +141,13 @@ function Server({ serverRequest, getWorkSpaceDetails }) {
 		setSubmitted(true);
 		if (validateServerDetails()) {
 			setLoader(true);
-			serverRequest({
-				...server?.form,
-				userId: localStorage.getItem("userId"),
-			});
+			serverRequest(
+				{
+					...server?.form,
+					userId: localStorage.getItem("userId"),
+				},
+				manageMessage
+			);
 		}
 	};
 

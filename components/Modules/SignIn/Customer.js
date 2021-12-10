@@ -28,6 +28,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import TextField from "../../CustomInput/TextField";
 import LinearProgress from "components/Loader/linear";
 import FieldSet from "components/Form/fieldset";
+import PhoneField from "components/PhoneFormat";
 const useStyles = makeStyles((theme) => ({
 	paper: {
 		marginTop: theme.spacing(8),
@@ -179,6 +180,10 @@ function CustomerLogin(props) {
 		setForm({ ...form, [name]: value });
 	};
 
+	const userpPoneHandler = (value) => {
+		setForm({ ...form, phone: value });
+	};
+
 	return (
 		<FieldSet>
 			{loading && <LinearProgress align="top" />}
@@ -229,14 +234,15 @@ function CustomerLogin(props) {
 							</Grid>
 
 							<GridItem xs={12}>
-								<TextField
+								<PhoneField
 									fullWidth
-									onChange={changeHandler}
+									onChange={(v) => userpPoneHandler(v)}
 									name="phone"
 									type="number"
 									value={form.phone}
 									label="Phone"
 									required
+									defaultCountry={"tw"}
 									error={!!emailError?.phone}
 									helperText={emailError?.phone || ""}
 								/>

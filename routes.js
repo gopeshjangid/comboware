@@ -35,14 +35,14 @@ const dashboardRoutes = [
 		icon: PaymentOutlined,
 		layout: "/payment",
 	},
-	// {
-	// 	path: "/#",
-	// 	name: "Skills Management",
-	// 	accessors: ["ADMIN"],
-	// 	rtlName: "المهندسين",
-	// 	icon: PaymentOutlined,
-	// 	layout: "/skills-management",
-	// },
+	{
+		path: "/#",
+		name: "Skills Management",
+		accessors: ["ADMIN"],
+		rtlName: "المهندسين",
+		icon: PaymentOutlined,
+		layout: "/skills-management",
+	},
 
 	{
 		path: "/",
@@ -82,14 +82,14 @@ const dashboardRoutes = [
 		icon: Notifications,
 		layout: "/admin",
 	},
-	// {
-	// 	path: "/#",
-	// 	name: "Customer Management",
-	// 	accessors: ["ADMIN"],
-	// 	rtlName: "إخطارات",
-	// 	icon: Notifications,
-	// 	layout: "/customer-management",
-	// },
+	{
+		path: "/#",
+		name: "Customer Management",
+		accessors: ["ADMIN"],
+		rtlName: "إخطارات",
+		icon: Notifications,
+		layout: "/customer-management",
+	},
 	{
 		path: "/servers",
 		name: "Workspace",
