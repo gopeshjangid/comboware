@@ -748,7 +748,7 @@ function TicketDetails({
 												user?.id !== ticketDetails?.form?.ticket?.user_id
 										)
 										.map((user) => ({
-											label: user?.first_name + " " + (user?.last_name || ""),
+											label: user?.user_name,
 											value: user?.id,
 										}))}
 									label="Assignee Engineer"
