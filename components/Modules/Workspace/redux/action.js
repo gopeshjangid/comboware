@@ -7,7 +7,7 @@ import {
 	API,
 } from "./constants";
 import Service from "../../../../service/index";
-
+import { saveProfile } from "../../Profile/redux/action";
 export const errorHandler = (code) => {
 	switch (code) {
 		case 500:
@@ -36,11 +36,17 @@ export const requestFailed = (data) => {
 	return { type: REQUEST_FAILED, payload: data };
 };
 
-export const createDomain = (data) => (dispatch) => {
+export const createDomain = (data) => (dispatch, getState) => {
 	dispatch(requestStart({ message: "Creating domain and project..." }));
 	Service.post(API.createDomain, data)
 		.then((res) => {
 			console.log("res", res?.response);
+			const state = getState();
+			dispatch(
+				saveProfile({
+					profile: { ...state?.user?.profile, is_profile_setup: 1 },
+				})
+			);
 			dispatch(
 				saveDomain({
 					data: res?.data?.data,
