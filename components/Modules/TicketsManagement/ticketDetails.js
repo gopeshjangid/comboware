@@ -733,9 +733,11 @@ function TicketDetails({
 								value={ticketDetails?.form?.ticket?.repair_status}
 								style={{ width: "200px" }}
 								disabled={
-									userType === "ADMIN" ||
-									ticketDetails?.form?.ticket?.assignee_id ===
-										reduxState?.user?.profile?.id
+									!(
+										userType === "ER" &&
+										ticketDetails?.form?.ticket?.assignee_id ===
+											reduxState?.user?.profile?.id
+									)
 								}
 							></Select>
 							&nbsp;

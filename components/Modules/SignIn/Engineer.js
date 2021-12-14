@@ -259,7 +259,9 @@ function CustomerLogin(props) {
 	const changeHandler = (e) => {
 		let name = e.target.name;
 		let value = e.target.value;
-
+		if (name === "user_name") {
+			value = value ? value.replaceAll(" ", "") : '';
+		}
 		setForm({ ...form, [name]: value });
 	};
 
@@ -393,6 +395,7 @@ function CustomerLogin(props) {
 													type="text"
 													label="User Name"
 													required
+													value={form?.user_name}
 													error={!!emailError?.user_name}
 													helperText={emailError?.user_name || ""}
 												/>

@@ -180,12 +180,12 @@ function Profile({
 			..._profile.error,
 			first_name: _profile?.form?.first_name === "",
 		};
-		_profile.error = {
-			..._profile.error,
-			user_name: _profile?.form?.user_name
-				? _profile?.form?.user_name.length < 5
-				: true,
-		};
+		// _profile.error = {
+		// 	..._profile.error,
+		// 	user_name: _profile?.form?.user_name
+		// 		? _profile?.form?.user_name.length < 5
+		// 		: true,
+		// };
 
 		// _profile.error = {
 		// 	..._profile.error,
@@ -467,7 +467,7 @@ function Profile({
 														<TextField
 															fullWidth
 															onChange={profileChangeHandler}
-															disabled={profile?.form?.is_profile_setup}
+															disabled={true}
 															helperText={
 																profile?.form?.user_name?.error &&
 																"Please enter user name"

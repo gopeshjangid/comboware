@@ -120,7 +120,7 @@ function TicketsList({ getAllTickets, getProfile }) {
 				},
 			},
 			{ field: "ticket_subject", header: "Title", renderCell: () => {} },
-			{ field: "first_name", header: "Customer Name" },
+			{ field: "user_name", header: "Customer user name" },
 			{
 				field: "ticket_status",
 				header: "Ticket Status",
