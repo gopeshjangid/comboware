@@ -746,7 +746,7 @@ function TicketDetails({
 								}
 							></Select>
 							&nbsp;
-							{userType === "ADMIN" && (
+							{userType !== "USER" && (
 								<Select
 									name="assignee"
 									options={reduxState?.user?.usersList
@@ -758,15 +758,12 @@ function TicketDetails({
 											label: user?.user_name,
 											value: user?.id,
 										}))}
-									label="Assignee Engineer"
+									label="Assign Engineer"
 									fullWidth
 									onChange={assigneeHandler}
 									value={assignee || ticketDetails?.form?.ticket?.assignee_id}
 									style={{ width: "200px" }}
-									disabled={
-										ticketDetails?.form?.ticket?.user_id ===
-										reduxState?.user?.profile?.id
-									}
+									disabled={userType !== "ADMIN"}
 								/>
 							)}
 							&nbsp;
