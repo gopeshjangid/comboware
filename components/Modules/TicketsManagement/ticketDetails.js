@@ -436,8 +436,10 @@ function TicketDetails({
 													value={ticketDetails?.form?.ticket?.ticket_subject}
 													variant="filled"
 													disabled={
-														ticketDetails?.form?.ticket?.user_id !==
-														reduxState?.user?.profile?.id
+														!(userType == "ER"
+															? ticketDetails?.form?.ticket?.user_id !==
+															  reduxState?.user?.profile?.id
+															: userType === "ADMIN")
 													}
 												/>
 											</GridItem>
@@ -449,8 +451,10 @@ function TicketDetails({
 													onChange={changeHandler}
 													value={ticketDetails?.form?.ticket?.ticket_category}
 													disabled={
-														ticketDetails?.form?.ticket?.user_id !==
-														reduxState?.user?.profile?.id
+														!(userType == "ER"
+															? ticketDetails?.form?.ticket?.user_id !==
+															  reduxState?.user?.profile?.id
+															: userType === "ADMIN")
 													}
 												/>
 											</GridItem>
@@ -466,8 +470,10 @@ function TicketDetails({
 														ticketDetails?.form?.ticket?.ticket_subcategory
 													}
 													disabled={
-														ticketDetails?.form?.ticket?.user_id !==
-														reduxState?.user?.profile?.id
+														!(userType == "ER"
+															? ticketDetails?.form?.ticket?.user_id !==
+															  reduxState?.user?.profile?.id
+															: userType === "ADMIN")
 													}
 												/>
 											</GridItem>
@@ -733,11 +739,10 @@ function TicketDetails({
 								value={ticketDetails?.form?.ticket?.repair_status}
 								style={{ width: "200px" }}
 								disabled={
-									!(
-										userType === "ER" &&
-										ticketDetails?.form?.ticket?.assignee_id ===
-											reduxState?.user?.profile?.id
-									)
+									!(userType === "ER"
+										? ticketDetails?.form?.ticket?.assignee_id ===
+										  reduxState?.user?.profile?.id
+										: userType === "ADMIN")
 								}
 							></Select>
 							&nbsp;
