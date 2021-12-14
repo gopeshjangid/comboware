@@ -746,7 +746,7 @@ function TicketDetails({
 								}
 							></Select>
 							&nbsp;
-							{userType !== "USER" && (
+							{userType === "ADMIN" && (
 								<Select
 									name="assignee"
 									options={reduxState?.user?.usersList
