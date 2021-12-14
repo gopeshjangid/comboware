@@ -13,6 +13,7 @@ import { getProfile } from "../Profile/redux/action";
 import { getAllWorkspace, updateRequest } from "./redux/action";
 import { COLUMNS } from "./redux/constants";
 import styles from "./styles";
+import { Chip } from "components/Custom";
 import CustomTab from "components/CustomTabs";
 function Admin({ getAllWorkspace, updateRequest, getProfile }) {
 	const useStyles = makeStyles(styles);
@@ -92,6 +93,16 @@ function Admin({ getAllWorkspace, updateRequest, getProfile }) {
 		return COLUMNS?.map((col) => {
 			if (col?.field === "action") {
 				col.renderCell = (params) => {
+					if (params?.request_status === "APPROVED") {
+						return (
+							<Chip
+								style="info"
+								type={"primary"}
+								label={"APPROVED"}
+								color="primary"
+							/>
+						);
+					}
 					return (
 						<Button
 							variant="contained"
